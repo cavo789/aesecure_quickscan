@@ -1958,8 +1958,13 @@ class aeSecureProgressBar
         } else {
             echo json_encode(['pct' => '100']);
         }
-        ob_end_flush();
-        flush();
+
+        try {
+            ob_end_flush();
+            flush();
+        } catch (Exception $e) {
+        }
+        
         die();
         exit();
     }
