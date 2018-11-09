@@ -100,19 +100,18 @@ define('REPO', 'https://raw.githubusercontent.com/cavo789/aesecure_quickscan/mas
 define('DIR', str_replace('/', DIRECTORY_SEPARATOR, dirname($_SERVER['SCRIPT_FILENAME'])));
 define('FILE', str_replace('/', DIRECTORY_SEPARATOR, basename($_SERVER['SCRIPT_FILENAME'])));
 
-define('DEBUG', false);                 // Enable debugging (Note : there is no progress bar in debug mode)
-define('FULLDEBUG', false);             // Output a lot of information
-
-define('VERSION', '1.1.12');            // Version number of this script
-define('EXPERT', false);                // Display Kill file button and allow to specify a folder
-define('MAX_SIZE', 1 * 1024 * 1024);    // One megabyte : skip files when filesize is greater than this max size.
-define('MAXFILESBYCYCLE', 500);         // Number of files to process by cycle, recude this figure if you receive HTTP error 504 - Gateway timeout
-define('CONTEXT_NBRCHARS', 100);        // When a suspicious pattern is found, the portion of code where this pattern is found will be displayed.  The portion is xxx characters before the pattern; the pattern and the same number of characters after it.
-define('SHOWMD5', false);               // Allow to generate a hash file
-define('PROGRESSBARFREQUENCY', 3);      // Frequency of updates for the progress bar. In seconds.
-define('MEMORY_LIMIT', '256M');         // DEBUG MODE ONLY - Maximum memory limit that will be used
-define('DEMO', false);                  // Don't allow to kill this script when demo mode is enabled
-define('CURL_TIMEOUT', 2);              // Max number of seconds before the timeout when requesting a JSON file from aesecure.com
+define('DEBUG', false);              // Enable debugging (Note : there is no progress bar in debug mode)
+define('FULLDEBUG', false);          // Output a lot of information
+define('VERSION', '1.1.12');         // Version number of this script
+define('EXPERT', false);             // Display Kill file button and allow to specify a folder
+define('MAX_SIZE', 1 * 1024 * 1024); // One megabyte : skip files when filesize is greater than this max size.
+define('MAXFILESBYCYCLE', 500);      // Number of files to process by cycle, recude this figure if you receive HTTP error 504 - Gateway timeout
+define('CONTEXT_NBRCHARS', 100);     // When a suspicious pattern is found, the portion of code where this pattern is found will be displayed.  The portion is xxx characters before the pattern; the pattern and the same number of characters after it.
+define('SHOWMD5', false);            // Allow to generate a hash file
+define('PROGRESSBARFREQUENCY', 3);   // Frequency of updates for the progress bar. In seconds.
+define('MEMORY_LIMIT', '256M');      // DEBUG MODE ONLY - Maximum memory limit that will be used
+define('DEMO', false);               // Don't allow to kill this script when demo mode is enabled
+define('CURL_TIMEOUT', 2);           // Max number of seconds before the timeout when requesting a JSON file from aesecure.com
 
 // Download URL for the file with CMS hashes
 define('DOWNLOAD_URL', 'https://raw.githubusercontent.com/cavo789/aesecure_quickscan/master/');
@@ -2468,8 +2467,18 @@ class aeSecureScan
                 case 'chgfolder': {
                     // Get the CMS if any
                     list($CMS, $CMSFullVersion, $CMSMainVersion, $CMSVersion, $SiteRoot) = aeSecureCMS::getInfo($this->_directory);
+
                     // reset the list of files to be sure that the scanner will process them again
                     $this->aeSession->set('arrFiles', null);
+                    $this->aeSession->set('folder', null);
+
+                    header('Content-Type: application/json');
+                    header('Cache-Control: no-cache');
+                    echo json_encode(
+                        [
+                            'CMS' => $CMS . ' ' . $CMSFullVersion,
+                        ]
+                    );
                     die('');
 
                     break;
@@ -3490,7 +3499,7 @@ class aeSecureScan
    </head>
    <body>
         <?php echo $github; ?>
-      <div class="container-full">
+        <div class="container-full">
 
             <?php
             if (DEMO) {
@@ -3929,30 +3938,34 @@ class aeSecureScan
                }
             });
          }); // $('#destroy')
-         // Change the folder to scan
-         $('#folder').change(function (e) {
-            e.stopImmediatePropagation();
 
-            $.ajax({
-               beforeSend: function() {
-                  $('#folder').prop("disabled", true);
-                  $('#result').empty();
-               },
-               async:true,
-               type:($debug?'GET':'POST'),
-               url: "<?php echo FILE; ?>",
-               data:"task=chgfolder&folder="+btoa($('#folder').val()),
-               success: function (data) {
-                  $('#folder').prop("disabled", false);
-                  $('#cleansite').text($('#cleansite').attr('data-old-caption'));
-                  $('#cleansite').prop("disabled", false);
-                  $('#getcountfiles').text($('#getcountfiles').attr('data-old-caption'));
-                  $('#getcountfiles').prop("disabled", false);
-                  $('#resultGetCountFiles').hide();
-                  $('#result').html(data);
-               }
+            // Change the folder to scan
+            $('#folder').change(function (e) {
+                e.stopImmediatePropagation();
+
+                $.ajax({
+                    beforeSend: function() {
+                        $('#folder').prop("disabled", true);
+                        $('#result').empty();
+                    },
+                    async:true,
+                    type:($debug?'GET':'POST'),
+                    url: "<?php echo FILE; ?>",
+                    data:"task=chgfolder&folder="+btoa($('#folder').val()),
+                    success: function (data) {
+                        $('#folder').prop("disabled", false);
+                        $('#cleansite').text($('#cleansite').attr('data-old-caption'));
+                        $('#cleansite').prop("disabled", false);
+                        $('#getcountfiles').text($('#getcountfiles').attr('data-old-caption'));
+                        $('#getcountfiles').prop("disabled", false);
+                        $('#resultGetCountFiles').hide();
+                        $('#result').html(data);
+                        // By changing of folder, the returned value, if there, is the 
+                        // name of the CMS in that folder
+                        $('.navbar-brand').html(data.CMS);
+                    }
+                });
             });
-         });
 
          if($debug){
             $('#DebugMode').click(function(e) {
