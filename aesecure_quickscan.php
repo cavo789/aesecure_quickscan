@@ -100,8 +100,8 @@ define('REPO', 'https://raw.githubusercontent.com/cavo789/aesecure_quickscan/mas
 define('DIR', str_replace('/', DIRECTORY_SEPARATOR, dirname($_SERVER['SCRIPT_FILENAME'])));
 define('FILE', str_replace('/', DIRECTORY_SEPARATOR, basename($_SERVER['SCRIPT_FILENAME'])));
 
-define('DEBUG', true);                 // Enable debugging (Note : there is no progress bar in debug mode)
-define('FULLDEBUG', true);             // Output a lot of information
+define('DEBUG', false);                 // Enable debugging (Note : there is no progress bar in debug mode)
+define('FULLDEBUG', false);             // Output a lot of information
 
 define('VERSION', '1.1.12');            // Version number of this script
 define('EXPERT', false);                // Display Kill file button and allow to specify a folder
