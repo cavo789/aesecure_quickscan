@@ -2172,8 +2172,14 @@ class aeSecureScan
         // This is just like a pagination so processing the 1000 next files will be : start=1000 and end=1000.
         $this->_start = aeSecureFct::getParam('start', 'integer', 0);
         $this->_end   = $this->_start + aeSecureFct::getParam('end', 'integer', 0);
-        
-        $this->_directory = (true === $this->aeSession->get('Expert', EXPERT)) ? $this->aeSession->get('folder', $rootFolder) : $rootFolder;
+
+        $this->_directory = $rootFolder;
+        if ($this->aeSession->get('Expert', EXPERT)) {
+            $this->_directory =  trim($this->aeSession->get('folder', $rootFolder));
+            if ($this->_directory == '') {
+                $this->_directory = $rootFolder;
+            }
+        }
 
         $this->_arrCMS = [['joomla' => 'J!'], ['wordpress' => 'WP']];
 
@@ -2243,18 +2249,18 @@ class aeSecureScan
         }
 
         if (file_exists($filename)) {
-            $whitelist = DIR . DS . self::WHITELIST;
-            $json      = (file_exists($whitelist) ? json_decode(file_get_contents($whitelist), true) : []);
+            $json = json_decode(file_get_contents($file), true);
 
             $sha = md5_file($filename);
+
             if (!(isset($json[$sha]))) {
-                $json[$sha] = $filename;
+                $json[$sha] = 1;
             }
 
             asort($json);
 
             // Output the file with all hashes
-            $fp = fopen($whitelist, 'w');
+            $fp = fopen($file, 'w');
             fwrite($fp, json_encode($json));
             fclose($fp);
             unset($fp);
@@ -2281,7 +2287,13 @@ class aeSecureScan
         // Process the task if any, from POST or GET depending on the debug mode state
 
         // Get the folder to process
-        $this->_directory = (true === $this->aeSession->get('Expert', EXPERT)) ? $this->aeSession->get('folder', DIR) : DIR;
+        $this->_directory = DIR;
+        if ($this->aeSession->get('Expert', EXPERT)) {
+            $this->_directory = trim($this->aeSession->get('folder', DIR));
+            if ($this->_directory == '') {
+                $this->_directory = DIR;
+            }
+        }
 
         $task = aeSecureFct::getParam('task', 'string', '');
 
@@ -2296,39 +2308,45 @@ class aeSecureScan
                 }
 
                 case 'byebye': {
+
+                    // Don't kill files in demo mode, simulate that everything was ok (return -1)
+                    if (DEMO) {
+                        die(-1);
+                    }
+
                     // keepwhitelist is a variable posted by the Ajax request and will inform if the script should or not
                     // remove the user's whitelist file.
                     $bKeepWhiteList = aeSecureFct::getParam('keepwhitelist', 'boolean', true);
 
                     if (true !== $this->aeSession->get('Debug', DEBUG)) {
-                        // Kill this script but also the CMS.json file if present
-                        $filename = DIR . DS . self::SUPPORTED_CMS;
 
-                        if (file_exists($filename) && is_readable($filename)) {
-                            unlink($filename);
-                        }
+                        // Get the list of aeSecure QuickScan JSON
+                        // Need to use "DIR . DS" so filenames will be absolute which is needed
+                        $arrDeleteFiles = glob(DIR . DS . 'aesecure_quickscan_*.json');
 
-                        $filename = DIR . self::FOLDERS;
-                        if (file_exists($filename) && is_readable($filename)) {
-                            unlink($filename);
-                        }
+                        // And don't scan this script also
+                        $arrDeleteFiles[] = DIR . DS . FILE;
 
                         // Kill the debug log file if present
-                        $filename = $this->aeLog->filename();
-                        if (file_exists($filename) && is_readable($filename)) {
-                            unlink($filename);
+                        if (null !== $this->aeLog) {
+                            $arrDeleteFiles[] = $this->aeLog->filename();
                         }
 
-                        // Kill the whitelist file if present; only if the user has asked this
-                        if (!$bKeepWhiteList) {
-                            $filename = DIR . DS . self::WHITELIST;
-                            if (file_exists($filename) && is_readable($filename)) {
-                                unlink($filename);
+                        foreach ($arrDeleteFiles as $filename) {
+                            $bDelete = true;
+
+                            if ($filename == DIR . DS . self::WHITELIST) {
+                                // If $bKeepWhiteList=true, we can't delete the file                                
+                                $bDelete = !$bKeepWhiteList;
+                            }
+
+                            if ($bDelete) {
+                                if (is_file($filename) && is_readable($filename)) {
+                                    unlink($filename);
+                                }
                             }
                         }
 
-                        // Kill this script
-                        unlink(FILE);
                     }
 
                     die('<div class="alert alert-info" role="alert">'.
@@ -2351,7 +2369,7 @@ class aeSecureScan
                 case 'killfile': {
                     // Don't kill files in demo mode, simulate that everything was ok (return -1)
                     if (DEMO) {
-                        die('-1');
+                        die(-1);
                     }
 
                     $filename = base64_decode(aeSecureFct::getParam('filename', 'string', ''));
@@ -2459,6 +2477,7 @@ class aeSecureScan
 
                 case 'whitelist': {
                     $filename = base64_decode(aeSecureFct::getParam('filename', 'string', ''));
+
                     die($this->WhiteList($filename));
                     break;
                 }
