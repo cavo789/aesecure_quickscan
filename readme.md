@@ -41,7 +41,7 @@ If your website is running a supported CMS like f.i. `Joomla` and a supported ve
 
 If something goes wrong with the automatic download (no `CURL` support f.i.), you'll be prompted to download these files manually.
 
-![Automatic downloads](files.png)
+![Automatic downloads](images/files.png)
 
 #### When 'Getting the file list' is fired
 
@@ -52,11 +52,11 @@ aeSecure Quickscan will automatically three or four more files:
 - `aesecure_quickscan_other.json` contains md5 hash of files that are considered as cleaned (like well known Joomla's components);
 - `aesecure_quickscan_whitelist.json` contains md5 hash of files that are considered as cleaned (manually processed file by file by Christophe, author of QuickScan);
 
-![More JSON files](files_extended.png)
+![More JSON files](images/files_extended.png)
 
 ### Discover the interface
 
-![Interface](interface.png)
+![Interface](images/interface.png)
 
 A few things:
 
@@ -78,7 +78,7 @@ In other words: `Getting the file list` will only retrieve files that need to be
 
 As you can see here below, on a fresh installation of Joomla 3.9.0, the number of files to scan is: zero. This because nothing was added to the site and thus 100% of files are in our whitelist.
 
-![Nothing to scan](nothing_to_scan.png)
+![Nothing to scan](images/nothing_to_scan.png)
 
 3. Scan the site
 
@@ -88,7 +88,7 @@ Remaining files will be scanned and if something is found based on
 - our blacklist hash (`aesecure_quickscan_blacklist.json`) or
 - our edited hash (`aesecure_quickscan_edited.json`)
 
-![Virus of mine](virus_of_mine.png)
+![Virus of mine](images/virus_of_mine.png)
 
 Then the file will be displayed and you'll be able to whitelist him (if the file is clean (i.e. false positive)), ignore the file (just close the item) or kill the file.
 
@@ -106,7 +106,7 @@ In that mode, you'll be able to specify a path (like making a scan of a subfolde
 
 You'll have another options:
 
-![Expert mode](expert.png)
+![Expert mode](images/expert.png)
 
 ## License
 
