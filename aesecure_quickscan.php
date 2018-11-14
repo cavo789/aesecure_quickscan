@@ -84,7 +84,7 @@
  */
 
 /**
- * Avoid __DIR__
+ * Avoid __DIR__.
  *
  *      __DIR__ is the folder where the running script is started so, perhaps, things like
  *      c:/sites/hacked/. In most of case, it's correct because the script file has been
@@ -140,7 +140,7 @@ register_shutdown_function(function () {
     $error = error_get_last();
 });
 
-class aeSecureDebug 
+class aeSecureDebug
 {
     /**
      * Debugging mode state (On / Off).
@@ -151,13 +151,14 @@ class aeSecureDebug
     private static $debugMode = false;
 
     /**
-     * Instantiate the class 
+     * Instantiate the class.
      *
-     * @param bool    $debugMode False will hide errors in the browser
-     *                           True will activate a verbose mode
+     * @param bool $debugMode False will hide errors in the browser
+     *                        True will activate a verbose mode
+     *
      * @return void
      */
-    public function __construct(bool $debugMode = false) 
+    public function __construct(bool $debugMode = false)
     {
         // Informs PHP where to store errors
         ini_set('error_log', DIR . 'aesecure_quickscan_error_log');
@@ -178,7 +179,7 @@ class aeSecureDebug
         static::$debugMode = $onOff;
 
         // When debug mode is on, we want to see every messages; even notice.
-        if (static::$debugMode === true) {
+        if (true === static::$debugMode) {
             ini_set('display_errors', '1');
             ini_set('display_startup_errors', '1');
             ini_set('html_errors', '1');
@@ -200,22 +201,22 @@ class aeSecureDebug
 class Download
 {
     const CURL_TIMEOUT = 2; // Timeout delay in seconds
-    const ERROR_CURL = 1001;
-    
-    private static $sAppName = '';
-    private static $sFileName = '';
-    private static $sSourceURL = '';
-    private static $bDebug = false;
+    const ERROR_CURL   = 1001;
+
+    private static $sAppName       = '';
+    private static $sFileName      = '';
+    private static $sSourceURL     = '';
+    private static $bDebug         = false;
     private static $sDebugFileName = '';
 
     public function __construct(string $ApplicationName)
     {
-        static::$bDebug = false;
+        static::$bDebug   = false;
         static::$sAppName = $ApplicationName;
     }
 
     /**
-     * Enable the debug mode for this class
+     * Enable the debug mode for this class.
      */
     public function debugMode(bool $bOnOff)
     {
@@ -227,9 +228,7 @@ class Download
         }
     }
 
-    /*
-     * URL where the script will find a file to download
-     */
+    // URL where the script will find a file to download
     public function setURL(string $sURL)
     {
         static::$sSourceURL = trim($sURL);
@@ -237,7 +236,7 @@ class Download
 
     /**
      * Once download, a file will be created on the disk.
-     * Use this property to specify the name of that file
+     * Use this property to specify the name of that file.
      */
     public function setFileName(string $sName)
     {
@@ -245,33 +244,14 @@ class Download
     }
 
     /**
-     * Detect if the CURL library is loaded
-     */
-    private function iscURLEnabled() : bool
-    {
-        return  (!function_exists('curl_init') && !function_exists('curl_setopt') && !function_exists('curl_exec') && !function_exists('curl_close')) ? false : true;
-    }
-
-    /**
-     * If the file is there and has a size of 0 byte,
-     * it's a failure, the file wasn't downloaded
-     */
-    private function removeIfNull()
-    {
-        if (file_exists(static::$sFileName)) {
-            if (filesize(static::$sFileName) < 1000) {
-                unlink(static::$sFileName);
-            }
-        }
-    }
-
-    /**
-     * Download the application package ZIP file
-     * @param  type   $url
-     * @param  type   $file
+     * Download the application package ZIP file.
+     *
+     * @param type $url
+     * @param type $file
+     *
      * @return string
      */
-    public function download() : int
+    public function download(): int
     {
         $wError = 0;
 
@@ -292,7 +272,7 @@ class Download
                 @chmod(static::$sFileName, 0644);
             }
 
-            if ($wError === 0) {
+            if (0 === $wError) {
                 // Ok, try to download the file
                 $ch = curl_init(static::$sSourceURL);
 
@@ -307,7 +287,7 @@ class Download
                         $wError = self::ERROR_CURL;
                     } else {
                         // Download
-                        
+
                         curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36 FirePHP/4Chrome');
                         curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
                         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, self::CURL_TIMEOUT);
@@ -347,7 +327,7 @@ class Download
         } // if (self::iscURLEnabled())
 
         self::removeIfNull();
-        
+
         if (!file_exists(static::$sFileName)) {
             // Unsuccessful, try with fopen()
             // Use a context to be able to define a timeout
@@ -358,7 +338,7 @@ class Download
 
             // Get the content if fopen() is enabled
             $content = @fopen(static::$sSourceURL, 'r', false, $context);
-            if ($content !== '') {
+            if ('' !== $content) {
                 @file_put_contents(static::$sFileName, $content);
             }
 
@@ -373,9 +353,9 @@ class Download
     }
 
     /**
-     * Return a text for the encountered error
+     * Return a text for the encountered error.
      */
-    public function getErrorMessage(int $code) : string
+    public function getErrorMessage(int $code): string
     {
         $sReturn =
             '<p>Your system configuration doesn\'t allow to download the file.</p>' .
@@ -385,20 +365,42 @@ class Download
             'FTP client and send the downloaded file to your ' .
             'website folder.</p>' .
             '<p>Once this is done, just refresh this page.</p>' .
-            '<p><em>Note : the filename should be ' .static::$sFileName . '</em></p>';
+            '<p><em>Note : the filename should be ' . static::$sFileName . '</em></p>';
 
         return $sReturn;
+    }
+
+    /**
+     * Detect if the CURL library is loaded.
+     */
+    private function iscURLEnabled(): bool
+    {
+        return  (!function_exists('curl_init') && !function_exists('curl_setopt') && !function_exists('curl_exec') && !function_exists('curl_close')) ? false : true;
+    }
+
+    /**
+     * If the file is there and has a size of 0 byte,
+     * it's a failure, the file wasn't downloaded.
+     */
+    private function removeIfNull()
+    {
+        if (file_exists(static::$sFileName)) {
+            if (filesize(static::$sFileName) < 1000) {
+                unlink(static::$sFileName);
+            }
+        }
     }
 }
 
 class aeSecureDownload
 {
-
     /**
      * Download a file from GitHub like "aesecure_quickscan_pattern.json", ...
-     * See the DOWNLOAD_URL constant for the URL
+     * See the DOWNLOAD_URL constant for the URL.
      *
      * @param [type] $file
+     * @param mixed  $uri
+     *
      * @return void
      */
     public static function get($file, $uri)
@@ -409,8 +411,8 @@ class aeSecureDownload
             $aeDownload->debugMode(DEBUG);
 
             // Be sure to have only one "/" and not two
-            if (trim($uri !=='')) {
-                $uri = ltrim(rtrim($uri,'/'),'/').'/';
+            if (trim('' !== $uri)) {
+                $uri = ltrim(rtrim($uri, '/'), '/') . '/';
             }
 
             $url = rtrim(DOWNLOAD_URL, '/') . '/' . $uri . basename($file);
@@ -423,7 +425,7 @@ class aeSecureDownload
                 $sErrorMsg = $aeDownload->getErrorMessage($wReturn);
             }
         } catch (Exception $e) {
-            $wReturn = 1001;
+            $wReturn   = 1001;
             $sErrorMsg = $e->getMessage();
         }
 
@@ -449,8 +451,8 @@ class aeSecureLanguage
     private $_lang                  = null;
     private $_arrLanguage           = null;
     private $_bLoaded               = false;
-    private $supportedLanguages = null;
-    private $browserLanguages   = null;
+    private $supportedLanguages     = null;
+    private $browserLanguages       = null;
 
     protected static $instance = null;
 
@@ -464,7 +466,7 @@ class aeSecureLanguage
 
         // Initialize the list of supported languages
         $this->supportedLanguages = explode(';', self::SUPPORTED_LANGUAGES);
-        
+
         // Get the list of languages supported by the Browser and by aeSecure (presence of the language's file)
         self::getBrowserLanguage();
 
@@ -472,14 +474,11 @@ class aeSecureLanguage
             // Perfect match
             // The language (f.i. nl-BE) is supported; we've a nl-BE.json file; use it
             $result = $lang;
-
         } elseif (in_array(substr($lang, 0, 2), $this->supportedLanguages)) {
             // If the user ask for f.i. en-US and we've a file for "en", use that file.
             // For instance en-GB
             $result = substr($lang, 0, 2);
-
         } else {
-            
             // No, not found.  Use the languages supported by the browser and check if aeSecure support that language
             $result = '';
 
@@ -489,6 +488,7 @@ class aeSecureLanguage
             foreach ($this->browserLanguages as $lang => $value) {
                 if (in_array($lang, $this->supportedLanguages)) {
                     $result = $lang;
+
                     break;
                 }
             }
@@ -502,6 +502,7 @@ class aeSecureLanguage
                     // the list of files like fr*.json
                     if (in_array(substr($lang, 0, 2), $this->supportedLanguages)) {
                         $result = substr($lang, 0, 2);
+
                         break;
                     }
                 }
@@ -549,14 +550,13 @@ class aeSecureLanguage
             $this->_bLoaded     = true;
         }
 
-        // If the parametrized file isn't found (f.i. the user set fr-FR has 
+        // If the parametrized file isn't found (f.i. the user set fr-FR has
         // preferred language and the file is not
         // present), then use by default en-GB
         if (!$this->_bLoaded) {
-
             // Try to download if not present
             $this->_filename = DIR . DS . sprintf(self::LANG_FILE, self::DEFAULT_LANGUAGE);
-            
+
             if (!file_exists($this->_filename)) {
                 aeSecureDownload::get($this->_filename, 'settings/');
             }
@@ -567,7 +567,7 @@ class aeSecureLanguage
 
                 if (null === json_decode($string, true)) {
                     die('There is a problem in ' . $this->_filename . '. ' .
-                        'Probably an invalid json file <pre>' . 
+                        'Probably an invalid json file <pre>' .
                         html_entity_decode($string) . '</pre>');
                 }
 
@@ -581,7 +581,7 @@ class aeSecureLanguage
             foreach ($this->supportedLanguages as $key => $value) {
                 $this->_filename = DIR . DS . sprintf(self::LANG_FILE, $value);
 
-                if (file_exists($this->_filename)) {                
+                if (file_exists($this->_filename)) {
                     $string = file_get_contents($this->_filename);
                     $string = str_replace('\\u', '\u', $string);
 
@@ -646,7 +646,7 @@ class aeSecureLanguage
             return $default;
         }
 
-        $this->browserLanguages = [];
+        $this->browserLanguages     = [];
         $result                     = '';
 
         // $this->browserLanguages is an array, sorted by priority order, of the supported languages; for instance :
@@ -686,7 +686,7 @@ class aeSecureLanguage
      * $language can be initialized or not.  If not, the script will detect supported languages as defined
      * in the user's browser.  If initialized, should be something like 'en-GB', 'fr-FR', ...
      *
-     * @param string $language
+     * @param string     $language
      * @param null|mixed $lang
      *
      * @return bool
@@ -722,8 +722,8 @@ class aeSecureFct
     /**
      * Generic function for adding a js in the HTML response.
      *
-     * @param type $localfile
-     * @param type $weblocation
+     * @param type  $localfile
+     * @param type  $weblocation
      * @param mixed $defer
      *
      * @return string
@@ -844,9 +844,9 @@ class aeSecureFct
     /**
      * Safely read values from posted forms ($_POST).
      *
-     * @param type $name
-     * @param type $type
-     * @param type $default
+     * @param type  $name
+     * @param type  $type
+     * @param type  $default
      * @param mixed $maxlen
      *
      * @return type
@@ -955,8 +955,8 @@ class aeSecureLog
     }
 
     /**
-     * @param type $sLogFile    Name of the logfile that will be used
-     * @param type $killFile    Default True : kill the logfile if present when starting the run
+     * @param type $sLogFile Name of the logfile that will be used
+     * @param type $killFile Default True : kill the logfile if present when starting the run
      *
      * @return type
      */
@@ -1005,7 +1005,7 @@ class aeSecureFiles
      *
      * @param null|mixed $filename
      *
-     * @return type    -1 if the file has been removed successfully
+     * @return type -1 if the file has been removed successfully
      */
     public function KillFile($filename = null)
     {
@@ -1040,8 +1040,8 @@ class aeSecureFiles
      * (f.i. rrmdir(__DIR__/hashes/cms/joomla/2.5.27) will kill the full tree below the specified folder).
      *
      * @param type $folder
-     * @param type $killroot   If true, the folder himself will be removed.
-     *          rrmdir(__DIR__/hashes/cms/joomla/2.5.27, true) ==> remove folder 2.5.27 too and not only his children
+     * @param type $killroot       If true, the folder himself will be removed.
+     *                             rrmdir(__DIR__/hashes/cms/joomla/2.5.27, true) ==> remove folder 2.5.27 too and not only his children
      * @param type $arrIgnoreFiles
      *
      * @return bool
@@ -1246,7 +1246,7 @@ class aeSecureCMS
 
         // Get the list of CMS (it's a json string stored in a constant)
         // and try to find a CMS
-        $file = DIR. DS . self::SUPPORTED_CMS;
+        $file = DIR . DS . self::SUPPORTED_CMS;
         if (!is_file($file)) {
             aeSecureDownload::get($file, 'settings/');
         }
@@ -1259,7 +1259,7 @@ class aeSecureCMS
 
         foreach ($arrCMS as $key => $value) {
             if (method_exists('aeSecureCMS', 'is' . $key)) {
-                $method = 'self::is' . $key;
+                $method                                                              = 'self::is' . $key;
                 list($return, $CMS, $Filename, $FullVersion, $MainVersion, $Version) = call_user_func($method, $root);
 
                 if (true === $return) {
@@ -1840,10 +1840,10 @@ class aeSecureProgressBar
 {
     protected $aeSession = null;
 
-    private $_filename  = null;
-    private $_ID        = null;
-    private $_CSS       = 'progress-bar';
-    private $_frequency = 1000; // refresh the progress bar each xx seconds  (1000=one second)
+    private $_filename   = null;
+    private $_ID         = null;
+    private $_CSS        = 'progress-bar';
+    private $_frequency  = 1000; // refresh the progress bar each xx seconds  (1000=one second)
     private $_start      = 0;              // f.i. 0   (current step in the progress bar)
     private $_end        = 0;                // f.i. 100 (number of steps)
     private $_pct        = 0;                // calculated progression in percentage
@@ -1964,7 +1964,7 @@ class aeSecureProgressBar
             flush();
         } catch (Exception $e) {
         }
-        
+
         die();
         exit();
     }
@@ -2071,8 +2071,8 @@ class aeSecureProgressBar
     }
 
     /**
-     * @param type $ID       ID to give to the HTML progress bar container
-     * @param type $Class   CSS class to give to the HTML container
+     * @param type $ID    ID to give to the HTML progress bar container
+     * @param type $Class CSS class to give to the HTML container
      *
      * @return type
      */
@@ -2180,7 +2180,7 @@ class aeSecureScan
         $this->_directory = $rootFolder;
         if ($this->aeSession->get('Expert', EXPERT)) {
             $this->_directory =  trim($this->aeSession->get('folder', $rootFolder));
-            if ($this->_directory == '') {
+            if ('' == $this->_directory) {
                 $this->_directory = $rootFolder;
             }
         }
@@ -2212,18 +2212,23 @@ class aeSecureScan
         switch ($disclaimer) {
             case 'HIGHPROBALITY':
                 $return = $this->aeLanguage->get('HIGHPROBALITY');
+
                 break;
             case 'HIGHPROBALITYFALSEGIF':
                 $return = $this->aeLanguage->get('HIGHPROBALITYFALSEGIF');
+
                 break;
             case 'HIGHPROBALITYBADSITE':
                 $return = $this->aeLanguage->get('HIGHPROBALITYBADSITE');
+
                 break;
             case 'HIGHPROBALITYBASE64KEYWORD':
                 $return = $this->aeLanguage->get('HIGHPROBALITYBASE64KEYWORD');
+
                 break;
             case 'WARNINGNOTMANDATORYAVIRUS':
                 $return = $this->aeLanguage->get('WARNINGNOTMANDATORYAVIRUS');
+
                 break;
             default:
                 $return = $disclaimer . ((true === $this->aeSession->get('Debug', DEBUG)) ? ' *please add translation*' : '');
@@ -2294,7 +2299,7 @@ class aeSecureScan
         $this->_directory = DIR;
         if ($this->aeSession->get('Expert', EXPERT)) {
             $this->_directory = trim($this->aeSession->get('folder', DIR));
-            if ($this->_directory == '') {
+            if ('' == $this->_directory) {
                 $this->_directory = DIR;
             }
         }
@@ -2308,11 +2313,11 @@ class aeSecureScan
                     $filename = DIR . DS . self::WHITELIST;
                     echo file_exists($filename) ? 1 : 0;
                     die();
+
                     break;
                 }
 
                 case 'byebye': {
-
                     // Don't kill files in demo mode, simulate that everything was ok (return -1)
                     if (DEMO) {
                         die(-1);
@@ -2323,7 +2328,6 @@ class aeSecureScan
                     $bKeepWhiteList = aeSecureFct::getParam('keepwhitelist', 'boolean', true);
 
                     if (true !== $this->aeSession->get('Debug', DEBUG)) {
-
                         // Get the list of aeSecure QuickScan JSON
                         // Need to use "DIR . DS" so filenames will be absolute which is needed
                         $arrDeleteFiles = glob(DIR . DS . 'aesecure_quickscan_*.json');
@@ -2340,7 +2344,7 @@ class aeSecureScan
                             $bDelete = true;
 
                             if ($filename == DIR . DS . self::WHITELIST) {
-                                // If $bKeepWhiteList=true, we can't delete the file                                
+                                // If $bKeepWhiteList=true, we can't delete the file
                                 $bDelete = !$bKeepWhiteList;
                             }
 
@@ -2350,10 +2354,9 @@ class aeSecureScan
                                 }
                             }
                         }
-
                     }
 
-                    die('<div class="alert alert-info" role="alert">'.
+                    die('<div class="alert alert-info" role="alert">' .
                         '<strong>Success</strong> The file ' . FILE .
                         ' has been removed from the server.</div>');
 
@@ -2362,11 +2365,13 @@ class aeSecureScan
 
                 case 'doscan': {
                     die($this->doScan());
+
                     break;
                 }
 
                 case 'getcountfiles': {
                     die($this->getCountFiles());
+
                     break;
                 }
 
@@ -2461,11 +2466,13 @@ class aeSecureScan
 
                 case 'progress': {
                     die($this->aeProgress->getProgress());
+
                     break;
                 }
 
                 case 'cleansite': {
                     die($this->doCleanSite());
+
                     break;
                 }
 
@@ -2493,11 +2500,12 @@ class aeSecureScan
                     $filename = base64_decode(aeSecureFct::getParam('filename', 'string', ''));
 
                     die($this->WhiteList($filename));
+
                     break;
                 }
 
                 default: {
-                    die('<div class="alert alert-danger" role="alert"><strong>Invalid call</strong>'.
+                    die('<div class="alert alert-danger" role="alert"><strong>Invalid call</strong>' .
                         'Sorry, the call to ' . FILE . ' is invalid.</div>');
                 }
             }
@@ -2511,15 +2519,15 @@ class aeSecureScan
      * the downloaded file will be stored in the same folder than this script, name : aesecure_quickscan_CMS.json   This file will be killed
      * when the user will click on the "Kill this script" button available on the user's form.
      *
-     * @param type $CMS        f.i. "Joomla"
-     * @param type $version    f.i. "2.5.27"
+     * @param type $CMS     f.i. "Joomla"
+     * @param type $version f.i. "2.5.27"
      *
-     * @return type            array of hashes like below.  All these hashes are native files => no scan needed
-     *    array(3707) {
-     *       ["a62f6525e7418dc679ad1c6c2ebe662dc67207cb"]=> int(1)
-     *       ["43ae5dae1df4bec4ecb2879146518283f55eab67"]=> int(1)
-     *       ["9b0661ab4d6d640ef8275995dfc2830c974af781"]=> int(1)
-     *       ["6e71c8f8ba7b9318d57773c4cdb60e98ffb43eb0"]=> int(1)
+     * @return type array of hashes like below.  All these hashes are native files => no scan needed
+     *              array(3707) {
+     *              ["a62f6525e7418dc679ad1c6c2ebe662dc67207cb"]=> int(1)
+     *              ["43ae5dae1df4bec4ecb2879146518283f55eab67"]=> int(1)
+     *              ["9b0661ab4d6d640ef8275995dfc2830c974af781"]=> int(1)
+     *              ["6e71c8f8ba7b9318d57773c4cdb60e98ffb43eb0"]=> int(1)
      */
     public function gethashes($CMS, $version)
     {
@@ -2562,7 +2570,7 @@ class aeSecureScan
             if (file_exists($json)) {
                 // rename the file from f.i. "J!3.9.0.json" to "aesecure_quickscan_J!3.9.0.json"
                 // so all Quickscan files are using the "aesecure_quickscan_" prefix
-                $old = $json;
+                $old  = $json;
                 $json = rtrim(dirname($old), DS) . DS . 'aesecure_quickscan_' . basename($old);
                 rename($old, $json);
             }
@@ -2570,7 +2578,7 @@ class aeSecureScan
 
         // Do we have the json file with all hashes?
         // Created just now or already there from a previous run ?
-        $arrHashes = array();
+        $arrHashes = [];
 
         if (file_exists($json)) {
             $arrHashes = json_decode(file_get_contents($json), true);
@@ -2716,8 +2724,7 @@ class aeSecureScan
         clearstatcache();
 
         try {
-            if (!get_cfg_var('safe_mode')) 
-            {
+            if (!get_cfg_var('safe_mode')) {
                 // set_time_limit isn't used when safe_mode is active
                 // No max execution time
                 @ini_set('max_execution_time', '0');
@@ -2779,10 +2786,10 @@ class aeSecureScan
 
             // Don't scan aeSecure QuickScan files
             // Need to use "DIR . DS" so filenames will be absolute which is needed
-            $arrSkipFiles = glob(DIR . DS .'aesecure_quickscan_*.json');
+            $arrSkipFiles = glob(DIR . DS . 'aesecure_quickscan_*.json');
 
             // And don't scan this script also
-            $arrSkipFiles[] = DIR . DS .FILE;
+            $arrSkipFiles[] = DIR . DS . FILE;
 
             foreach ($files as $filename => $object) {
                 // Don't process these files
@@ -2871,11 +2878,11 @@ class aeSecureScan
             header('Cache-Control: no-cache');
             echo json_encode(
                 [
-                    'count' => count($arrFiles), 
+                    'count'       => count($arrFiles),
                     'whitelisted' => $wNbrWhitelisted,
                     'blacklisted' => $wNbrBlacklisted,
-                    'edited' => $wNbrEdited,
-                    'skipped' => $wNbrSkipped, 
+                    'edited'      => $wNbrEdited,
+                    'skipped'     => $wNbrSkipped,
                 ]
             );
 
@@ -2904,11 +2911,10 @@ class aeSecureScan
         $aeLanguage = aeSecureLanguage::getInstance();
 
         try {
-            if (!get_cfg_var('safe_mode')) 
-            {   
+            if (!get_cfg_var('safe_mode')) {
                 // set_time_limit isn't used when safe_mode is active
                 // No max execution time
-                @ini_set('max_execution_time', '0'); 
+                @ini_set('max_execution_time', '0');
                 // Remove time limit; avoid 504 HTTP errors
                 @ini_set('set_time_limit', '0');
             }
@@ -3052,7 +3058,7 @@ class aeSecureScan
                         if (isset($this->_arrBlackListHashes[$md5])) {
                             // The file being scanned is blacklisted
                             $bInfected = true;
-                            $bFound = true;
+                            $bFound    = true;
 
                             $FOUND =
                                 '<span class="label label-danger blink">' . $aeLanguage->get('DANGER') . '</span>&nbsp;' . $aeLanguage->get('BLACKLISTED') .
@@ -3070,7 +3076,7 @@ class aeSecureScan
                         if (isset($this->_arrEditedHashes[$md5])) {
                             // The file being scanned contains a virus
                             $bInfected = true;
-                            $bFound = true;
+                            $bFound    = true;
 
                             $FOUND =
                                 '<span class="label label-danger blink">' . $aeLanguage->get('DANGER') . '</span>&nbsp;' . $aeLanguage->get('EDITED') .
@@ -3269,12 +3275,12 @@ class aeSecureScan
                         'data-caption="<span class=\'glyphicon glyphicon-heart\'>&nbsp;</span>' .
                         $this->aeLanguage->get('WHITE_LIST') . '" data-content="' .
                         $this->aeLanguage->get('WHITE_LIST_HINT') . '" data-filename="' .
-                        base64_encode($filename) . '"><span class="glyphicon glyphicon-heart">'.
+                        base64_encode($filename) . '"><span class="glyphicon glyphicon-heart">' .
                         '</span></button>';
 
                     if (true === $this->aeSession->get('Expert', EXPERT)) {
                         // Kill file button
-                        $buttonDelete = '<button type="button" class="killfile btn '.
+                        $buttonDelete = '<button type="button" class="killfile btn ' .
                             'btn-danger btn-xs" data-toggle="popover" data-html="true" ' .
                             'data-old-caption="<span class=\'glyphicon glyphicon-trash\'></span>" ' .
                             'data-caption="<span class=\'glyphicon glyphicon-trash\'>&nbsp;</span>' .
@@ -3301,10 +3307,7 @@ class aeSecureScan
             unset($arrFiles);
         }
 
-        unset($this->arrOtherHashes);
-        unset($this->arrWhiteListHashes);
-        unset($this->arrBlackListHashes);
-        unset($this->arrCMSHashes);
+        unset($this->arrOtherHashes, $this->arrWhiteListHashes, $this->arrBlackListHashes, $this->arrCMSHashes);
 
         if (true === $this->aeSession->get('Debug', DEBUG)) {
             $this->aeLog->addLog("\nEND OF SCAN");
@@ -3550,11 +3553,11 @@ class aeSecureScan
                      <div class="checkbox">
 
                         <label><input type="checkbox" id="chkExpert" name="chkExpert" <?php if (true === $aeSession::get('Expert', EXPERT)) {
-                               echo 'checked="checked" ';
-                                                           } ?> title=""><?php echo $aeLanguage->get('EXPERT_MODE');?></input></label><br/>
+                                echo 'checked="checked" ';
+                            } ?> title=""><?php echo $aeLanguage->get('EXPERT_MODE');?></input></label><br/>
                         <label><input type="checkbox" id="chkDebug" name="chkDebug" <?php if (true === $aeSession::get('Debug', DEBUG)) {
-                               echo 'checked="checked" ';
-                                                         } ?> title=""><?php echo $aeLanguage->get('DEBUG_MODE');?></input></label><br/>
+                                echo 'checked="checked" ';
+                            } ?> title=""><?php echo $aeLanguage->get('DEBUG_MODE');?></input></label><br/>
                         <br/>
                         <?php
                            $select = '';
@@ -3573,25 +3576,25 @@ class aeSecureScan
                      <div class="checkbox">
                        <label title="<?php echo sprintf($aeLanguage->get('IGNORE_EXTENSIONS'), ExtArchives); ?>"><input type="checkbox" id="chkIgnoreArchives" name="chkIgnoreArchives" <?php if (1 === $aeSession::get('IgnoreArchives', 1)) {
                             echo 'checked="checked" ';
-             } ?>><?php echo $aeLanguage->get('IGNORE_ARCHIVE') . '<br/><span class="ignoredext">' . ExtArchives . '</span>';?></input></label><br/>
+                        } ?>><?php echo $aeLanguage->get('IGNORE_ARCHIVE') . '<br/><span class="ignoredext">' . ExtArchives . '</span>';?></input></label><br/>
                        <label title="<?php echo sprintf($aeLanguage->get('IGNORE_EXTENSIONS'), ExtDocuments); ?>"><input type="checkbox" id="chkIgnoreDocuments" name="chkIgnoreDocuments" <?php if (1 === $aeSession::get('IgnoreDocuments', 1)) {
                             echo 'checked="checked" ';
-             } ?>><?php echo $aeLanguage->get('IGNORE_DOCUMENTS') . '<br/><span class="ignoredext">' . ExtDocuments . '</span>';?></input></label><br/>
+                        } ?>><?php echo $aeLanguage->get('IGNORE_DOCUMENTS') . '<br/><span class="ignoredext">' . ExtDocuments . '</span>';?></input></label><br/>
                        <label title="<?php echo sprintf($aeLanguage->get('IGNORE_EXTENSIONS'), ExtFonts); ?>"><input type="checkbox" id="chkIgnoreFonts" name="chkIgnoreFonts" <?php if (1 === $aeSession::get('IgnoreFonts', 1)) {
                             echo 'checked="checked" ';
-             } ?>><?php echo $aeLanguage->get('IGNORE_FONT') . '<br/><span class="ignoredext">' . ExtFonts . '</span>';?></input></label><br/>
+                        } ?>><?php echo $aeLanguage->get('IGNORE_FONT') . '<br/><span class="ignoredext">' . ExtFonts . '</span>';?></input></label><br/>
                        <label title="<?php echo sprintf($aeLanguage->get('IGNORE_EXTENSIONS'), ExtImages); ?>"><input type="checkbox" id="chkIgnoreImages" name="chkIgnoreImages" <?php if (1 === $aeSession::get('IgnoreImages', 1)) {
                             echo 'checked="checked" ';
-             } ?>><?php echo $aeLanguage->get('IGNORE_IMAGES') . '<br/><span class="ignoredext">' . ExtImages . '</span>';?></input></label><br/>
+                        } ?>><?php echo $aeLanguage->get('IGNORE_IMAGES') . '<br/><span class="ignoredext">' . ExtImages . '</span>';?></input></label><br/>
                        <label title="<?php echo sprintf($aeLanguage->get('IGNORE_EXTENSIONS'), ExtMedia); ?>"><input type="checkbox" id="chkIgnoreMedia" name="chkIgnoreMedia" <?php if (1 === $aeSession::get('IgnoreMedia', 1)) {
                             echo 'checked="checked" ';
-             } ?>><?php echo $aeLanguage->get('IGNORE_MEDIA') . '<br/><span class="ignoredext">' . ExtMedia . '</span>';?>)</input></label><br/>
+                        } ?>><?php echo $aeLanguage->get('IGNORE_MEDIA') . '<br/><span class="ignoredext">' . ExtMedia . '</span>';?>)</input></label><br/>
                        <label title="<?php echo sprintf($aeLanguage->get('IGNORE_EXTENSIONS'), ExtSoundMovies); ?>"><input type="checkbox" id="chkIgnoreSoundMovies" name="chkIgnoreSoundMovies" <?php if (1 === $aeSession::get('IgnoreSoundMovies', 1)) {
                             echo 'checked="checked" ';
-             } ?>><?php echo $aeLanguage->get('IGNORE_MOVIES') . '<br/><span class="ignoredext">' . ExtSoundMovies . '</span>';?></input></label><br/>
+                        } ?>><?php echo $aeLanguage->get('IGNORE_MOVIES') . '<br/><span class="ignoredext">' . ExtSoundMovies . '</span>';?></input></label><br/>
                        <label title="<?php echo sprintf($aeLanguage->get('IGNORE_EXTENSIONS'), ExtText); ?>"><input type="checkbox" id="chkIgnoreText" name="chkIgnoreText" <?php if (1 === $aeSession::get('IgnoreText', 1)) {
                             echo 'checked="checked" ';
-             } ?>><?php echo $aeLanguage->get('IGNORE_TEXTES') . '<br/><span class="ignoredext">' . ExtText . '</span>';?></input></label>
+                        } ?>><?php echo $aeLanguage->get('IGNORE_TEXTES') . '<br/><span class="ignoredext">' . ExtText . '</span>';?></input></label>
                      </div>
                   </div>
                   <button type="button" id="btnSubmit" class="btn btn-primary"><?php echo $aeLanguage->get('APPLY');?></button>
@@ -4117,7 +4120,7 @@ class aeSecureScan
             }); // $("[id^=startscan]").click()
 
             <?php if (true === $aeSession::get('Expert', EXPERT)) {
-                ?>
+            ?>
 
                $('.killfile').mouseover(function(e) { $(this).html($(this).attr("data-caption")); });
                $('.killfile').mouseleave(function(e) { $(this).html($(this).attr("data-old-caption")); });
@@ -4151,7 +4154,7 @@ class aeSecureScan
                }); // $('.killfile').click()
 
                 <?php
-      }?>
+        }?>
 
          } // function initButtons()
 
