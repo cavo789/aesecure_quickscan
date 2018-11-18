@@ -15,10 +15,10 @@
  * This script will make a quick and *superficial*, not deeply, scan and will detect the presence of
  * a few patterns in files present on your website. If such files are found, they will be reported.
  *
- * This script is a quick scan tool : only a very few patterns will be scanned and if you find
- * viruses with it, consider to make a full an deeply scan to search for other malware scripts.
+ * This script is a quick scan tool: only a very few patterns will be scanned and if you find
+ * viruses with it, consider making a full and deeply scan to search for other malware scripts.
  *
- * If no files are reported by the script, here too, it's possible that other type of viruses are
+ * If no files are reported by the script, here too, it's possible that other type of virus are
  * present.
  *
  * If you wish a full scan, contact me by surfing on https://www.aesecure.com and take a look on my
@@ -28,8 +28,14 @@
  *      ### I can scan your site with my professional scanner and clean it for you, just contact me ###
  *      ###############################################################################################
  *
- * Changelog :
+ * Changelog:
  *
+ * version 1.2
+ *    + Rewrite for downloading all settings and signatures files from GitHub
+ *    + Add a lot more signatures in these lists: blacklist, whitelist, other and edited json
+ *    + Add more patterns for viruses detection
+ *    + Reformat the code of the scanner
+ * 
  * version 1.1.12
  *    + Add support for Grr, mediawiki, piwik and pmb
  *    + Solve an issue with session_start() for some hosts
@@ -69,7 +75,7 @@
  *         SilverStripe and x3cms
  *
  * version 1.1.1
- *    + Monitored folders for Joomla : files present in a native Joomla's folder (part of the CMS) will
+ *    + Monitored folders for Joomla: files present in a native Joomla's folder (part of the CMS) will
  *      be analysed
  *          - If not part of the distribution (intrusion)
  *          - If part of the distribution but with an another hash (hacked file or, at least, altered one)
@@ -81,9 +87,7 @@
  *        + Allow to activate debug and expert mode (without any changes in the code)
  *        + Allow to specify how many files to process by cycle (without any changes in the code)
  *        + Allow to specify with type of files to ignore (archives, images, medias, ...)
- */
-
-/**
+ *
  * Avoid __DIR__.
  *
  *      __DIR__ is the folder where the running script is started so, perhaps, things like
@@ -95,17 +99,17 @@
  *
  *      So, don't use __DIR__ but c:/sites/hacked/
  */
-define('REPO', 'https://raw.githubusercontent.com/cavo789/aesecure_quickscan/master/');
+define('REPO', 'https://github.com/cavo789/aesecure_quickscan');
 
 define('DIR', str_replace('/', DIRECTORY_SEPARATOR, dirname($_SERVER['SCRIPT_FILENAME'])));
 define('FILE', str_replace('/', DIRECTORY_SEPARATOR, basename($_SERVER['SCRIPT_FILENAME'])));
 
-define('DEBUG', false);              // Enable debugging (Note : there is no progress bar in debug mode)
+define('DEBUG', false);              // Enable debugging (Note: there is no progress bar in debug mode)
 define('FULLDEBUG', false);          // Output a lot of information
-define('VERSION', '1.1.12');         // Version number of this script
+define('VERSION', '1.2');            // Version number of this script
 define('EXPERT', false);             // Display Kill file button and allow to specify a folder
-define('MAX_SIZE', 1 * 1024 * 1024); // One megabyte : skip files when filesize is greater than this max size.
-define('MAXFILESBYCYCLE', 500);      // Number of files to process by cycle, recude this figure if you receive HTTP error 504 - Gateway timeout
+define('MAX_SIZE', 1 * 1024 * 1024); // One megabyte: skip files when filesize is greater than this max size.
+define('MAXFILESBYCYCLE', 500);      // Number of files to process by cycle, reduce this figure if you receive HTTP error 504 - Gateway timeout
 define('CONTEXT_NBRCHARS', 100);     // When a suspicious pattern is found, the portion of code where this pattern is found will be displayed.  The portion is xxx characters before the pattern; the pattern and the same number of characters after it.
 define('SHOWMD5', false);            // Allow to generate a hash file
 define('PROGRESSBARFREQUENCY', 3);   // Frequency of updates for the progress bar. In seconds.
@@ -118,7 +122,8 @@ define('DOWNLOAD_URL', 'https://raw.githubusercontent.com/cavo789/aesecure_quick
 
 define('DS', DIRECTORY_SEPARATOR);
 
-// List of extensions, by "category".  Add an extension if you want to skip that files when skipping the category
+// List of extensions, by "category". Add an extension if you want to skip that files when 
+// skipping the category
 define('ExtArchives', '7z, bak, gz, gzip, jpa, tar, zip');
 define('ExtDocuments', 'doc, docx, pdf, ppt, pptx, xls, xlsx');
 define('ExtFonts', 'eot, otf, ttf, ttf2, woff, woff2');
@@ -135,7 +140,8 @@ set_error_handler(function ($code, $string, $file, $line) {
 });
 
 register_shutdown_function(function () {
-    $memory = 'ini_get memory_limit=' . ini_get('memory_limit') . ' | ' . 'memory used=' . aeSecureFct::getMemoryUsed();
+    $memory = 'ini_get memory_limit=' . ini_get('memory_limit') . ' | ' . 
+        'memory used=' . aeSecureFct::getMemoryUsed();
 
     $error = error_get_last();
 });
@@ -200,7 +206,8 @@ class aeSecureDebug
 
 class Download
 {
-    const CURL_TIMEOUT = 2; // Timeout delay in seconds
+    // Timeout delay in seconds
+    const CURL_TIMEOUT = 2; 
     const ERROR_CURL   = 1001;
 
     private static $sAppName       = '';
@@ -288,13 +295,15 @@ class Download
                     } else {
                         // Download
 
-                        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36 FirePHP/4Chrome');
+                        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.1; WOW64) '.
+                            'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 '.
+                            'Safari/537.36 FirePHP/4Chrome');
                         curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
                         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, self::CURL_TIMEOUT);
 
                         // Output curl debugging messages into a text file
                         if (static::$bDebug) {
-                            // output debuging info in a txt file
+                            // output debugging info in a txt file
                             curl_setopt($ch, CURLOPT_VERBOSE, true);
                             $fdebug = fopen(static::$sDebugFileName, 'w');
                             curl_setopt($ch, CURLOPT_STDERR, $fdebug);
@@ -321,17 +330,16 @@ class Download
                         }
 
                         @chmod(static::$sFileName, 0644);
-                    } // if (!curl_setopt($ch, CURLOPT_URL, static::$sSourceURL))
-                } // if ($ch)
-            } // if ($wError===0)
-        } // if (self::iscURLEnabled())
+                    }
+                }
+            }
+        }
 
         self::removeIfNull();
 
         if (!file_exists(static::$sFileName)) {
             // Unsuccessful, try with fopen()
             // Use a context to be able to define a timeout
-
             $context = stream_context_create(
                 ['http' => ['timeout' => self::CURL_TIMEOUT]]
             );
@@ -347,7 +355,7 @@ class Download
             if (file_exists(static::$sFileName)) {
                 $wError = 0;
             }
-        } // if (!file_exists(static::$sFileName))
+        }
 
         return $wError;
     }
@@ -365,7 +373,7 @@ class Download
             'FTP client and send the downloaded file to your ' .
             'website folder.</p>' .
             '<p>Once this is done, just refresh this page.</p>' .
-            '<p><em>Note : the filename should be ' . static::$sFileName . '</em></p>';
+            '<p><em>Note: the filename should be ' . static::$sFileName . '</em></p>';
 
         return $sReturn;
     }
@@ -375,7 +383,8 @@ class Download
      */
     private function iscURLEnabled(): bool
     {
-        return  (!function_exists('curl_init') && !function_exists('curl_setopt') && !function_exists('curl_exec') && !function_exists('curl_close')) ? false : true;
+        return  (!function_exists('curl_init') && !function_exists('curl_setopt') && 
+            !function_exists('curl_exec') && !function_exists('curl_close')) ? false : true;
     }
 
     /**
@@ -443,7 +452,7 @@ class aeSecureLanguage
     // Filename pattern for languages files
     const LANG_FILE = 'aesecure_quickscan_lang_%s.json';
 
-    // Hardcoded list of supported languages
+    // Hard-coded list of supported languages
     // @See https://github.com/cavo789/aesecure_quickscan for xxx_lang_xxxx.json files
     const SUPPORTED_LANGUAGES = 'en;en-GB;fr;fr-FR;nl;nl-BE';
 
@@ -467,7 +476,8 @@ class aeSecureLanguage
         // Initialize the list of supported languages
         $this->supportedLanguages = explode(';', self::SUPPORTED_LANGUAGES);
 
-        // Get the list of languages supported by the Browser and by aeSecure (presence of the language's file)
+        // Get the list of languages supported by the Browser and by aeSecure 
+        // (presence of the language's file)
         self::getBrowserLanguage();
 
         if (in_array($lang, $this->supportedLanguages)) {
@@ -479,7 +489,8 @@ class aeSecureLanguage
             // For instance en-GB
             $result = substr($lang, 0, 2);
         } else {
-            // No, not found.  Use the languages supported by the browser and check if aeSecure support that language
+            // No, not found. Use the languages supported by the browser and check if aeSecure 
+            // support that language
             $result = '';
 
             // Search for a perfect match so if the language is en_US, try to find en_US.json
@@ -493,12 +504,13 @@ class aeSecureLanguage
                 }
             }
 
-            // If $result is still empty, no perfect match so search on the language and not language and country
-            // So, if the language is en-US and if a file en-GB is found, get it.
+            // If $result is still empty, no perfect match so search on the language and not
+            // language and country. So, if the language is en-US and if a file en-GB is found, get it.
             if ('' == $result) {
                 $result = 'en-GB';
                 foreach ($this->browserLanguages as $lang => $value) {
-                    // Check if there is a language file (f.i. if $lang is "fr" (and not "fr_FR"), the glob function will return
+                    // Check if there is a language file (f.i. if $lang is "fr" 
+                    // (and not "fr_FR"), the glob function will return
                     // the list of files like fr*.json
                     if (in_array(substr($lang, 0, 2), $this->supportedLanguages)) {
                         $result = substr($lang, 0, 2);
@@ -508,7 +520,7 @@ class aeSecureLanguage
                 }
             }
 
-            // Still not ? Use en-GB by default
+            // Still not? Use en-GB by default
             if ('' == $result) {
                 $result = self::DEFAULT_LANGUAGE;
             }
@@ -576,7 +588,7 @@ class aeSecureLanguage
             }
         }
 
-        // Still not ?  Use the first language file that is present
+        // Still not? Use the first language file that is present
         if ((!$this->_bLoaded) && (count($this->supportedLanguages) > 0)) {
             foreach ($this->supportedLanguages as $key => $value) {
                 $this->_filename = DIR . DS . sprintf(self::LANG_FILE, $value);
@@ -609,7 +621,8 @@ class aeSecureLanguage
     }
 
     /**
-     * Translation functionality, search the CODE in the json file and returns its value (the translated text).
+     * Translation functionality, search the CODE in the json file and returns its 
+     * value (the translated text).
      *
      * @param mixed $code
      *
@@ -620,8 +633,6 @@ class aeSecureLanguage
         $sText = '';
         if (isset($this->_arrLanguage[$code])) {
             $sText = $this->_arrLanguage[$code];
-        } else {
-            //$sText = $code;
         }
 
         return $sText;
@@ -633,8 +644,8 @@ class aeSecureLanguage
     }
 
     /**
-     * Read the HTTP_ACCEPT_LANGUAGE browser info to determine the best language to use for aeSecure based
-     * on the browser's preferences.
+     * Read the HTTP_ACCEPT_LANGUAGE browser info to determine the best language 
+     * to use for aeSecure based on the browser's preferences.
      *
      * @return string Returns f.i. en-GB, fr-FR, nl-NL, ...
      */
@@ -649,14 +660,16 @@ class aeSecureLanguage
         $this->browserLanguages     = [];
         $result                     = '';
 
-        // $this->browserLanguages is an array, sorted by priority order, of the supported languages; for instance :
+        // $this->browserLanguages is an array, sorted by priority order, of the 
+        // supported languages; for instance:
         // array
         //   'fr' => float 1
         //   'en_US' => float 0.8
         //   'en' => float 0.6
 
         foreach (preg_split('/,\s*/', $httplanguages) as $accept) {
-            $result = preg_match('/^([a-z]{1,8}(?:[-_][a-z]{1,8})*)(?:;\s*q=(0(?:\.[0-9]{1,3})?|1(?:\.0{1,3})?))?$/i', $accept, $match);
+            $result = preg_match('/^([a-z]{1,8}(?:[-_][a-z]{1,8})*)(?:;\s*'.
+                'q=(0(?:\.[0-9]{1,3})?|1(?:\.0{1,3})?))?$/i', $accept, $match);
 
             if (!$result) {
                 continue;
@@ -683,8 +696,9 @@ class aeSecureLanguage
     }
 
     /**
-     * $language can be initialized or not.  If not, the script will detect supported languages as defined
-     * in the user's browser.  If initialized, should be something like 'en-GB', 'fr-FR', ...
+     * $language can be initialized or not.  If not, the script will detect supported 
+     * languages as defined in the user's browser. If initialized, should be something
+     * like 'en-GB', 'fr-FR', ...
      *
      * @param string     $language
      * @param null|mixed $lang
@@ -715,8 +729,10 @@ class aeSecureFct
      */
     public static function sanitize($string)
     {
-        $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
-        return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+        // Replaces all spaces with hyphens.
+        $string = str_replace(' ', '-', $string);
+        // Removes special chars.
+        return preg_replace('/[^A-Za-z0-9\-]/', '', $string);
     }
 
     /**
@@ -732,14 +748,16 @@ class aeSecureFct
     {
         $return = '';
 
-        // Perhaps the script (aesecure_quickscan.php) is a symbolic link so __DIR__ is the folder where the
-        // real file can be found and SCRIPT_FILENAME his link, the line below should therefore not be used anymore
-        //if (is_file(dirname(__DIR__).DS.str_replace('/',DS,$localfile))) {
+        // Perhaps the script (aesecure_quickscan.php) is a symbolic link so __DIR__ 
+        // is the folder where the real file can be found and SCRIPT_FILENAME his link,
+        // the line below should therefore not be used anymore
         if (is_file(str_replace('/', DS, dirname($_SERVER['SCRIPT_FILENAME'])) . DS . $localfile)) {
-            $return = '<script ' . (true == $defer ? 'defer="defer" ' : '') . 'type="text/javascript" src="../' . $localfile . '"></script>';
+            $return = '<script ' . (true == $defer ? 'defer="defer" ' : '') . 
+                'type="text/javascript" src="../' . $localfile . '"></script>';
         } else {
             if ('' != $weblocation) {
-                $return = '<script ' . (true == $defer ? 'defer="defer" ' : '') . 'type="text/javascript" src="' . $weblocation . '"></script>';
+                $return = '<script ' . (true == $defer ? 'defer="defer" ' : '') . 
+                    'type="text/javascript" src="' . $weblocation . '"></script>';
             }
         }
 
@@ -758,9 +776,9 @@ class aeSecureFct
     {
         $return = '';
 
-        // Perhaps the script (aesecure_quickscan.php) is a symbolic link so __DIR__ is the folder where the
-        // real file can be found and SCRIPT_FILENAME his link, the line below should therefore not be used anymore
-        //if (is_file(dirname(__DIR__).DS.str_replace('/',DS,$localfile))) {
+        // Perhaps the script (aesecure_quickscan.php) is a symbolic link so __DIR__ is the
+        // folder where the real file can be found and SCRIPT_FILENAME his link, the line 
+        // below should therefore not be used anymore        
         if (is_file(str_replace('/', DS, dirname($_SERVER['SCRIPT_FILENAME'])) . DS . $localfile)) {
             $return = '<link href="../' . $localfile . '" rel="stylesheet" />';
         } else {
@@ -823,14 +841,16 @@ class aeSecureFct
      */
     public static function isAjaxRequest()
     {
-        $bAjax = (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ('XMLHttpRequest' == $_SERVER['HTTP_X_REQUESTED_WITH']));
+        $bAjax = (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 
+            ('XMLHttpRequest' == $_SERVER['HTTP_X_REQUESTED_WITH']));
 
         return $bAjax;
     }
 
     /**
-     * Return the memory usage when this function is called.  By calling this function at different place in the code,
-     * it's then possible to determine which part is eating a lot of memory.
+     * Return the memory usage when this function is called.  By calling this function
+     * at different place in the code, it's then possible to determine which part is 
+     * eating a lot of memory.
      *
      * @return type
      */
@@ -838,7 +858,9 @@ class aeSecureFct
     {
         $mem_usage = memory_get_peak_usage(true);
 
-        return ($mem_usage < 1048576) ? round($mem_usage / 1024, 2) . ' kb' : round($mem_usage / 1048576, 2) . ' mb';
+        return ($mem_usage < 1048576) 
+            ? round($mem_usage / 1024, 2) . ' kb' 
+            : round($mem_usage / 1048576, 2) . ' mb';
     }
 
     /**
@@ -871,7 +893,7 @@ class aeSecureFct
             } elseif ('unsafe' == $type) {
                 $return = $_POST[$name];
             }
-        } else { // if (isset($_POST[$name]))
+        } else {
             $aeSession = aeSecureSession::getInstance();
 
             // Get from the $_GET only in debug mode or for very few parameters like "lang" (to allow to switch between
@@ -891,8 +913,8 @@ class aeSecureFct
                         $return = $_GET[$name];
                     }
                 }
-            } // if(DEBUG==1)
-        } // if (isset($_POST[$name]))
+            }
+        }
 
         if ('boolean' == $type) {
             $return = (in_array($return, ['on', '1']) ? true : false);
@@ -903,7 +925,7 @@ class aeSecureFct
 }
 
 /**
- * Logging functionnality.
+ * Logging functionality.
  */
 class aeSecureLog
 {
@@ -1014,6 +1036,7 @@ class aeSecureFiles
         }
 
         $return = 0;
+
         if ((is_file($filename)) && is_writable($filename)) {
             try {
                 if (true === $this->aeSession->get('Debug', DEBUG)) {
@@ -1032,16 +1055,19 @@ class aeSecureFiles
         } else {
             $return = -50;
         }
+
         echo $return;
     }
 
     /**
      * Remove recursively folders
-     * (f.i. rrmdir(__DIR__/hashes/cms/joomla/2.5.27) will kill the full tree below the specified folder).
+     * (f.i. rrmdir(__DIR__/hashes/cms/joomla/2.5.27) will kill the full tree below 
+     * the specified folder).
      *
      * @param type $folder
      * @param type $killroot       If true, the folder himself will be removed.
-     *                             rrmdir(__DIR__/hashes/cms/joomla/2.5.27, true) ==> remove folder 2.5.27 too and not only his children
+     *                             rrmdir(__DIR__/hashes/cms/joomla/2.5.27, true) ==> 
+     *                              remove folder 2.5.27 too and not only his children
      * @param type $arrIgnoreFiles
      *
      * @return bool
@@ -1060,6 +1086,7 @@ class aeSecureFiles
                     return false;
                 }
             }
+
             foreach (scandir($folder) as $file) {
                 if ('.' == $file || '..' == $file || in_array($file, $arrIgnoreFiles)) {
                     continue;
@@ -1103,10 +1130,13 @@ class aeSecureFiles
         $mime_type = null;
 
         if (is_file($filename)) {
+
             $finfo = null;
+
             if (class_exists('info')) {
+                // return mime type
                 $finfo = new finfo(FILEINFO_MIME);
-            } // return mime type
+            }
 
             if ($finfo) {
                 $file_info = $finfo->file($filename);
@@ -1136,21 +1166,21 @@ class aeSecureFiles
         $mimeType   = aeSecureFiles::getFileMimeType($filename);
         $isTextType = false;
 
-        // Try to determine if it's a text file; in that case the MIME type is something like text/plain or
-        // text/richtext i.e. starting with the "text/" prefix
-
+        // Try to determine if it's a text file; in that case the MIME type is 
+        // something like text/plain or text/richtext i.e. starting with the "text/" prefix
         $isTextType = ('text/' == substr($mimeType, 0, 5));
 
         // A few mimetype are also text like application/javascript
         if (!$isTextType) {
             $isTextType = in_array($mimeType, ['application/xml']);
 
-            // Still not ?   Try to use the file's extension to determine this
+            // Still not? Try to use the file's extension to determine this
             if (!$isTextType) {
                 $ext        = pathinfo($filename, PATHINFO_EXTENSION);
-                $isTextType = in_array($ext, ['css', 'csv', 'eot', 'html', 'htm', 'ini', 'js', 'json', 'php', 'sh', 'svg', 'txt', 'xml']);
+                $isTextType = in_array($ext, ['css', 'csv', 'eot', 'html', 'htm', 'ini', 
+                    'js', 'json', 'php', 'sh', 'svg', 'txt', 'xml']);
             }
-        } // if(!$isTextType) {
+        }
 
         return $isTextType;
     }
@@ -1176,7 +1206,8 @@ class aeSecureSession
             try {
                 session_start();
             } catch (Exception $e) {
-                // 1.1.9 - On some hoster the path where to store session is incorrectly set and this gives a fatal error
+                // 1.1.9 - On some hoster the path where to store session is incorrectly
+                // set and this gives a fatal error
                 // Handle this and use the /tmp folder in this case.
                 @session_destroy();
                 session_save_path(sys_get_temp_dir());
@@ -1185,7 +1216,7 @@ class aeSecureSession
                     session_start();
                 } catch (Exception $e) {
                     // 1.1.12
-                    // Still not ?  Use the current dir
+                    // Still not? Use the current dir
                     @session_destroy();
                     session_save_path(DIR);
                     session_start();
@@ -1216,7 +1247,9 @@ class aeSecureSession
 
     public static function get($name, $defaultvalue)
     {
-        return isset($_SESSION[static::$prefix . $name]) ? $_SESSION[static::$prefix . $name] : $defaultvalue;
+        return isset($_SESSION[static::$prefix . $name]) 
+            ? $_SESSION[static::$prefix . $name] 
+            : $defaultvalue;
     }
 }
 
@@ -1259,14 +1292,16 @@ class aeSecureCMS
 
         foreach ($arrCMS as $key => $value) {
             if (method_exists('aeSecureCMS', 'is' . $key)) {
-                $method                                                              = 'self::is' . $key;
+
+                $method = 'self::is' . $key;
+
                 list($return, $CMS, $Filename, $FullVersion, $MainVersion, $Version) = call_user_func($method, $root);
 
                 if (true === $return) {
                     break;
                 }
-            } // if (method_exists())
-        } // foreach ($arrCMS as $key=>$value)
+            }
+        }
 
         return [$CMS, $FullVersion, $MainVersion, $Version, $root];
     }
@@ -1375,7 +1410,6 @@ class aeSecureCMS
      */
     private static function isDrupal($root)
     {
-        //$filename=rtrim($root,DS).DS.'modules'.DS.'bootstrap.inc';
         $filename = rtrim($root, DS) . DS . 'modules' . DS . 'system' . DS . 'system.module';
 
         if (file_exists($filename)) {
@@ -1496,7 +1530,9 @@ class aeSecureCMS
         if (file_exists($filename)) {
             $content = file_get_contents($filename);
 
-            preg_match('/\\$version_grr[[:blank:]]=[[:blank:]]"(.*)"/', $content, $arrMatches, PREG_OFFSET_CAPTURE);
+            $pattern = '/\\$version_grr[[:blank:]]=[[:blank:]]"(.*)"/';
+
+            preg_match($pattern, $content, $arrMatches, PREG_OFFSET_CAPTURE);
 
             $FullVersion = (count($arrMatches) > 0) ? $arrMatches[1][0] : '';
 
@@ -1553,7 +1589,8 @@ class aeSecureCMS
             $arr = ['RELEASE' => 0, 'DEV_LEVEL' => 0, 'DEV_STATUS' => 0, 'RELDATE' => 0, 'RELTIME' => 0, 'RELTZ' => 0];
 
             foreach ($arr as $key => $value) {
-                // Use [[:blank:]] and not just a space character because sometimes the version.php file contains something other than a space
+                // Use [[:blank:]] and not just a space character because sometimes the 
+                // version.php file contains something other than a space
                 // this is the case for J1.5.26
                 // Note : since J3.5, variables are now constants and without the preceding dollar sign so
                 //     before J3.5, it was $RELEASE f.i., since 3.5, it's just RELEASE
@@ -1562,7 +1599,7 @@ class aeSecureCMS
                 if (count($arrMatches) > 0) {
                     $arr[$key] = $arrMatches[1][0];
                 }
-            } // foreach
+            }
 
             $MainVersion = $arr['RELEASE'];
             $Version     = $arr['RELEASE'] . '.' . $arr['DEV_LEVEL'];
@@ -1594,7 +1631,7 @@ class aeSecureCMS
                 if (count($arrMatches) > 0) {
                     $arr[$key] = $arrMatches[1][0];
                 }
-            } // foreach
+            }
 
             $FullVersion = $arr['major'] . '.' . $arr['minor'] . '.' . $arr['revision'] . '.' . $arr['patch'];
 
@@ -1618,7 +1655,10 @@ class aeSecureCMS
         if (file_exists($filename)) {
             $content = file_get_contents($filename);
 
-            preg_match('/.*\$wgVersion \= \'(\\d+\\.\\d+\\.\\d+)\'/', $content, $arrMatches, PREG_OFFSET_CAPTURE);
+            $pattern = '/.*\$wgVersion \= \'(\\d+\\.\\d+\\.\\d+)\'/';
+
+            preg_match($pattern, $content, $arrMatches, PREG_OFFSET_CAPTURE);
+
             $FullVersion = (count($arrMatches) > 0) ? $arrMatches[1][0] : '';
 
             return [true, 'MediaWiki', $filename, $FullVersion, $FullVersion, $FullVersion, $root];
@@ -1641,7 +1681,10 @@ class aeSecureCMS
         if (file_exists($filename)) {
             $content = file_get_contents($filename);
 
-            preg_match('/.*phpbb_version \= (\\d+\\.\\d+\\.\\d+)/', $content, $arrMatches, PREG_OFFSET_CAPTURE);
+            $pattern = '/.*phpbb_version \= (\\d+\\.\\d+\\.\\d+)/';
+
+            preg_match($pattern, $content, $arrMatches, PREG_OFFSET_CAPTURE);
+
             $FullVersion = (count($arrMatches) > 0) ? $arrMatches[1][0] : '';
 
             return [true, 'phpBB', $filename, $FullVersion, $FullVersion, $FullVersion];
@@ -1691,7 +1734,10 @@ class aeSecureCMS
         if (file_exists($filename)) {
             $content = file_get_contents($filename);
 
-            preg_match('/.*PMA_VERSION\', *\'(\\d+\\.\\d+\\.\\d+)\'/', $content, $arrMatches, PREG_OFFSET_CAPTURE);
+            $pattern = '/.*PMA_VERSION\', *\'(\\d+\\.\\d+\\.\\d+)\'/';
+
+            preg_match($pattern, $content, $arrMatches, PREG_OFFSET_CAPTURE);
+
             $FullVersion = (count($arrMatches) > 0) ? $arrMatches[1][0] : '';
 
             return [true, 'phpmyadmin', $filename, $FullVersion, $FullVersion, $FullVersion, $root];
@@ -1714,7 +1760,10 @@ class aeSecureCMS
         if (file_exists($filename)) {
             $content = file_get_contents($filename);
 
-            preg_match('/\\$pmb_version_brut[[:blank:]]=[[:blank:]]"(\\d+\\.\\d+\\.\\d+(.*))"/', $content, $arrMatches, PREG_OFFSET_CAPTURE);
+            $pattern = '/\\$pmb_version_brut[[:blank:]]=[[:blank:]]"(\\d+\\.\\d+\\.\\d+(.*))"/';
+
+            preg_match($pattern, $content, $arrMatches, PREG_OFFSET_CAPTURE);
+
             $FullVersion = (count($arrMatches) > 0) ? $arrMatches[1][0] : '';
 
             return [true, 'PMB', $filename, $FullVersion, $FullVersion, $FullVersion, $root];
@@ -1737,7 +1786,10 @@ class aeSecureCMS
         if (file_exists($filename)) {
             $content = file_get_contents($filename);
 
-            preg_match('/.*_PS_VERSION_\', *\'(.*)\'/', $content, $arrMatches, PREG_OFFSET_CAPTURE);
+            $pattern = '/.*_PS_VERSION_\', *\'(.*)\'/';
+
+            preg_match($pattern, $content, $arrMatches, PREG_OFFSET_CAPTURE);
+
             $FullVersion = (count($arrMatches) > 0) ? $arrMatches[1][0] : '';
 
             return [true, 'Prestashop', $filename, $FullVersion, $FullVersion, $FullVersion];
@@ -1797,7 +1849,10 @@ class aeSecureCMS
 
             $configuration = file_get_contents($filename);
 
-            preg_match('/.*\\$wp_version *= *\'(.*)\'/', $configuration, $arrMatches, PREG_OFFSET_CAPTURE);
+            $pattern = '/.*\\$wp_version *= *\'(.*)\'/';
+
+            preg_match($pattern, $configuration, $arrMatches, PREG_OFFSET_CAPTURE);
+
             $FullVersion = (count($arrMatches) > 0) ? $arrMatches[1][0] : '';
 
             // Get the website root folder
@@ -1823,7 +1878,10 @@ class aeSecureCMS
         if (file_exists($filename)) {
             $content = file_get_contents($filename);
 
-            preg_match('/.*\'X4VERSION\', *\'(\\d+\\.\\d+\\.\\d+)\'/', $content, $arrMatches, PREG_OFFSET_CAPTURE);
+            $pattern = '/.*\'X4VERSION\', *\'(\\d+\\.\\d+\\.\\d+)\'/';
+
+            preg_match($pattern, $content, $arrMatches, PREG_OFFSET_CAPTURE);
+
             $FullVersion = (count($arrMatches) > 0) ? $arrMatches[1][0] : '';
 
             return [true, 'x3cms', $filename, $FullVersion, $FullVersion, $FullVersion];
@@ -1844,9 +1902,9 @@ class aeSecureProgressBar
     private $_ID         = null;
     private $_CSS        = 'progress-bar';
     private $_frequency  = 1000; // refresh the progress bar each xx seconds  (1000=one second)
-    private $_start      = 0;              // f.i. 0   (current step in the progress bar)
-    private $_end        = 0;                // f.i. 100 (number of steps)
-    private $_pct        = 0;                // calculated progression in percentage
+    private $_start      = 0;    // f.i. 0   (current step in the progress bar)
+    private $_end        = 0;    // f.i. 100 (number of steps)
+    private $_pct        = 0;    // calculated progression in percentage
 
     protected static $instance = null;
 
@@ -1858,7 +1916,8 @@ class aeSecureProgressBar
         $this->_start     = 0;
         $this->_end       = 100;
         $this->_pct       = 0;
-        $this->_frequency = PROGRESSBARFREQUENCY * 1000;  // Refresh frequency
+        // Refresh frequency
+        $this->_frequency = PROGRESSBARFREQUENCY * 1000;
 
         $this->aeSession = aeSecureSession::getInstance();
 
@@ -1906,8 +1965,8 @@ class aeSecureProgressBar
     }
 
     /**
-     * Increment the position of the progress bar percentage (write the percentage in the temporary file that will be
-     * used by the ajax Progress bar).
+     * Increment the position of the progress bar percentage (write the percentage 
+     * in the temporary file that will be used by the ajax Progress bar).
      *
      * @return bool
      */
@@ -1922,15 +1981,16 @@ class aeSecureProgressBar
         if (($this->_start / $this->getEnd()) > $this->_pct) {
             $this->_pct = $this->_start / $this->getEnd();
 
-            // **************************************************************************************
-            // **************************************************************************************
-            // **************************************************************************************
+            // *******************************************************************
+            // *******************************************************************
+            // *******************************************************************
             //
-            // The session should be closed otherwise Ajax request won't be called asynchronously and the progress bar won't be incremented
+            // The session should be closed otherwise Ajax request won't be called 
+            // asynchronously and the progress bar won't be incremented
             // http://stackoverflow.com/questions/3506574
             session_write_close();
             //
-            // **************************************************************************************
+            // *******************************************************************
 
             if ($handle = fopen($this->_filename, 'w+')) {
                 fwrite($handle, (int)($this->_pct * 100));
@@ -1966,7 +2026,6 @@ class aeSecureProgressBar
         }
 
         die();
-        exit();
     }
 
     /**
@@ -1980,16 +2039,19 @@ class aeSecureProgressBar
             return false;
         }
 
-        echo '
-      <div id="' . $this->_ID . '" class="progress" style="display:none;">
-            <div class="progress progress-striped active">
-               <div class="' . $this->_CSS . '" aria-valuenow="1" aria-valuemin="1" aria-valuemax="100"></div>
-            </div>
-         </div>   ';
+        echo 
+            '<div id="' . $this->_ID . '" class="progress" style="display:none;">' .
+                '<div class="progress progress-striped active">' .
+                    '<div class="' . $this->_CSS . '" aria-valuenow="1" aria-valuemin="1" ' .
+                        'aria-valuemax="100">' .
+                    '</div>' .
+                '</div>' .
+            '</div>';
     }
 
     /**
-     * Generate the JS code for the progress bar (initialization and show evolution during the scanning).
+     * Generate the JS code for the progress bar (initialization and show evolution 
+     * during the scanning).
      *
      * @param mixed $what
      */
@@ -2033,38 +2095,38 @@ class aeSecureProgressBar
                // The long process is running, update the progress bar
 
                 echo
-                  'function getProgress() {
-                  $.ajax({
-                     url:"' . FILE . '",
-                     data:"task=progress",
-                     type:"' . ((true === $this->aeSession->get('Debug', DEBUG)) ? 'GET' : 'POST') . '",
-                     async:true,
-                     timeout: 600000,  // Scanning a site can be very long
-                     cache:false,
-                     dataType:"json",
-                     success: function(json) {
-                        percentage=parseInt(json.pct);
-                        if (percentage>=100) {
-                           $(".' . $this->_CSS . '").attr("aria-valuenow", 100);
-                           $(".' . $this->_CSS . '").css("width","100%");
-                           $(".' . $this->_CSS . '").html($(".' . $this->_CSS . '").attr("aria-valuenow") + "%");
-                           clearTimeout(progressFct);
-                           $("#' . $this->_ID . '").fadeOut(300);
-                        } else {
-                           if (percentage>previousPct) {
-                              if ($("#gettingFiles").length) $("#gettingFiles").hide();
-                              if (percentage>100) percentage=100;
-                              $(".' . $this->_CSS . '").attr("aria-valuenow", Math.round(percentage));
-                              $(".' . $this->_CSS . '").css("width", percentage + "%");
-                              $(".' . $this->_CSS . '").html($(".' . $this->_CSS . '").attr("aria-valuenow") + "%");
-                              $("#' . $this->_ID . '").show();
-                              previousPct=percentage;
-                           }
-                        }
-                     } // success
-                  });
-                  return;
-               } // function getProgress()';
+                    'function getProgress() {
+                        $.ajax({
+                            url:"' . FILE . '",
+                            data:"task=progress",
+                            type:"' . ((true === $this->aeSession->get('Debug', DEBUG)) ? 'GET' : 'POST') . '",
+                            async:true,
+                            timeout: 600000,  // Scanning a site can be very long
+                            cache:false,
+                            dataType:"json",
+                            success: function(json) {
+                                percentage=parseInt(json.pct);
+                                if (percentage>=100) {
+                                    $(".' . $this->_CSS . '").attr("aria-valuenow", 100);
+                                    $(".' . $this->_CSS . '").css("width","100%");
+                                    $(".' . $this->_CSS . '").html($(".' . $this->_CSS . '").attr("aria-valuenow") + "%");
+                                    clearTimeout(progressFct);
+                                    $("#' . $this->_ID . '").fadeOut(300);
+                                } else {
+                                    if (percentage>previousPct) {
+                                        if ($("#gettingFiles").length) $("#gettingFiles").hide();
+                                        if (percentage>100) percentage=100;
+                                        $(".' . $this->_CSS . '").attr("aria-valuenow", Math.round(percentage));
+                                        $(".' . $this->_CSS . '").css("width", percentage + "%");
+                                        $(".' . $this->_CSS . '").html($(".' . $this->_CSS . '").attr("aria-valuenow") + "%");
+                                        $("#' . $this->_ID . '").show();
+                                        previousPct=percentage;
+                                    }
+                                }
+                            } // success
+                        });
+                        return;
+                    } // function getProgress()';
 
                 break;
         }
@@ -2152,7 +2214,8 @@ class aeSecureScan
         $rootFolder = DIR;
         $this->aeSession->set('folder', '');
 
-        // By default, scan the current directory.  In Expert mode, allow to use a session to store the name of the folder
+        // By default, scan the current directory. 
+        // In Expert mode, allow to use a session to store the name of the folder
         // Get the folder to process
         if (true === $this->aeSession->get('Expert', EXPERT)) {
             $folder = base64_decode(aeSecureFct::getParam('folder', 'string', ''));
@@ -2173,7 +2236,8 @@ class aeSecureScan
 
         // When running the scan for f.i. only 1000 files and not all files present on the server,
         // the start parameter will f.i. be set to 0 while the end parameter will be set to 1000.
-        // This is just like a pagination so processing the 1000 next files will be : start=1000 and end=1000.
+        // This is just like a pagination so processing the 1000 next files will be :
+        // start=1000 and end=1000.
         $this->_start = aeSecureFct::getParam('start', 'integer', 0);
         $this->_end   = $this->_start + aeSecureFct::getParam('end', 'integer', 0);
 
@@ -2218,6 +2282,10 @@ class aeSecureScan
                 $return = $this->aeLanguage->get('HIGHPROBALITYFALSEGIF');
 
                 break;
+            case 'WARNINGBASE64ENCODEDPATTERN':
+                $return = $this->aeLanguage->get('WARNINGBASE64ENCODEDPATTERN');
+
+                break;
             case 'HIGHPROBALITYBADSITE':
                 $return = $this->aeLanguage->get('HIGHPROBALITYBADSITE');
 
@@ -2231,7 +2299,9 @@ class aeSecureScan
 
                 break;
             default:
-                $return = $disclaimer . ((true === $this->aeSession->get('Debug', DEBUG)) ? ' *please add translation*' : '');
+                $return = $disclaimer . ((true === $this->aeSession->get('Debug', DEBUG)) 
+                    ? ' *please add translation*' 
+                    : '');
         }
 
         return $return;
@@ -2294,7 +2364,6 @@ class aeSecureScan
         $this->_arrRegex = json_decode(file_get_contents($file), true);
 
         // Process the task if any, from POST or GET depending on the debug mode state
-
         // Get the folder to process
         $this->_directory = DIR;
         if ($this->aeSession->get('Expert', EXPERT)) {
@@ -2323,8 +2392,8 @@ class aeSecureScan
                         die(-1);
                     }
 
-                    // keepwhitelist is a variable posted by the Ajax request and will inform if the script should or not
-                    // remove the user's whitelist file.
+                    // keepwhitelist is a variable posted by the Ajax request and will 
+                    // inform if the script should or not remove the user's whitelist file.
                     $bKeepWhiteList = aeSecureFct::getParam('keepwhitelist', 'boolean', true);
 
                     if (true !== $this->aeSession->get('Debug', DEBUG)) {
@@ -2405,7 +2474,9 @@ class aeSecureScan
                 case 'seefile': {
                     if (DEMO) {
                         // Don't return source code in DEMO mode
-                        echo '<div class="alert alert-warning" role="alert"><strong>Demo mode</strong>&nbsp;This functionnality is not enabled during the demo mode; sorry.</div>';
+                        echo '<div class="alert alert-warning" role="alert">' . 
+                            '<strong>Demo mode</strong>&nbsp;This functionnality is not enabled '.
+                            'during the demo mode; sorry.</div>';
                         die();
                     }
 
@@ -2418,19 +2489,25 @@ class aeSecureScan
 
                         preg_match_all('/' . $regex['pattern'] . '/im', $src, $arrMatch, PREG_OFFSET_CAPTURE);
 
-                        // Something found ?   Greater than zero means; yes, the regex has been matched.
-
+                        // Something found? Greater than zero means; yes, the regex has been matched.
                         if (count($arrMatch[0]) > 0) {
-                            $disclaimer = (key_exists('disclaimer', $regex) ? $this->getDisclaimerText($regex['disclaimer']) : '');
+                            $disclaimer = (key_exists('disclaimer', $regex) 
+                                ? $this->getDisclaimerText($regex['disclaimer']) 
+                                : '');
 
                             $patternFound = count($arrMatch[1]);
 
                             for ($i = 0; $i < $patternFound; $i++) {
-                                // Get the found keyword (f.i. AnonGhost then, in the second loop, bash_history in our example)
-                                $keyword = (isset($arrMatch[1][$i][0]) ? $keyword = $arrMatch[1][$i][0] : '');
+                                // Get the found keyword (f.i. AnonGhost then, in the second loop, 
+                                // bash_history in our example)
+                                $keyword = (isset($arrMatch[1][$i][0]) 
+                                    ? $keyword = $arrMatch[1][$i][0] 
+                                    : '');
 
                                 if (!in_array($arrMatch[0], [null, ''])) {
-                                    $src = str_replace($keyword, '<span class="blink alert alert-danger text-danger highlight" role="alert" title="' . $disclaimer . '">' . $keyword . '</span>', $src);
+                                    $src = str_replace($keyword, '<span class="blink alert ' . 
+                                        'alert-danger text-danger highlight" role="alert" title="' . 
+                                        $disclaimer . '">' . $keyword . '</span>', $src);
                                 }
                             }
                         }
@@ -2515,8 +2592,9 @@ class aeSecureScan
     }
 
     /**
-     * Download from aesecure.com a json file with the hash of natives files of, f.i., Joomla 2.5.27.    If the download is successfull,
-     * the downloaded file will be stored in the same folder than this script, name : aesecure_quickscan_CMS.json   This file will be killed
+     * Download from aesecure.com a json file with the hash of natives files of, 
+     * f.i., Joomla 3.9.0. If the download is successfull, the downloaded file will be stored
+     * in the same folder than this script, name : aesecure_quickscan_CMS.json. This file will be killed
      * when the user will click on the "Kill this script" button available on the user's form.
      *
      * @param type $CMS     f.i. "Joomla"
@@ -2563,10 +2641,13 @@ class aeSecureScan
 
         if (!file_exists($json)) {
             // Try to download the JSON for the CMS and the version found
-            // On GitHub the file with CMS hashes doesn't start with the "aesecure_quickscan_" prefix
-            $json = rtrim(dirname($json), DS) . DS . str_replace('aesecure_quickscan_', '', basename($json));
+            // On GitHub the file with CMS hashes doesn't start with the 
+            // "aesecure_quickscan_" prefix
+            $json = rtrim(dirname($json), DS) . DS . 
+                str_replace('aesecure_quickscan_', '', basename($json));
 
             aeSecureDownload::get($json, 'hashes/' . strtolower($CMS) . '/');
+
             if (file_exists($json)) {
                 // rename the file from f.i. "J!3.9.0.json" to "aesecure_quickscan_J!3.9.0.json"
                 // so all Quickscan files are using the "aesecure_quickscan_" prefix
@@ -2577,7 +2658,7 @@ class aeSecureScan
         }
 
         // Do we have the json file with all hashes?
-        // Created just now or already there from a previous run ?
+        // Created just now or already there from a previous run?
         $arrHashes = [];
 
         if (file_exists($json)) {
@@ -2617,20 +2698,32 @@ class aeSecureScan
         $output = '';
 
         // Try to clean these folders
-        $arr = ['administrator' . DS . 'cache', 'aesecure' . DS . 'cache', 'aesecure' . DS . 'tmp', 'cache', 'temp'];
+        $arr = [
+            'administrator' . DS . 'cache', 
+            'aesecure' . DS . 'cache', 
+            'aesecure' . DS . 'tmp', 
+            'cache', 
+            'temp'
+        ];
 
         foreach ($arr as $tmp) {
             if (is_dir($folder = rtrim($this->_directory, DS) . DS . $tmp)) {
                 if (!DEMO) {
-                    $this->aeFiles->rrmdir($dir = $folder, $killroot = false, $arrIgnoreFiles = ['.htaccess', 'index.html']);
+                    $this->aeFiles->rrmdir(
+                        $dir = $folder, 
+                        $killroot = false, 
+                        $arrIgnoreFiles = ['.htaccess', 'index.html']
+                    );
                 }
                 // Don't give full path in demo mode
                 if (DEMO) {
                     $folder = str_replace(DIR, '', $folder);
                 }
-                $output .= '<li><span class="glyphicon glyphicon-thumbs-up">&nbsp;</span>' . sprintf($this->aeLanguage->get('CLEANFOLDER'), $folder) . '</li>';
+                $output .= '<li><span class="glyphicon glyphicon-thumbs-up">&nbsp;</span>' . 
+                    sprintf($this->aeLanguage->get('CLEANFOLDER'), $folder) . '</li>';
             }
         }
+
         echo '<ul class="list-unstyled text-success">' . $output . '</ul>';
     }
 
@@ -2642,10 +2735,11 @@ class aeSecureScan
      */
     private function initializeHashes()
     {
-        // Try to determine the CMS used and, if found one, try to get a json file with hashes of native
-        // files.   If found, this is a tremendous news since these files are known as safe (native ones!) so
-        // should not be scanned when the file present on the website has the same hash meaning that this file was never
-        // altered at all.
+        // Try to determine the CMS used and, if found one, try to get a json file 
+        // with hashes of native files. If found, this is a tremendous news since 
+        // these files are known as safe (native ones!) so should not be scanned 
+        // when the file present on the website has the same hash meaning that this
+        // file was never altered at all.
         list($CMS, $CMSFullVersion, $CMSMainVersion, $CMSVersion, $SiteRoot) = aeSecureCMS::getInfo($this->_directory);
 
         list($this->_arrCMSHashes) = $this->gethashes($CMS, $CMSVersion);
@@ -2721,9 +2815,9 @@ class aeSecureScan
      */
     private function getCountFiles($echo = true, &$arrFiles = null)
     {
-        clearstatcache();
-
         try {
+            clearstatcache();
+
             if (!get_cfg_var('safe_mode')) {
                 // set_time_limit isn't used when safe_mode is active
                 // No max execution time
@@ -2734,10 +2828,12 @@ class aeSecureScan
         } catch (Exception $e) {
         }
 
-        @ini_set('memory_limit', (true !== $this->aeSession->get('Debug', DEBUG)) ? -1 : MEMORY_LIMIT); // Allocate the maximum allowed memory to the script (-1 = no limit)
+        // Allocate the maximum allowed memory to the script (-1 = no limit)
+        @ini_set('memory_limit', (true !== $this->aeSession->get('Debug', DEBUG)) ? -1 : MEMORY_LIMIT); 
 
         if (!is_dir($this->_directory)) {
-            echo '<hr/><div class="alert alert-danger" role="alert"><strong>' . sprintf(DIRNOTFOUND, $this->_directory) . '</strong></div>';
+            echo '<hr/><div class="alert alert-danger" role="alert"><strong>' . 
+                sprintf(DIRNOTFOUND, $this->_directory) . '</strong></div>';
 
             return false;
         }
@@ -2752,7 +2848,8 @@ class aeSecureScan
 
         if ((null == $arrFiles) || (0 == count($arrFiles))) {
             // The "arrFiles" session variable is either not found or equal to NULL ==>
-            // Get the list of files in the current folder and subfolders by scanning files and folders on the disk
+            // Get the list of files in the current folder and subfolders by scanning 
+            // files and folders on the disk
             $dir   = new RecursiveDirectoryIterator($this->_directory, RecursiveDirectoryIterator::SKIP_DOTS);
             $files = new RecursiveIteratorIterator($dir, RecursiveIteratorIterator::LEAVES_ONLY);
 
@@ -2769,8 +2866,6 @@ class aeSecureScan
             $IgnoreMedia       = $this->aeSession->get('IgnoreMedia', true);
             $IgnoreSoundMovies = $this->aeSession->get('IgnoreSoundMovies', true);
             $IgnoreText        = $this->aeSession->get('IgnoreText', true);
-
-            //if($this->aeSession->get('Debug',DEBUG)===true) echo '<pre>'.print_r($_SESSION,true).'</pre>';
 
             // Prepare the arrays with extensions, by category
             $arrArchive     = explode(',', str_replace(' ', '', ExtArchives));
@@ -2803,15 +2898,16 @@ class aeSecureScan
                         $md5 = md5_file($filename);
 
                         if (isset($this->_arrBlackListHashes[$md5])) {
-                            // Already known as bad ?
+                            // Already known as bad?
                             $arrFiles[] = $filename;
                             ++$wNbrBlacklisted;
                         } elseif (isset($this->_arrEditedHashes[$md5])) {
-                            // Already known as having a virus in it ?
+                            // Already known as having a virus in it?
                             $arrFiles[] = $filename;
                             ++$wNbrEdited;
                         } elseif (isset($this->_arrCMSHashes[$md5]) || isset($this->_arrWhiteListHashes[$md5]) || isset($this->_arrOtherHashes[$md5])) {
-                            // if the hash of file is listed in the CMS core file, white list or other hashes, don't process it, the file is safe
+                            // if the hash of file is listed in the CMS core file, 
+                            // white list or other hashes, don't process it, the file is safe
                             ++$wNbrWhitelisted;
                         } else {
                             // Get file's extension
@@ -2861,8 +2957,8 @@ class aeSecureScan
             $this->aeSession->set('Folder', $this->_directory);
             $this->aeSession->set('arrFiles', json_encode($arrFiles));
         } else {
-            // The user is running the script once more for the same folder ==> don't scan the disk again, just
-            // user the session variable to speed up the process
+            // The user is running the script once more for the same folder 
+            // ==> don't scan the disk again, just user the session variable to speed up the process
 
             $arrFiles = json_decode($arrFiles);
         }
@@ -2871,11 +2967,16 @@ class aeSecureScan
             $arrFiles = json_decode($this->aeSession->get('arrFiles', null));
         }
 
-        unset($this->arrOtherHashes, $this->arrWhiteListHashes, $this->arrBlackListHashes, $this->arrCMSHashes);
+        unset($this->arrOtherHashes);
+        unset($this->arrWhiteListHashes);
+        unset($this->arrBlackListHashes);
+        unset($this->arrCMSHashes);
 
         if (true == $echo) {
+
             header('Content-Type: application/json');
             header('Cache-Control: no-cache');
+
             echo json_encode(
                 [
                     'count'       => count($arrFiles),
@@ -2887,12 +2988,16 @@ class aeSecureScan
             );
 
             // Prevent a warning; flush only if there is something to flush
-            while (ob_get_level() > 0) {
-                ob_end_flush();
+            try {
+                while (ob_get_level() > 0) {
+                    ob_end_flush();
+                }
+
+                flush();
+            } catch (\Exception $e) {
             }
-            flush();
+
             die();
-            exit();
         } else {
             return true;
         }
@@ -2970,7 +3075,8 @@ class aeSecureScan
         // Start the scan, process all files
         if (($wCount = count($arrFiles)) > 0) {
             if (true === $this->aeSession->get('Debug', DEBUG)) {
-                $this->aeLog->kill();  // Reset the log file
+                // Reset the log file
+                $this->aeLog->kill();
                 $this->aeLog->addLog('#' . $wCount . " files to process\n");
             }
 
@@ -3009,7 +3115,8 @@ class aeSecureScan
                     // Empty file
                     if (0 == filesize($filename)) {
                         if (true === $this->aeSession->get('Debug', DEBUG)) {
-                            $this->aeLog->addLog('Scanning #' . ($wFile + 1) . '. ' . $filename . '   SKIP;   Filesize=0');
+                            $this->aeLog->addLog('Scanning #' . ($wFile + 1) . '. ' . $filename . 
+                                '   SKIP;   Filesize=0');
                         }
 
                         continue;
@@ -3023,9 +3130,17 @@ class aeSecureScan
                         // Be sure that the hash isn't in the blacklist; for security.
                         if (!isset($this->_arrBlackListHashes[$md5])) {
                             if (isset($this->_arrCMSHashes[$md5])) {
+
+                                if (FULLDEBUG && !aeSecureFct::isAjaxRequest()) {
+                                    echo sprintf(
+                                        '%s is an original CMS file; not altered thus safe<br/>',
+                                        $filename);
+                                }
+
                                 ++$wSkipHashes;
                                 if (true === $this->aeSession->get('Debug', DEBUG)) {
-                                    $this->aeLog->addLog('Scanning #' . ($wFile + 1) . '. ' . $filename . '   SKIP;   Original CMS file');
+                                    $this->aeLog->addLog('Scanning #' . ($wFile + 1) . '. ' . 
+                                        $filename . '   SKIP;   Original CMS file');
                                 }
 
                                 continue;
@@ -3035,8 +3150,20 @@ class aeSecureScan
                             // the Other hashes (also white listed)
                             if (isset($this->_arrWhiteListHashes[$md5]) || isset($this->_arrOtherHashes[$md5])) {
                                 ++$wSkipHashes;
+
+                                if (FULLDEBUG && !aeSecureFct::isAjaxRequest()) {
+                                    echo sprintf(
+                                        '%s is whitelisted, healthy file<br/>',
+                                        $filename
+                                    );
+                                }
+
                                 if (true === $this->aeSession->get('Debug', DEBUG)) {
-                                    $this->aeLog->addLog('Scanning #' . ($wFile + 1) . '. ' . $filename . '   SKIP;   Hash whitelisted' . (isset($this->_arrOtherHashes[$md5]) ? ' in the other.json file' : ''));
+                                    $this->aeLog->addLog('Scanning #' . ($wFile + 1) . '. ' . $filename . 
+                                        '   SKIP;   Hash whitelisted' . 
+                                        (isset($this->_arrOtherHashes[$md5]) 
+                                        ? ' in the other.json file' 
+                                        : ''));
                                 }
 
                                 continue;
@@ -3067,8 +3194,16 @@ class aeSecureScan
 
                             $output_line = str_replace('$FOUND$', $FOUND, $OutputTemplate);
 
+                            if (FULLDEBUG && !aeSecureFct::isAjaxRequest()) {
+                                echo sprintf(
+                                    '%s IS BLACKLISTED, VIRUS FOUND<br/>',
+                                    $filename
+                                );
+                            }
+
                             if (true === $this->aeSession->get('Debug', DEBUG)) {
-                                $this->aeLog->addLog('Scanning #' . ($wFile + 1) . '. ' . $filename . '. This file is in the blacklist');
+                                $this->aeLog->addLog('Scanning #' . ($wFile + 1) . '. ' . $filename . 
+                                    '. This file is in the blacklist');
                             }
                         }
 
@@ -3085,8 +3220,17 @@ class aeSecureScan
 
                             $output_line = str_replace('$FOUND$', $FOUND, $OutputTemplate);
 
+                            if (FULLDEBUG && !aeSecureFct::isAjaxRequest()) {
+                                echo sprintf(
+                                    '%s CONTAINS A VIRUS<br/>',
+                                    $filename
+                                );
+                            }
+
                             if (true === $this->aeSession->get('Debug', DEBUG)) {
-                                $this->aeLog->addLog('Scanning #' . ($wFile + 1) . '. ' . $filename . '. This file is in the edited list i.e. contains a known virus');
+                                $this->aeLog->addLog('Scanning #' . ($wFile + 1) . '. ' . 
+                                    $filename . '. This file is in the edited list i.e. ' .
+                                    'contains a known virus');
                             }
                         }
 
@@ -3097,9 +3241,12 @@ class aeSecureScan
                                 $content = file_get_contents($filename);
                             } catch (Exception $ex) {
                                 ++$wUnreadable;
+
                                 if (true === $this->aeSession->get('Debug', DEBUG)) {
-                                    $this->aeLog->addLog('Scanning #' . ($wFile + 1) . '. ' . $filename . '   SKIP;   Unreadable content');
+                                    $this->aeLog->addLog('Scanning #' . ($wFile + 1) . '. ' .
+                                        $filename . '   SKIP;   Unreadable content');
                                 }
+
                                 $bFound      = true;
                                 $output_line = '<li>' .
                                     '<span class="label label-warning">' . $aeLanguage->get('WARNING') . '</span>&nbsp;' .
@@ -3113,14 +3260,16 @@ class aeSecureScan
                                 $FOUND = '';
 
                                 // Template on how the file's informations should be reported
-                                // $FOUND$ will be replaced by every occurences found in the file (severall occurences are indeed possible)
+                                // $FOUND$ will be replaced by every occurences found in the 
+                                // file (severall occurences are indeed possible)
 
                                 if (true === $this->aeSession->get('Debug', DEBUG)) {
-                                    $this->aeLog->addLog('Scanning #' . ($wFile + 1) . '. ' . $filename . '   Processing... (filesize=' . aeSecureFct::human_filesize(filesize($filename)) . ')');
+                                    $this->aeLog->addLog('Scanning #' . ($wFile + 1) . '. ' . 
+                                        $filename . '   Processing... (filesize=' . 
+                                        aeSecureFct::human_filesize(filesize($filename)) . ')');
                                 }
 
                                 // Process every regex for the processing file
-
                                 foreach ($this->_arrRegex as $regex) {
                                     if (FULLDEBUG === true) {
                                         $this->aeLog->addLog('   scan pattern ' . $regex['pattern']);
@@ -3132,74 +3281,97 @@ class aeSecureScan
                                         preg_match_all('/' . $regex['pattern'] . '/im', $content, $arrMatch, PREG_OFFSET_CAPTURE);
                                     } catch (Exception $ex) {
                                         if (true === $this->aeSession->get('Debug', DEBUG)) {
-                                            echo '<h5>' . __LINE__ . '  EXCEPTION ENCOUNTERED = ' . $e->getMessage() . '</h5>';
+                                            echo '<h5>' . __LINE__ . '  EXCEPTION ENCOUNTERED = ' . $ex->getMessage() . '</h5>';
                                         }
                                     }
 
-                                    // Something found ?   Greater than zero means; yes, the regex has been matched.
+                                    // Something found?  Greater than zero means; yes, the regex 
+                                    // has been matched.
+                                    if (is_array($arrMatch) && (count($arrMatch) > 0)) {
+                                        if (count($arrMatch[0]) > 0) {
+                                            // Something has been found in that file.
+                                            $bInfected = true;
 
-                                    if (count($arrMatch[0]) > 0) {
-                                        // Something has been found in that file.
-                                        $bInfected = true;
+                                            // The regex is always composed of three things
+                                            //          1.     2.      3.
+                                            //        (.*)(VIRUS_CODE)(.*)
+                                            //
+                                            // (1) Something before followed by the virus code 
+                                            // (2) followed by something 
+                                            // (3) so the regex match f.i. the entire line
+                                            // and not only the keyword (2)
+                                            //
+                                            // When the regex is something of severall codes like
+                                            //     1.              2.          3.
+                                            //    (.*)(AnonGhost|bash_history)(.*)
+                                            //
+                                            // the $arrMatch[2] position will return the number 
+                                            // of matches so if these two words are found in the file
+                                            // $patternFound will be set to two and the code below 
+                                            // will process these two matches
+                                            $patternFound = count($arrMatch[1]);
 
-                                        // The regex is always composed of three things
-                                        //          1.     2.      3.
-                                        //        (.*)(VIRUS_CODE)(.*)
-                                        // (1) Something before followed by the virus code (2) followed by something (3) so the regex match f.i. the entire line
-                                        // and not only the keyword (2)
-                                        //
-                                        // When the regex is something of severall codes like
-                                        //     1.              2.          3.
-                                        //    (.*)(AnonGhost|bash_history)(.*)
-                                        //
-                                        // the $arrMatch[2] position will return the number of matches so if these two words are found in the file
-                                        // $patternFound will be set to two and the code below will process these two matches
+                                            // Process every matches
+                                            for ($i = 0; $i < $patternFound; $i++) {
+                                                // Get the found keyword (f.i. AnonGhost then, in the
+                                                // second loop, bash_history in our example)
+                                                $keyword = (isset($arrMatch[1][$i][0])
+                                                ? $keyword = $arrMatch[1][$i][0]
+                                                : '');
 
-                                        $patternFound = count($arrMatch[1]);
+                                                // Get the full line where the keyword was found
+                                                $code = $arrMatch[0][$i][0];
 
-                                        // Process every matches
+                                                // And get the position in the file (start position of
+                                                // the keyword)
+                                                $position = $arrMatch[1][$i][1];
 
-                                        for ($i = 0; $i < $patternFound; $i++) {
-                                            // Get the found keyword (f.i. AnonGhost then, in the second loop, bash_history in our example)
-                                            $keyword = (isset($arrMatch[1][$i][0]) ? $keyword = $arrMatch[1][$i][0] : '');
-                                            // Get the full line where the keyword was found
-                                            $code = $arrMatch[0][$i][0];
-                                            // And get the position in the file (start position of the keyword)
-                                            $position = $arrMatch[1][$i][1];
+                                                // When outputting the result, get the context i.e. a
+                                                // specific number of characters before the found pattern
+                                                // and the same number of characters after so QuickScan
+                                                // can display the portion of code where this suspicious
+                                                // pattern is found, making easier to read and determine
+                                                // the dangerosity of the code
+                                                $sContext = '';
 
-                                            // When outputting the result, get the context i.e. a specific number of characters before
-                                            // the found pattern and the same number of characters after so QuickScan can display the portion
-                                            // of code where this suspicious pattern is found, making easier to read and determine the
-                                            // dangerosity of the code
-                                            $sContext = '';
-
-                                            try {
-                                                $wStart   = ($position > CONTEXT_NBRCHARS ? $position - CONTEXT_NBRCHARS : 0);
-                                                $wEnd     = ($position + strlen($keyword) + CONTEXT_NBRCHARS) - $wStart;
-                                                $sContext = substr($content, $wStart, $wEnd);
-                                            } catch (Exception $e) {
-                                                if (true === $this->aeSession->get('Debug', DEBUG)) {
-                                                    echo '<h5>' . __LINE__ . '  EXCEPTION ENCOUNTERED = ' . $e->getMessage() . '</h5>';
+                                                try {
+                                                    $wStart   = ($position > CONTEXT_NBRCHARS ? $position - CONTEXT_NBRCHARS : 0);
+                                                    $wEnd     = ($position + strlen($keyword) + CONTEXT_NBRCHARS) - $wStart;
+                                                    $sContext = substr($content, $wStart, $wEnd);
+                                                } catch (Exception $e) {
+                                                    if (true === $this->aeSession->get('Debug', DEBUG)) {
+                                                        echo '<h5>' . __LINE__ . '  EXCEPTION ENCOUNTERED = ' . $e->getMessage() . '</h5>';
+                                                    }
                                                 }
-                                            }
 
-                                            if (!in_array($arrMatch[0], [null, ''])) {
-                                                $bFound = true;
+                                                if (!in_array($arrMatch[0], [null, ''])) {
+                                                    $bFound = true;
 
-                                                $disclaimer = (key_exists('disclaimer', $regex) ? $this->getDisclaimerText($regex['disclaimer']) : '');
+                                                    if (FULLDEBUG && !aeSecureFct::isAjaxRequest()) {
+                                                        echo sprintf(
+                                                            '%s contains [%s] risk [%s], so needs to be ' .
+                                                            'analyzed<br/>',
+                                                            $filename,
+                                                            $regex['risk'],
+                                                            $keyword
+                                                        );
+                                                    }
 
-                                                $FOUND .=
-                                                    '<span class="label label-' . $regex['risk'] . '">' . ('danger' == $regex['risk'] ? $this->aeLanguage->get('DANGER') : ('warning' == $regex['risk'] ? $this->aeLanguage->get('WARNING') : $this->aeLanguage->get('INFO'))) . '</span>&nbsp;' . $disclaimer .
-                                                    '<span class="regex newline" title="regex = ' . $regex['pattern'] . '">' . $this->aeLanguage->get('PATTERN') . ' : <strong>' . $keyword . '</strong></span>' .
-                                                    '<span class="position newline">' . sprintf($this->aeLanguage->get('FOUNDPOSITION'), $position) . '</strong></span>' .
-                                                    '<span class="regexresult"><pre>' . str_replace(
-                                                        $keyword,
-                                                        '<strong class="double_underline" style="color:red;" data-html="true" ' .
-                                                        'data-toggle="popover" data-content="<span class=\'text-' . $regex['risk'] . ' ' . $regex['risk'] . '\'>' .
-                                                        $disclaimer . '</span>">' . $keyword . '</strong>',
-                                                        trim(str_replace('<', '&lt;', $sContext))
-                                                    ) . '</pre>' .
-                                                    '</span>';
+                                                    $disclaimer = (key_exists('disclaimer', $regex) ? $this->getDisclaimerText($regex['disclaimer']) : '');
+
+                                                    $FOUND .=
+                                                        '<span class="label label-' . $regex['risk'] . '">' . ('danger' == $regex['risk'] ? $this->aeLanguage->get('DANGER') : ('warning' == $regex['risk'] ? $this->aeLanguage->get('WARNING') : $this->aeLanguage->get('INFO'))) . '</span>&nbsp;' . $disclaimer .
+                                                        '<span class="regex newline" title="regex = ' . $regex['pattern'] . '">' . $this->aeLanguage->get('PATTERN') . ' : <strong>' . $keyword . '</strong></span>' .
+                                                        '<span class="position newline">' . sprintf($this->aeLanguage->get('FOUNDPOSITION'), $position) . '</strong></span>' .
+                                                        '<span class="regexresult"><pre>' . str_replace(
+                                                            $keyword,
+                                                            '<strong class="double_underline" style="color:red;" data-html="true" ' .
+                                                            'data-toggle="popover" data-content="<span class=\'text-' . $regex['risk'] . ' ' . $regex['risk'] . '\'>' .
+                                                            $disclaimer . '</span>">' . $keyword . '</strong>',
+                                                            trim(str_replace('<', '&lt;', $sContext))
+                                                        ) . '</pre>' .
+                                                        '</span>';
+                                                }
                                             }
                                         }
                                     }
@@ -3224,7 +3396,8 @@ class aeSecureScan
                         ++$wSkipSize;
 
                         if (true === $this->aeSession->get('Debug', DEBUG)) {
-                            $this->aeLog->addLog('Scanning #' . ($wFile + 1) . '. ' . $filename . '   SKIP;   Too big.');
+                            $this->aeLog->addLog('Scanning #' . ($wFile + 1) . '. ' . 
+                                $filename . '   SKIP;   Too big.');
                         }
 
                         // The filename wasn't whitelisted, show it.
@@ -3307,7 +3480,10 @@ class aeSecureScan
             unset($arrFiles);
         }
 
-        unset($this->arrOtherHashes, $this->arrWhiteListHashes, $this->arrBlackListHashes, $this->arrCMSHashes);
+        unset($this->arrOtherHashes);
+        unset($this->arrWhiteListHashes);
+        unset($this->arrBlackListHashes);
+        unset($this->arrCMSHashes);
 
         if (true === $this->aeSession->get('Debug', DEBUG)) {
             $this->aeLog->addLog("\nEND OF SCAN");
@@ -3321,7 +3497,9 @@ class aeSecureScan
 
         if (false == $bFound) {
             // Nothing found, congrats!
-            $output = '<div class="alert alert-success" role="alert"><strong>' . $aeLanguage->get('SUCCESS') . '</strong> ' . $aeLanguage->get('NOTHINGFOUND') . '</div>' . $output;
+            $output = '<div class="alert alert-success" role="alert"><strong>' . 
+                $aeLanguage->get('SUCCESS') . '</strong> ' . $aeLanguage->get('NOTHINGFOUND') . 
+                '</div>' . $output;
         } else {
             // Something has been found
             $output =
@@ -3392,7 +3570,8 @@ class aeSecureScan
     // Try to obtain a few informations about the site
     list($CMS, $CMSFullVersion, $CMSMainVersion, $CMSVersion, $SiteRoot) = aeSecureCMS::getInfo($aeScan->directory());
 
-    // Is it a website made with a supported CMS ?  (Joomla, WordPress, Drupal, CakePHP, PrestaShop, Magento, ...)
+    // Is it a website made with a supported CMS? (Joomla, WordPress, Drupal, CakePHP,
+    //  PrestaShop, Magento, ...)
     if ('' != $CMS) {
         // Yes so try to retrieve the hash of that CMS and for the installed version
         list($arrCMSHashes) = $aeScan->gethashes($CMS, $CMSVersion);
@@ -3407,15 +3586,23 @@ class aeSecureScan
             }
 
             $showInfo = '<div class="alert alert-success">' .
-                '<strong><span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;' . $aeLanguage->get('USINGHASHES') . '</strong>&nbsp;' .
+                '<strong><span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;' . 
+                $aeLanguage->get('USINGHASHES') . '</strong>&nbsp;' .
                 sprintf($aeLanguage->get('USINGHASHESINFO'), $CMS, $CMSVersion) . '</div>';
         } else {
             // No hashes found for that version of the CMS
             if (true === $aeSession->get('Expert', EXPERT)) {
-                $usingHashes = sprintf($usingHashes, 'red', 'down', $aeLanguage->get('NOTUSINGHASHESSHORT'));
+                $usingHashes = sprintf(
+                    $usingHashes, 
+                    'red', 
+                    'down', 
+                    $aeLanguage->get('NOTUSINGHASHESSHORT')
+                );
             }
 
-            $showInfo = '<div class="alert alert-warning">' . sprintf($aeLanguage->get('SORRYNOHASHES'), $CMSVersion, $CMS) . '</div>';
+            $showInfo = '<div class="alert alert-warning">' . 
+                sprintf($aeLanguage->get('SORRYNOHASHES'), $CMSVersion, $CMS) . 
+                '</div>';
         }
 
         // If a CMS has been detected, display the CMS used + version as navbar
@@ -3436,516 +3623,775 @@ class aeSecureScan
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
-   <head>
-      <meta charset="utf-8" />
-      <meta name="robots" content="noindex, nofollow" />
-      <meta name="author" content="Christophe Avonture" />
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-      <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8;" />
-      <meta property="og:title" content="<?php echo $aeLanguage->get('PAGETITLE');?>" />
-      <meta property="og:description" content="<?php echo $aeLanguage->get('DESCRIPTION');?>" />
-      <meta property="og:image" content="https://www.aesecure.com/images/aesecure.png" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <title><?php echo $aeLanguage->get('PAGETITLE');?> | AVONTURE Christophe - www.aesecure.com</title>
-      <link href="https://www.aesecure.com/templates/moments/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon"/>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="robots" content="noindex, nofollow" />
+        <meta name="author" content="Christophe Avonture" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8;" />
+        <meta property="og:title" content="<?php echo $aeLanguage->get('PAGETITLE');?>" />
+        <meta property="og:description" content="<?php echo $aeLanguage->get('DESCRIPTION');?>" />
+        <meta property="og:image" content="https://www.aesecure.com/images/aesecure.png" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        
+        <title><?php echo $aeLanguage->get('PAGETITLE');?> | AVONTURE Christophe - www.aesecure.com</title>
+        
+        <link href="https://www.aesecure.com/templates/moments/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon"/>
         <?php
-         echo aeSecureFct::addStylesheet('libs/bootstrap/css/bootstrap.min.css', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css');
-         echo aeSecureFct::addStylesheet('libs/tablesorter/css/theme.ice.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.5/css/theme.ice.min.css');
-         echo aeSecureFct::addStylesheet('libs/alertify/css/alertify.core.css', 'https://cdnjs.cloudflare.com/ajax/libs/alertify.js/0.3.11/alertify.core.css');
-         echo aeSecureFct::addStylesheet('libs/alertify/css/alertify.bootstrap.css', 'https://cdnjs.cloudflare.com/ajax/libs/alertify.js/0.3.11/alertify.bootstrap.css');
+            echo aeSecureFct::addStylesheet('libs/bootstrap/css/bootstrap.min.css', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css');
+            echo aeSecureFct::addStylesheet('libs/tablesorter/css/theme.ice.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.5/css/theme.ice.min.css');
+            echo aeSecureFct::addStylesheet('libs/alertify/css/alertify.core.css', 'https://cdnjs.cloudflare.com/ajax/libs/alertify.js/0.3.11/alertify.core.css');
+            echo aeSecureFct::addStylesheet('libs/alertify/css/alertify.bootstrap.css', 'https://cdnjs.cloudflare.com/ajax/libs/alertify.js/0.3.11/alertify.bootstrap.css');
         ?>
-      <style type="text/css">
-         #DebugMode{background-color:red;color:yellow;padding:5px;margin:10px;right:0px;}
-         #DemoMode{background-color:orange;color:white;padding:5px;margin:10px;}
-         #result li{padding-top:10px;}
-         #result{overflow:auto;padding-top:20px;margin:5px;}
-         #result button.close{top:10px;color:red;}
-         #ALERTINFO{min-height:90px;}
-         .ignoredext{font-size:x-small;}
-         .bottomright{position:fixed;right:0;bottom:0;}
-         span.regexresult .popover{min-width:350px;max-width:500px;}
-         span.regexresult .popover-content{word-wrap: break-word;}
-         .danger{font-weight:bold;}
-         .danger:before {content:"<?php echo $aeLanguage->get('DANGER');?>";background-color:#d9534f;color:#fff;font-weight:bold;padding:.2em .6em .3em;text-align:center;border-radius:.25em;margin-right:0.5em;}
-         .warning:before {content:"<?php echo $aeLanguage->get('WARNING');?>";background-color:#f0ad4e;color:#fff;font-weight:bold;padding:.2em .6em .3em;text-align:center;border-radius:.25em;margin-right:0.5em;}
-         .md5{padding-left:10px;color:gray;float:right;}
-         .disclaimer{font-style:italic;}
-         .double_underline{text-decoration:underline;border-bottom:1px solid #000;}
-         .filename{color:red;white-space:nowrap;padding-bottom:10px;display:inline-block;}
-         .filesize{padding-left:5px;color:red;white-space:nowrap;padding-bottom:10px;display:inline-block;font-style:italic;font-size:x-small;}
-         .filedate{padding-left:5px;color:red;white-space:nowrap;padding-bottom:10px;display:inline-block;font-style:italic;font-size:x-small;}
-         .newline{display:block;}
-         .seefile{margin-right:25px;}
-         .whitelist{margin-right:25px;}
-         .killfile{margin-left:100px;}
-         .btnscan{margin:5px;min-width:140px;}
-         .footer{padding-top:50px;padding-left:10px;}
-         .stats{margin-bottom:25px;border:1px solid green;padding:5px;color:green;}
-         .underline{text-decoration:underline;}
-         .fanpage{color:rgb(255,158,158);}
-         .cleanforyou, a.cleanforyou{color:green;text-decoration:none;}
-         .blink {animation: blink 1s steps(5, start) infinite; -webkit-animation: blink 1s steps(5, start) infinite; } @keyframes blink {to {visibility: hidden;}} @-webkit-keyframes blink {to {visibility: hidden;}}
-         .border{border:2px dotted #C9CBFF;padding:5px;margin-bottom:10px;}
-         #frmAdvanced{color:#31708f;}
-         /* OffCanvasMenuEffects from http://tympanus.net/Development/OffCanvasMenuEffects/ */
-         .container,.content-wrap{overflow:hidden;height:100%}
-         /* Menu Button */
-         .menu-button{position:fixed;z-index:1000;margin:1em;padding:0;width:2.5em;height:2.25em;border:none;text-indent:2.5em;font-size:1.5em;color:transparent;background:0 0}
-         .menu-button::before{position:absolute;top:.5em;right:.5em;bottom:.5em;left:.5em;background:linear-gradient(#2e6da4 20%,transparent 20%,transparent 40%,#2e6da4 40%,#337ab7 60%,transparent 60%,transparent 80%,#2e6da4 80%);content:''}
-         .menu-button:hover{opacity:.6}
-         .close-button{width:1em;height:1em;position:absolute;right:1em;top:1em;overflow:hidden;text-indent:1em;font-size:.75em;border:none;background:0 0;color:transparent}
-         .close-button::after,.close-button::before{content:'';position:absolute;width:3px;height:100%;top:0;left:50%;background:#bdc3c7}
-         .close-button::before{-webkit-transform:rotate(45deg);transform:rotate(45deg)}
-         .close-button::after{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}
-         .menu-wrap{position:absolute;top:0px;z-index:1001;width:300px;height:100%;background:#d9edf7;padding:2.5em 1.5em 0;font-size:1.15em;-webkit-transform:translate3d(-320px,0,0);transform:translate3d(-320px,0,0);-webkit-transition:-webkit-transform .4s;transition:transform .4s;-webkit-transition-timing-function:cubic-bezier(.7,0,.3,1);transition-timing-function:cubic-bezier(.7,0,.3,1)}
-         /* Shown menu */
-         .show-menu .menu-wrap{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);-webkit-transition:-webkit-transform .8s;transition:transform .8s;-webkit-transition-timing-function:cubic-bezier(.7,0,.3,1);transition-timing-function:cubic-bezier(.7,0,.3,1)}
-         .show-menu .icon-list,.show-menu .icon-list a{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);-webkit-transition:-webkit-transform .8s;transition:transform .8s;-webkit-transition-timing-function:cubic-bezier(.7,0,.3,1);transition-timing-function:cubic-bezier(.7,0,.3,1)}
-         .show-menu .icon-list a{-webkit-transition-duration:.9s;transition-duration:.9s}
-      </style>
-   </head>
-   <body>
+        <style type="text/css">
+            #DebugMode{background-color:red;color:yellow;padding:5px;margin:10px;right:0px;}
+            #DemoMode{background-color:orange;color:white;padding:5px;margin:10px;}
+            #result li{padding-top:10px;}
+            #result{overflow:auto;padding-top:20px;margin:5px;}
+            #result button.close{top:10px;color:red;}
+            #ALERTINFO{min-height:90px;}
+            .ignoredext{font-size:x-small;}
+            .bottomright{position:fixed;right:0;bottom:0;}
+            span.regexresult .popover{min-width:350px;max-width:500px;}
+            span.regexresult .popover-content{word-wrap: break-word;}
+            .danger{font-weight:bold;}
+            .danger:before {content:"<?php echo $aeLanguage->get('DANGER');?>";background-color:#d9534f;color:#fff;font-weight:bold;padding:.2em .6em .3em;text-align:center;border-radius:.25em;margin-right:0.5em;}
+            .warning:before {content:"<?php echo $aeLanguage->get('WARNING');?>";background-color:#f0ad4e;color:#fff;font-weight:bold;padding:.2em .6em .3em;text-align:center;border-radius:.25em;margin-right:0.5em;}
+            .md5{padding-left:10px;color:gray;float:right;}
+            .disclaimer{font-style:italic;}
+            .double_underline{text-decoration:underline;border-bottom:1px solid #000;}
+            .filename{color:red;white-space:nowrap;padding-bottom:10px;display:inline-block;}
+            .filesize{padding-left:5px;color:red;white-space:nowrap;padding-bottom:10px;display:inline-block;font-style:italic;font-size:x-small;}
+            .filedate{padding-left:5px;color:red;white-space:nowrap;padding-bottom:10px;display:inline-block;font-style:italic;font-size:x-small;}
+            .newline{display:block;}
+            .seefile{margin-right:25px;}
+            .whitelist{margin-right:25px;}
+            .killfile{margin-left:100px;}
+            .btnscan{margin:5px;min-width:140px;}
+            .footer{padding-top:50px;padding-left:10px;}
+            .stats{margin-bottom:25px;border:1px solid green;padding:5px;color:green;}
+            .underline{text-decoration:underline;}
+            .fanpage{color:rgb(255,158,158);}
+            .cleanforyou, a.cleanforyou{color:green;text-decoration:none;}
+            .blink {animation: blink 1s steps(5, start) infinite; -webkit-animation: blink 1s steps(5, start) infinite; } @keyframes blink {to {visibility: hidden;}} @-webkit-keyframes blink {to {visibility: hidden;}}
+            .border{border:2px dotted #C9CBFF;padding:5px;margin-bottom:10px;}
+            #frmAdvanced{color:#31708f;}
+            /* OffCanvasMenuEffects from http://tympanus.net/Development/OffCanvasMenuEffects/ */
+            .container,.content-wrap{overflow:hidden;height:100%}
+            /* Menu Button */
+            .menu-button{position:fixed;z-index:1000;margin:1em;padding:0;width:2.5em;height:2.25em;border:none;text-indent:2.5em;font-size:1.5em;color:transparent;background:0 0}
+            .menu-button::before{position:absolute;top:.5em;right:.5em;bottom:.5em;left:.5em;background:linear-gradient(#2e6da4 20%,transparent 20%,transparent 40%,#2e6da4 40%,#337ab7 60%,transparent 60%,transparent 80%,#2e6da4 80%);content:''}
+            .menu-button:hover{opacity:.6}
+            .close-button{width:1em;height:1em;position:absolute;right:1em;top:1em;overflow:hidden;text-indent:1em;font-size:.75em;border:none;background:0 0;color:transparent}
+            .close-button::after,.close-button::before{content:'';position:absolute;width:3px;height:100%;top:0;left:50%;background:#bdc3c7}
+            .close-button::before{-webkit-transform:rotate(45deg);transform:rotate(45deg)}
+            .close-button::after{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}
+            .menu-wrap{position:absolute;top:0px;z-index:1001;width:300px;height:100%;background:#d9edf7;padding:2.5em 1.5em 0;font-size:1.15em;-webkit-transform:translate3d(-320px,0,0);transform:translate3d(-320px,0,0);-webkit-transition:-webkit-transform .4s;transition:transform .4s;-webkit-transition-timing-function:cubic-bezier(.7,0,.3,1);transition-timing-function:cubic-bezier(.7,0,.3,1)}
+            /* Shown menu */
+            .show-menu .menu-wrap{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);-webkit-transition:-webkit-transform .8s;transition:transform .8s;-webkit-transition-timing-function:cubic-bezier(.7,0,.3,1);transition-timing-function:cubic-bezier(.7,0,.3,1)}
+            .show-menu .icon-list,.show-menu .icon-list a{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);-webkit-transition:-webkit-transform .8s;transition:transform .8s;-webkit-transition-timing-function:cubic-bezier(.7,0,.3,1);transition-timing-function:cubic-bezier(.7,0,.3,1)}
+            .show-menu .icon-list a{-webkit-transition-duration:.9s;transition-duration:.9s}
+        </style>
+    </head>
+    <body>
+
         <?php echo $github; ?>
+
         <div class="container-full">
 
             <?php
-            if (DEMO) {
-                echo '<span id="DemoMode" class="blink img-rounded bottomright">Demo Mode Enabled</span>';
-            }
-            if (DEBUG || true === $aeSession::get('Debug', DEBUG)) {
-                echo '<span id="DebugMode" class="bottomright blink img-rounded" style="cursor:pointer;">Debug Mode Enabled</span>';
-            }
-
-            ?>
-         <!-- Advanced menu -->
-         <div class="menu-wrap">
-            <div class="menu">
-               <form id="frmAdvanced" name="frmAdvanced" method="POST">
-
-                  <div class="border"><?php echo $aeLanguage->get('SELECT_LANGUAGE');?>&nbsp;:
-                     <div >
-
-
-                        <select class="form-control" id="lang" name="lang">
-                            <?php
-                                // Retrieve the list of JSON files that match aesecure_quickscan_*.json
-                                // f.i. aesecure_quickscan
-                                $script  = str_replace('.php', '', basename(__FILE__));
-
-                                // f.i. aesecure_quickscan_lang_*.json
-                                $pattern = str_replace('.php', '_lang_*.json', basename(__FILE__));
-
-                                $arr = glob($pattern);
-
-                                if (count($arr) > 0) {
-                                    foreach ($arr as $filename) {
-                                        $lang = str_replace('.json', '', str_replace($script . '_lang_', '', $filename));
-                                        echo '<option value="' . $lang . '"' . ($aeLanguage->getlang() == $lang ? ' selected="selected"' : '') . '>' . $lang . '</option>';
-                                    }
-                                }
-                            ?>
-                        </select>
-                     </div>
-                  </div>
-
-                  <div class="border"><?php echo $aeLanguage->get('ADVANCED_OPTIONS');?>&nbsp;:
-                     <div class="checkbox">
-
-                        <label><input type="checkbox" id="chkExpert" name="chkExpert" <?php if (true === $aeSession::get('Expert', EXPERT)) {
-                                echo 'checked="checked" ';
-                            } ?> title=""><?php echo $aeLanguage->get('EXPERT_MODE');?></input></label><br/>
-                        <label><input type="checkbox" id="chkDebug" name="chkDebug" <?php if (true === $aeSession::get('Debug', DEBUG)) {
-                                echo 'checked="checked" ';
-                            } ?> title=""><?php echo $aeLanguage->get('DEBUG_MODE');?></input></label><br/>
-                        <br/>
-                        <?php
-                           $select = '';
-                           $wMax   = $aeSession::get('MaxFilesByCycle', MAXFILESBYCYCLE);
-                           $arr    = ['250' => 250, '500' => 500, '1000' => 1000, '1250' => 1250, '1500' => 1500, '2500' => 2500, '5000' => 5000, '0' => $aeLanguage->get('ALL')];
-                        foreach ($arr as $key => $value) {
-                            $select .= '<option value="' . $key . '" ' . (($wMax == $key) ? 'selected="SELECTED"' : '') . '>' . $value . '</option>';
-                        }
-                           $select = sprintf($aeLanguage->get('EXPERT_MAXFILES'), '<select id="nbrFilesCycle" name="nbrFilesCycle">' . $select . '</select>');
-                           echo '<label>' . $select . '</label>';
-                        ?>
-
-                     </div>
-                  </div>
-                  <div class="border"><?php echo $aeLanguage->get('IGNORE_TITLE');?>&nbsp;:
-                     <div class="checkbox">
-                       <label title="<?php echo sprintf($aeLanguage->get('IGNORE_EXTENSIONS'), ExtArchives); ?>"><input type="checkbox" id="chkIgnoreArchives" name="chkIgnoreArchives" <?php if (1 === $aeSession::get('IgnoreArchives', 1)) {
-                            echo 'checked="checked" ';
-                        } ?>><?php echo $aeLanguage->get('IGNORE_ARCHIVE') . '<br/><span class="ignoredext">' . ExtArchives . '</span>';?></input></label><br/>
-                       <label title="<?php echo sprintf($aeLanguage->get('IGNORE_EXTENSIONS'), ExtDocuments); ?>"><input type="checkbox" id="chkIgnoreDocuments" name="chkIgnoreDocuments" <?php if (1 === $aeSession::get('IgnoreDocuments', 1)) {
-                            echo 'checked="checked" ';
-                        } ?>><?php echo $aeLanguage->get('IGNORE_DOCUMENTS') . '<br/><span class="ignoredext">' . ExtDocuments . '</span>';?></input></label><br/>
-                       <label title="<?php echo sprintf($aeLanguage->get('IGNORE_EXTENSIONS'), ExtFonts); ?>"><input type="checkbox" id="chkIgnoreFonts" name="chkIgnoreFonts" <?php if (1 === $aeSession::get('IgnoreFonts', 1)) {
-                            echo 'checked="checked" ';
-                        } ?>><?php echo $aeLanguage->get('IGNORE_FONT') . '<br/><span class="ignoredext">' . ExtFonts . '</span>';?></input></label><br/>
-                       <label title="<?php echo sprintf($aeLanguage->get('IGNORE_EXTENSIONS'), ExtImages); ?>"><input type="checkbox" id="chkIgnoreImages" name="chkIgnoreImages" <?php if (1 === $aeSession::get('IgnoreImages', 1)) {
-                            echo 'checked="checked" ';
-                        } ?>><?php echo $aeLanguage->get('IGNORE_IMAGES') . '<br/><span class="ignoredext">' . ExtImages . '</span>';?></input></label><br/>
-                       <label title="<?php echo sprintf($aeLanguage->get('IGNORE_EXTENSIONS'), ExtMedia); ?>"><input type="checkbox" id="chkIgnoreMedia" name="chkIgnoreMedia" <?php if (1 === $aeSession::get('IgnoreMedia', 1)) {
-                            echo 'checked="checked" ';
-                        } ?>><?php echo $aeLanguage->get('IGNORE_MEDIA') . '<br/><span class="ignoredext">' . ExtMedia . '</span>';?>)</input></label><br/>
-                       <label title="<?php echo sprintf($aeLanguage->get('IGNORE_EXTENSIONS'), ExtSoundMovies); ?>"><input type="checkbox" id="chkIgnoreSoundMovies" name="chkIgnoreSoundMovies" <?php if (1 === $aeSession::get('IgnoreSoundMovies', 1)) {
-                            echo 'checked="checked" ';
-                        } ?>><?php echo $aeLanguage->get('IGNORE_MOVIES') . '<br/><span class="ignoredext">' . ExtSoundMovies . '</span>';?></input></label><br/>
-                       <label title="<?php echo sprintf($aeLanguage->get('IGNORE_EXTENSIONS'), ExtText); ?>"><input type="checkbox" id="chkIgnoreText" name="chkIgnoreText" <?php if (1 === $aeSession::get('IgnoreText', 1)) {
-                            echo 'checked="checked" ';
-                        } ?>><?php echo $aeLanguage->get('IGNORE_TEXTES') . '<br/><span class="ignoredext">' . ExtText . '</span>';?></input></label>
-                     </div>
-                  </div>
-                  <button type="button" id="btnSubmit" class="btn btn-primary"><?php echo $aeLanguage->get('APPLY');?></button>
-               </form>
-            </div>
-            <button class="close-button" id="close-button"></button>
-         </div> <!-- Advanced menu -->
-         <div class="">
-            <div class="col-md-2" >
-               <button class="menu-button" id="open-button"></button>
-            </div><!--col-md-2-->
-            <div class="col-md-10">
-
-                <?php
-
-                  // Houston, we've a serious problem; no signatures to scan => there was an error in the json REGEX_PATTERN
-                  // constant
-                if (0 == $aeScan->getCountPatterns()) {
-                    die();
+                if (DEMO) {
+                    echo '<span id="DemoMode" class="blink img-rounded bottomright">' . 
+                        'Demo Mode Enabled</span>';
                 }
 
-                ?>
+                if (DEBUG || true === $aeSession::get('Debug', DEBUG)) {
+                    echo '<span id="DebugMode" class="bottomright blink img-rounded" ' .
+                        'style="cursor:pointer;">Debug Mode Enabled</span>';
+                }
+            ?>
 
-                <?php echo $siteInfos;?>
+            <!-- Advanced menu -->
+            <div class="menu-wrap">
+                <div class="menu">
+                    <form id="frmAdvanced" name="frmAdvanced" method="POST">
 
-               <div style="margin-top:10px;">
+                        <div class="border">
+                            <?php echo $aeLanguage->get('SELECT_LANGUAGE');?>
+                            &nbsp;:
 
-                  <div class="alert alert-info fade in" role="alert" id="ALERTINFO">
-                     <a href="<?php echo $aeLanguage->get('HOME');?>" target="_blank"><img style="float:left;margin-right:10px;" title="<?php echo $aeLanguage->get('HOMETITLE'); ?>" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAA8CAYAAAAgwDn8AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwQAADsEBuJFr7QAAABh0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC41ZYUyZQAAFENJREFUaEPVWglYU3e2p+10melrbetSWxStYlUgJCEQwhpZsrNKIosgypINsPKsU7tM7UxHx67a9jlttXtnXqe209a6sLmhglpxQUFUVBRZRfYkgELOO+d6g4mA2qrf++Z83/lC/vd/7/2d/Zx/cPr/pCbO6KQmjzGXGt3HlDZxxk1hl/9zqJEzpqyJMxYaOWOtTW5jEtnl/xxq4o5f0cR9sq+JM6a6wX20D7v82+iU6xOPNnmMW9zgMea/m93G/he7fFfJND9F2RYre+kib8y09U5O97HLv42a3ccamzzG9jd6jB1o8BitByene9hLd43MRv1bZoNBwH69PcJgepX8kWH8+24LYNFqXczZunzr4uSH2aXbI8oCDZzRBc0+zxxv16jS7qYAy5Ytu7fHYFjeY9SnsUt3hhD0vSZj6nhzlmFLh9Hoyi7fcTLrdM6mbMP3zUbj3Yk1U5ZeZjEavoe79AJLtkFjydKn3lU37c7WLzQbdbkAcEdfAhrNfQj+u65s7QzQau9nl+88taSlPWIy6tabs/RRtyoEoG8TKGtu7u+tS9IeseamP2HO1Tmb9XpRt1GXaMnSvdylz9yEz+xBN23BLHTenG1Y2a3Xj7sr1rAY5k9Ed/rOZDTy2CWGCGRXTs7YXr1+umWhMdBi1M1BUIvM2foV+LkW7/kReR9q+gICvIx/W4nr5sbDUXk4NKYkAboRw3gdLFmGst6sjGfZx98y3bB2oDZ/17h48cO9OYZIS7ZuIwZdujlL97bFqC9A7Z02ZevrEWwLcicCtSCQfhsoe8br0LJgHuyfFQhbvblQJPCEw9JQQEvY7yEBPyD3Yl/vQHncGapCvoc3+5Whn6ZPf2Szp9sq9qsjdRsMnghqLfJFAsZo6Tdwy4IUOKqQwDZvHuzw9YKyMDHUJmoYoYbu1zfWouuxEBwon+fuj/zOxwLBYMwU8jyUBXyPoQL0ZGc/g4CPIlvtX0AaG/7FI3ONJhZKAkUIPBi2C/kM7xQJGEHaM9Mc9tL7zBkZE1gYDvSz4Nkx+Vz3U4WcmWH0fROH83gBz31/Ad89gdlgT+iPr9pr/FJaKpSj35L59wT6wvFIBaPFtowFNxUIkwCciFLC3gQ1NGzZBH2trdBdXQ1Vb/4NSiUhzLPt9/dk6WaxMBxoi6vrg/k8t2/QCr1FfE4+ftYX8DwaigRuLuyWa4Ruc8T+oQTy9Oxo2Ira25eSCAdzDFCMPrxT5M1o8kLSnBEFaZo3F3aFzwJLfT0mMgBTTQ1c6eqCgcuXoXrNB3AgNJgR0ra/J9uYycIYQgW8mYqjinATPXOf2N+az3VbV2bnUoOEwVljD6I5NRn2oAWaCvLA2t8PYLUyAOp/+gF2oGuciokY3Hs9n4qNhNMf/g9YBwagYdNGKEGXKpaFgaWuDq50dsIucQC0ps8f3N+dpX+DhTGErOmYkrP0TbTv0oLUhjyvGU+xlxwJNxXbHkh8UBYKF/69HgBBtJUdgPI/LoambUVgvXIFTn+0Bg6Qhu3223OFSgaNKHi/xQL70+bBtiARYOBB/cYNjEVK8PpFDHTbfpNB/xMLYwiVYepGYb/v1Gf2YP0wsMtDqSfb8IXtgeQau6Qh0HXyBPS1t0EzAi/CINwe7Ad9bW3QfvgQFIv9HVKiPZ+Oi2b8naxW8/lnsAsB75uXBH2XWqCnuQl2oUAUS7b9nQb9UbFYM2L7gv7/1laBZ+mmQM7j7NJQsmQbl9keyAiAFug+Xc0A3pecwGhwGwYzBWRHxTEUIAA6demDIOyZ8v+u0CC03C+MBS11F+Ayuk5/Tw8c+9NLcATdyT5+zmRm9noHKdc+6SkZtsUu5Lmvz+e7by7w9By5BTcZ9Sn2IPajizRvLWK02FKyG448nwsNmzcx8VD77TewNyRoxCAmJiuQq1z493fQdaIK2g6WQcWrL8M+vK9Tl+G4V6cFv9DogUl+su+f9gkbzUIapDye2wFMn/9Y7+b2ALs0lHqM2jAENFhVKcvsi4+D7lMnGb+lgCRhCEwpgqtHq9iDGI6pdThG7oPWoJghoTq0Q612KDOz30uqhmlBkVcm+yk+mSQWP0SYqE/CbiAA68qlkzGqr27YBG5PmS/rMOp6bQ+lNHc8Ug670dzVa96HxvwtcHLV20x6pCxj0z59EpNWuwyZmEKTmAxTGSEfLIL0LPu0ac94va80I+MlL0XCMY4kDoWI6Hfxlb3iJBb/rk2rHYV7qLjSvs5e7GRZuI70uCB8lCIkau85NOV1D4cGrAEnolVwTCmDk9ERjOZpndIsWakKC9aZuBjM0QHM36VBfnBWHQPlKHjHdVV3CCMoTN/LSLPeynh/L0V8nXvYbJgSqOpy8ZOpOrOyRmOr0UZ7TVnYIeQYxCxke9LcN8FHstpLHGk9nOHomzYmwDa2rRHoY0oJY43z8WpGIHIPsgTtwzbaip9XsAHsQw2asdK3IzfhWgW219sQ/BqTXs+v0Ghsfn2PMCJeypfP6Z4ZEgOu/oqSb7z58WdmR3Wi9Trwvk0dBsPQLPS0j4Q3yV/RRDe9mZBSi93nZXvwIzGBJLfAzwFsp7sQUAMygtMX4PVPce5dgYlhSU+OPg21rOg2Gt3hudTHalJTHxqp+3SV5zzorUp8zyd8dv9C30DrJp5HD2a/f56Ji/OkWYPd5kguQulq16AIK/pfT7AqIYqmMdIWao0Cup+0iKB6SYv4dxOa8hiuFyKo91GA+R3ZOmEnzgetBsPErpwFY9te0I6imbdxcfLDhxHwL6/op1e+kBZ8enFmQtWSzL/XPq8tbHtO92r3woVPrkdB1msce/tFQaFeH/iKTBu8PCHX279T4RXMYS8NJWeheIKLSN5B2ufKNMWCcM0omq76snVcc7Yu15Sle5HmgR6DIcRiTJtE0xq1vmUrtaMqnjeOP74049nKpZnhtYv1Cc3PZRoaF2n/3JKjXd2Uq/u5IVd3+lKOrr0rW9+DjFZysJ4VXexgSYDPu4V89xU/CwR/oIxT6MURFXA9SjbwPVtSg6UDM4Ijr7iIZEsQ6r1XEV9H6D7LpwaqgCNRA0+ekMouDxI9lPjQEt20o0szF556PvNfzYt0xR05+qPINV05+kbkLpyj+9Ai/chWe6A3Y8pU6CIDWKTiC7gzkwu4bvXYrB14398/SKCIr3QLjYVnAhTbp/tHPcJCukZPCOWPThDJKp8VR4GndE6dSK0e1se6sw3JCLB1OAC3y+ex3aYKn8dzr8JW+RLyt9QqizGFCpSJq9Ctrahg8ySBdGj6fNo7jD/ZX3GJpOTK41ewy4NEvXi5JCQYY8IBPAUv9TGUQmsRAE1fJqNj+rVnCnTKTDTIdBsc9zXPTwZ0G8Aqay7gu+Xatwo+kUkRXNkc8/RZ0TDJV76UXb5GzgKJeoq/st89fPZlT7kmkF0epC08d8PeYH8KYuZl9NmKwGv0GXD+nTfhUmE+tBXvhLrP1sGZl1+AcwuzoA731GfpoA6Bns1cAFVYiQ9jT0WTGTFVYnsBaLChgSmf73GYApp9NUN+kuRxXsr4izNRwZNF8hJ2+RpNFEr/4hoUCR7hcRe8VUlDfmRAc/6wy98HNbcA6ubOgWosYPXYRvdcqMX24hSc/eRjOImCNOZtgZ6GeuhraYFe/KTrDGPv34n9TyW2I2ewsFGFvr57bcNn06iZz/P4in2tPd3jrUzcQYVtsr+yYxJX/Bi7fpUmCKXfMv4vUR/hydVj2WWnIxLPhw+pYwxH5ifXHc/NgXMIsnXHdujB6cp09gxUf7AatmJXWkCmRy4UeGKb7c+0zKUJGqZtLkHAe2ZHoUANUI3zAFXmuqR4B/DE6Fp9pcF+Ozby3Lns6x0IFbuS2gsmDrBesctXyUUo2z1dHA1cqWaXICLiD+yy067AwLHVr758uO9iM9O41f/8Exxf8TqUoZ8X44RGgCnwboXNKPAxdKMj6Eb1c4c2f+iWnd2ZaSHsq4eQIDIp3VOqQQEieif7yWTs8lWaKJIeZwSQqQsp6tllp608N7ej6fPPWtANdmMPVIg+ymh7GIA3485jR6EaGzzydVssOQiQjW1GjiGSffUQEirnqlDBgIW2z0Uo17DLV8lFJD01AyOcK1fnObEBhJnn0QKue+GeWQFWS+15dImrae5mvB2ns8rlf4Yzn6yFPdgb2dZb9++HCnShCqV0xOkN240Rj/TRhcJZAS5PEkmT2OWrNEEoqZjO1AB1kUCgvf9bkej3mI8/w5RmKRZ5F7bvLRk4iFqzBzock0tV//0DHDMPQv2GH6EEfd927VLJHqhG4NefBdlzhy79nd2BgY8PJ8SgC6EALj7SuezyVZroKy2+WsQ0e9xwHs3jumVh5jFjJfxkX6DQ7cK6j3pPrn7HwX2KfL0YbZNbUZCeePsN2JukgXNffwnN27fC2U/XwgEcM237W0tL4HzO8MBtXBM/21LI5+ygSnz9cYm3KuFF6hKmYAw4+4Yr2eWrNFEo+ce04EgMYvWxtX7CRMzFXflc9+IiwZRRpI2qJYv2Ne/YBoU+PAYMudMlBEQT2gFMf0yAo8a7jlfCLnSRytdfgwvff8scndgCvePQQai7iQANyYlXixnfw4LvX1FhNzZ6qRI+wTQPUwKUPRN95Y61aoKv5BUPFGClOrm7PDayvSRQdHYLBjBdo4bubLb+s+7KCuYwi8A05G2G48tfh5ZdxXDirTdw2G+FxoJ8aNi4AfYmaqBq5XKo+fIzMJ+rYSxFVjKdOAHNNxGApjc6+KV3YE9k2uLpnsC4E8A9fGXCCTeqA36KrvE8+WCqZ2i8UKJZHZdo7UI/pwzRoc84WjorMKCA55ZaFhr8RVtmmrlj21YEu5J5OB1onXj7TeaIhWrBxeIdWBfOMicUhxYaoearL+DMuo+gRBPD7Kdg7sYs1DZM9rFnajVsAjDMdS8qxXj0VSVO4yvi2ynRUMZkYV8jZy+J74EFae22B7VmzB/Y6edlLuB5tJYGiY516zPb6l77U3/H0XLmYIp8nk4YziHQoy+9ANuC/aAEWwM6pRt8uR3TuVA7Cttx3QnEcLzdl99guw/j0EKnb97KpBTMQL3k5hN9Za+xsK+RC0f1eK4y7mQHWQAf0qbN2LxT6BVU5M2Zgk3VOJMxg3c8VvXX9l/295dhJingc6BIyL+lQkY+TWdCje+9O6SBu57R+m3bfLir7e9fL/AMFKgSPif/fwb7NawBjGsPoacE4WskIZGQotJAsFzzArvM0I5Jkx4q4nNyjy/J7Sc/LxJ6OYC8EZO1LOfPwfl0x1Noe0bgA8g4+elymXnA7v7VIlE6Tz6nltxnsp98jyu2/iwsR5ogCnV2Fob3YakGbJoOe0pix9E6BRH64h8pre7EtNlWshvKly5xADkyc5ggb/jn19h2zwf6icls1FtwLG0zGw2nEPwPOEP/tSfLsOByltbbmpPzYJ7XzCD7Z6SHyA9Q+sQC1j9RKHsJIY38O5qzt+TDSSK5FfvuK+5h6nnU1ubx3VOwoPXRw8gdyo3aga6qSocqOxLvlIRAR/kRqNKlb7Nk6+ZZcgz+CHIqnfEMV6wAh/wqlSxqHyqKfo76ISgQAmRqK425qP3GCSLpjX+3fspLKnD2kVyk0XJmSGzTcwGhCjTpGRsgtMKVrUL+mpp332m+uGvn4EnzcLwV22+qHc0bfmw4HBfpzr5iWAJMk13ZugCMv42YieopVlr1WnhRnYwjbhxpH6b7Sl9mt9+AMOdTLODwbKXKHCVWtNKJgA0UVuiSIp8Zow+oY1UXN2+8RACpKyVXsQdPBe8UpteuY+UDRzSxr18/oNgTaZ18H2PAPBgTyJsXpIOPfA5Qi+MWoDwgHMn3r6dROCw4e4eXYsEADwycxQGzaEoiYP1bBG5MBdyBHWt5cvz8+q+/NHWUHwbqk5hOFfdt9fPGNmIddJYfsVYZtP+7Ty684YsR8DyMg24beOIdaRkQokqAGeg6U/2VpqAgZTRuvfXfkCfwwnywYWrCsg3u+JBXAsRQ4Cs4UGs37C9zcrq3LFoRU7v2w1rzuXNWOi8tQ9PXYZEzna4eqMpduGV/2NDTZXui0zUM6EYbcNL8Ya0WIiOTgOZzdOXLokDV33DrrYMn0qDJAwIU81xF0stTMB74oTHwl9kJLa0G3Xv0LzLsNkaI/RIxD8Guu/D5pybTyRPQUlTQX6lP/3yfWDzsr432hFkpg1KoDXwBaj4iMpEB7xqoGuAGKNdFCK4NWL+KljktuzcgQJI+VSQxTwlQgQc+dNHsuQMntZmHmo3pDtmgQuP2wEGVVIC8br88fGlZhOCWXmrO0i3HtNrQrNea/jUvDYIU8Zg8YrBhU13hBCjyY8JibmjBm5LGTfNAUIBMN10k7cAqCFRMYlXxsCph3i+r4lMns9t+M53LzHzqeXXKoujIxNM8zPV0bIJDey8dcaql6ifYbbdH5E5ykVw83VdycjLWiGlBkcAJjbV6SuIqubL4+TNQSzQEsdtvTpjp/KOiHuErEryxwuZ5SjRmdBkrncnS0ebTPuGLXV3lD7K77xxJsYhwfKUfTvWVtZM1qLFCc1s9wuJOeUjiPsZmK5MnTxR7S+Mn0lxNgtuYGx39GAH2UibM4cs1K7jSObuxul4mX5+GafIZf8UANml5430kwfiqXxewv4bIpcKCI/x8xJElLr7SXhKEKTJo+pmhMX0eYbM7sem66KWMv+AblXzOLyqlxkeVVIuDUiMCbvcIn21xC4u1zpgVg/dFUnN25dngyFqfyLmpw5553i3SarX3B6lSZAh87bQgVcVUDLrJ/gr6NYURiKxDhdDG9J3W6fqUQKUVv5+fGRK90UeVkBmTlXV7gXo7RO7hF5s8blpwzEwsfs+h/36Nrch5Z6HkMs7ZVnQLRgBPiboXtf+Lb0TSKmHMXClXpXaWJC++M/+p6OTk9H895/Dti65t0gAAAABJRU5ErkJggg=="/></a>
-                        <?php echo sprintf($aeLanguage->get('ALERTINFO'), $aeLanguage->get('HOME'), aeSecureFct::human_filesize(MAX_SIZE, 0)); ?>
-                  </div>
+                            <div>
+                                <select class="form-control" id="lang" name="lang">
+                                    <?php
+                                        // Retrieve the list of JSON files that match
+                                        // aesecure_quickscan_*.json
+                                        // f.i. aesecure_quickscan
+                                        $script  = str_replace('.php', '', basename(__FILE__));
+
+                                        // f.i. aesecure_quickscan_lang_*.json
+                                        $pattern = str_replace('.php', '_lang_*.json', basename(__FILE__));
+
+                                        $arr = glob($pattern);
+
+                                        if (count($arr) > 0) {
+                                            foreach ($arr as $filename) {
+                                                $lang = str_replace('.json', '', 
+                                                    str_replace($script . '_lang_', '', $filename));
+                                                echo '<option value="' . $lang . '"' . 
+                                                    ($aeLanguage->getlang() == $lang 
+                                                    ? ' selected="selected"' 
+                                                    : '') . '>' . $lang . '</option>';
+                                            }
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="border">
+                            <?php echo $aeLanguage->get('ADVANCED_OPTIONS');?>
+                            &nbsp;:
+
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="chkExpert" name="chkExpert" title="" 
+                                        <?php 
+                                            if (true === $aeSession::get('Expert', EXPERT)) {
+                                                echo 'checked="checked" ';
+                                            }
+                                        ?>
+                                    >
+                                    <?php echo $aeLanguage->get('EXPERT_MODE');?>
+                                </label>
+                                <br/>
+                                <label>
+                                    <input type="checkbox" id="chkDebug" name="chkDebug" title="" 
+                                        <?php 
+                                            if (true === $aeSession::get('Debug', DEBUG)) {
+                                                echo 'checked="checked" ';
+                                            } 
+                                        ?>
+                                    >
+                                    <?php echo $aeLanguage->get('DEBUG_MODE');?>                                    
+                                </label>
+                                <br/>
+                                <br/>
+
+                                <?php
+                                    $select = '';
+                                    $wMax   = $aeSession::get('MaxFilesByCycle', MAXFILESBYCYCLE);
+
+                                    $arr    = [
+                                        '250' => 250, 
+                                        '500' => 500, 
+                                        '1000' => 1000, 
+                                        '1250' => 1250, 
+                                        '1500' => 1500, 
+                                        '2500' => 2500, 
+                                        '5000' => 5000, 
+                                        '0' => $aeLanguage->get('ALL')
+                                    ];
+
+                                    foreach ($arr as $key => $value) {
+                                        $select .= '<option value="' . $key . '" ' .
+                                             (($wMax == $key) ? 'selected="SELECTED"' : '') . '>' . 
+                                             $value . '</option>';
+                                    }
+
+                                    $select = sprintf(
+                                        $aeLanguage->get('EXPERT_MAXFILES'), 
+                                        '<select id="nbrFilesCycle" name="nbrFilesCycle">' . 
+                                        $select . '</select>');
+
+                                    echo '<label>' . $select . '</label>';
+                                ?>
+
+                            </div>
+                        </div>
+
+                        <div class="border">
+                            <?php echo $aeLanguage->get('IGNORE_TITLE');?>
+                            &nbsp;:
+
+                            <div class="checkbox">
+                                <label title="
+                                    <?php 
+                                        echo sprintf($aeLanguage->get('IGNORE_EXTENSIONS'), ExtArchives); 
+                                    ?>"
+                                >
+                                <input type="checkbox" id="chkIgnoreArchives" name="chkIgnoreArchives" 
+                                    <?php 
+                                        if (1 === $aeSession::get('IgnoreArchives', 1)) {
+                                            echo 'checked="checked" ';
+                                        } 
+                                    ?>
+                                >
+                                <?php 
+                                    echo $aeLanguage->get('IGNORE_ARCHIVE') . 
+                                        '<br/><span class="ignoredext">' . ExtArchives . '</span>';
+                                ?>
+
+                                </label>
+
+                                <br/>
+
+                                <label title="
+                                    <?php 
+                                        echo sprintf($aeLanguage->get('IGNORE_EXTENSIONS'), ExtDocuments); 
+                                    ?>"
+                                >
+                                <input type="checkbox" id="chkIgnoreDocuments" name="chkIgnoreDocuments" 
+                                    <?php 
+                                        if (1 === $aeSession::get('IgnoreDocuments', 1)) {
+                                            echo 'checked="checked" ';
+                                        } 
+                                    ?>
+                                >
+                                <?php 
+                                    echo $aeLanguage->get('IGNORE_DOCUMENTS') . '<br/>' . 
+                                        '<span class="ignoredext">' . ExtDocuments . '</span>';
+                                ?>
+
+                                </label>
+
+                                <br/>
+
+                                <label title="
+                                    <?php 
+                                        echo sprintf($aeLanguage->get('IGNORE_EXTENSIONS'), ExtFonts); 
+                                    ?>"
+                                >
+                                <input type="checkbox" id="chkIgnoreFonts" name="chkIgnoreFonts" 
+                                    <?php 
+                                        if (1 === $aeSession::get('IgnoreFonts', 1)) {
+                                            echo 'checked="checked" ';
+                                        }
+                                    ?>
+                                >
+                                <?php 
+                                    echo $aeLanguage->get('IGNORE_FONT') . '<br/>' . 
+                                        '<span class="ignoredext">' . ExtFonts . '</span>';
+                                ?>
+
+                                </label>
+
+                                <br/>
+
+                                <label title="
+                                    <?php 
+                                        echo sprintf($aeLanguage->get('IGNORE_EXTENSIONS'), ExtImages);
+                                    ?>"
+                                >
+                                <input type="checkbox" id="chkIgnoreImages" name="chkIgnoreImages" 
+                                    <?php 
+                                        if (1 === $aeSession::get('IgnoreImages', 1)) {
+                                            echo 'checked="checked" ';
+                                        } 
+                                    ?>
+                                >
+                                <?php echo $aeLanguage->get('IGNORE_IMAGES') . '<br/>' . 
+                                    '<span class="ignoredext">' . ExtImages . '</span>';
+                                ?>
+
+                                </label>
+
+                                <br/>
+
+                                <label title="
+                                    <?php 
+                                        echo sprintf($aeLanguage->get('IGNORE_EXTENSIONS'), ExtMedia); 
+                                    ?>"
+                                >
+                                <input type="checkbox" id="chkIgnoreMedia" name="chkIgnoreMedia" 
+                                    <?php 
+                                        if (1 === $aeSession::get('IgnoreMedia', 1)) {
+                                            echo 'checked="checked" ';
+                                        }
+                                    ?>
+                                >
+                                <?php 
+                                    echo $aeLanguage->get('IGNORE_MEDIA') . '<br/>' . 
+                                        '<span class="ignoredext">' . ExtMedia . '</span>';
+                                ?>
+
+                                </label>
+
+                                <br/>
+
+                                <label title="
+                                    <?php 
+                                        echo sprintf($aeLanguage->get('IGNORE_EXTENSIONS'), ExtSoundMovies);
+                                    ?>
+                                ">
+                                <input type="checkbox" id="chkIgnoreSoundMovies" 
+                                    name="chkIgnoreSoundMovies" 
+                                    <?php 
+                                        if (1 === $aeSession::get('IgnoreSoundMovies', 1)) {
+                                            echo 'checked="checked" ';
+                                        }
+                                    ?>
+                                >
+                                <?php 
+                                    echo $aeLanguage->get('IGNORE_MOVIES') . '<br/>' . 
+                                        '<span class="ignoredext">' . ExtSoundMovies . '</span>';
+                                ?>
+
+                                </label>
+
+                                <br/>
+
+                                <label title="
+                                    <?php 
+                                        echo sprintf($aeLanguage->get('IGNORE_EXTENSIONS'), ExtText);
+                                    ?>"
+                                >
+                                <input type="checkbox" id="chkIgnoreText" name="chkIgnoreText" 
+                                    <?php 
+                                        if (1 === $aeSession::get('IgnoreText', 1)) {
+                                            echo 'checked="checked" ';
+                                        }
+                                    ?>
+                                >
+                                <?php echo $aeLanguage->get('IGNORE_TEXTES') . '<br/>' . 
+                                    '<span class="ignoredext">' . ExtText . '</span>';
+                                ?>
+
+                            </div>
+                        </div>
+
+                        <button type="button" id="btnSubmit" class="btn btn-primary">
+                            <?php echo $aeLanguage->get('APPLY');?>
+                        </button>
+
+                    </form>
+                </div>
+                <button class="close-button" id="close-button"></button>
+            </div> <!-- Advanced menu -->
+
+            <div class="">
+
+                <div class="col-md-2" >
+                    <button class="menu-button" id="open-button"></button>
+                </div>
+
+                <div class="col-md-9">
 
                     <?php
 
-                    if (!$aeLanguage->ready()) {
-                        echo '<div class="alert alert-warning  fade in" >';
-                        echo '<div class="text-danger">Error. No translation file found.  Please download the <a href="https://www.aesecure.com" target="_blank">aeSecure QuickScan</a> archive again and take the json file that match your preferred language (for instance aesecure_quickscan_en-GB.json).  You can find this file in the archive and you need to save it in the same folder of aesecure_quickscan.php, then refresh this page.</div>';
-                        echo '</div>';
-                    } else { // if(!$aeLanguage->ready())
-                        if (true !== $aeSession::get('Expert', EXPERT)) {
-                            echo '<div class="alert alert-warning alert-dismissible fade in" role="alert">' .
-                             '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>';
-                            echo $aeLanguage->get('ALERTWARNING');
-                            echo '</div>';
+                        // Houston, we've a serious problem; no signatures to scan =>
+                        // there was an error in the json PATTERN
+                        if (0 == $aeScan->getCountPatterns()) {
+                            die();
                         }
 
-                        echo '<div class="row">';
-
-                        if (true === $aeSession::get('Expert', EXPERT)) {
-                            echo '<div class="col-md-12" style="padding-bottom:16px;">' . $aeLanguage->get('SCANFOLDER') . ' <input type="text" name="folder" id="folder" value="' . $aeScan->directory() . '" size="80" /></div>';
-                        }
-
-                        echo '<button type="button" id="cleansite" class="btn btn-primary" data-toggle="popover" data-placement="top" data-html="true" data-content="' . $aeLanguage->get('BTNCLEANHINT') . '" data-old-caption="1. ' . $aeLanguage->get('BTNCLEAN') . '">1. ' . $aeLanguage->get('BTNCLEAN') . '</button>&nbsp;';
-                        echo '<button type="button" id="getcountfiles" disabled="disabled" class="btn btn-primary" data-toggle="popover" data-placement="bottom" data-html="true" data-content="<span class=\'text-info\'>' . $aeLanguage->get('BTNGETLISTHINT') . '</span>" data-old-caption="2. ' . $aeLanguage->get('BTNGETLIST') . '">2. ' . $aeLanguage->get('BTNGETLIST') . '</button>&nbsp;';
-                        echo '<button type="button" id="startscan" data-start="0" data-end="0" disabled="disabled" class="btn btn-primary" data-toggle="popover" data-placement="bottom" data-html="true" data-content="<span class=\'text-info\'>' . $aeLanguage->get('BTNSCANHINT') . '</p>" data-old-caption="3. ' . $aeLanguage->get('BTNSCAN') . '">3. ' . $aeLanguage->get('BTNSCAN') . '</button>&nbsp;';
-
-                        $killnr = 4;
-
-                        echo '<button type="button" id="destroy" class="btn btn-warning" data-toggle="popover" data-placement="bottom" data-html="true" data-content="<strong class=\'text-danger\'>' . $aeLanguage->get('BTNKILLMEHINT') . '</strong>"><span class="glyphicon glyphicon-trash">&nbsp;</span>' . $killnr . '. ' . $aeLanguage->get('BTNKILLME') . '</button>';
-
-                        echo '<div id="resultGetCountFiles" style="display:none;padding-top:25px;" class="text-info">' .
-                          '<div id="resultGetCountFilesNumber" style="padding-bottom:15px;"></div>' .
-                          '<div id="resultGetCountFilesButtons"></div>' .
-                          '</div>';
-                        echo '<div id="result">' . $showInfo . '</div>';
-                        echo '</div>'; // row
-
-                        $aeProgress->getHTML();
-                    } //if(!$aeLanguage->ready())
                     ?>
-               </div>
 
-                <?php echo $aeScan->getHTMLFooter(); ?>
+                    <?php echo $siteInfos;?>
 
-            </div> <!--col-md-10-->
-         </div>
-      </div> <!--container-full-->
+                    <div style="margin-top:10px;">
+
+                        <div class="alert alert-info fade in" role="alert" id="ALERTINFO">
+                            <a href="<?php echo $aeLanguage->get('HOME');?>" target="_blank">
+                                <img style="float:left;margin-right:10px;" title="
+                                    <?php echo $aeLanguage->get('HOMETITLE'); ?>" 
+                                    src="data:image/png;base64,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"/>
+                            </a>
+                            <?php 
+                                echo sprintf(
+                                    $aeLanguage->get('ALERTINFO'), 
+                                    $aeLanguage->get('HOME'), 
+                                    aeSecureFct::human_filesize(MAX_SIZE, 0)
+                                ); 
+                            ?>
+                        </div>
+
+                        <?php
+
+                            if (!$aeLanguage->ready()) {
+                                echo '<div class="alert alert-warning fade in" >';
+                                echo '<div class="text-danger">Error. No translation file found. ' .
+                                    'Please download the <a href="https://github.com/cavo789/aesecure_quickscan" '.
+                                    'target="_blank">aeSecure QuickScan</a> archive again and take ' .
+                                    'the json file that match your preferred language ' .
+                                    '(for instance aesecure_quickscan_en-GB.json). '.
+                                    'You can find this file in the archive and you need to save ' .
+                                    'it in the same folder of aesecure_quickscan.php, then refresh ' .
+                                    'this page.</div>';
+                                echo '</div>';
+                            } else {
+                                if (true !== $aeSession::get('Expert', EXPERT)) {
+                                    echo '<div class="alert alert-warning alert-dismissible fade in" role="alert">' .
+                                    '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>';
+                                    echo $aeLanguage->get('ALERTWARNING');
+                                    echo '</div>';
+                                }
+
+                                echo '<div class="row">';
+
+                                if (true === $aeSession::get('Expert', EXPERT)) {
+                                    echo '<div class="col-md-12" style="padding-bottom:16px;">' . $aeLanguage->get('SCANFOLDER') . ' <input type="text" name="folder" id="folder" value="' . $aeScan->directory() . '" size="80" /></div>';
+                                }
+
+                                echo '<button type="button" id="cleansite" class="btn btn-primary" ' .
+                                    'data-toggle="popover" data-placement="top" data-html="true" ' .
+                                    ' data-content="' . $aeLanguage->get('BTNCLEANHINT') . '" ' .
+                                    'data-old-caption="1. ' . $aeLanguage->get('BTNCLEAN') . '">1. ' . 
+                                    $aeLanguage->get('BTNCLEAN') . '</button>&nbsp;';
+
+                                echo '<button type="button" id="getcountfiles" disabled="disabled" ' .
+                                    'class="btn btn-primary" data-toggle="popover" ' .
+                                    'data-placement="bottom" data-html="true" ' .
+                                    'data-content="<span class=\'text-info\'>' . 
+                                    $aeLanguage->get('BTNGETLISTHINT') . '</span>" ' .
+                                    'data-old-caption="2. ' . $aeLanguage->get('BTNGETLIST') . 
+                                    '">2. ' . $aeLanguage->get('BTNGETLIST') . '</button>&nbsp;';
+                                echo '<button type="button" id="startscan" data-start="0" ' .
+                                    'data-end="0" disabled="disabled" class="btn btn-primary" ' . 
+                                    'data-toggle="popover" data-placement="bottom" data-html="true" ' .
+                                    'data-content="<span class=\'text-info\'>' . 
+                                    $aeLanguage->get('BTNSCANHINT') . '</p>" data-old-caption="3. ' . 
+                                    $aeLanguage->get('BTNSCAN') . '">3. ' . 
+                                    $aeLanguage->get('BTNSCAN') . '</button>&nbsp;';
+
+                                $killnr = 4;
+
+                                echo '<button type="button" id="destroy" class="btn btn-warning" ' .
+                                    'data-toggle="popover" data-placement="bottom" data-html="true" ' .
+                                    'data-content="<strong class=\'text-danger\'>' . 
+                                    $aeLanguage->get('BTNKILLMEHINT') . '</strong>">' .
+                                    '<span class="glyphicon glyphicon-trash">&nbsp;</span>' . 
+                                    $killnr . '. ' . $aeLanguage->get('BTNKILLME') . '</button>';
+
+                                echo '<div id="resultGetCountFiles" style="display:none;padding-top:25px;" class="text-info">' .
+                                '<div id="resultGetCountFilesNumber" style="padding-bottom:15px;"></div>' .
+                                '<div id="resultGetCountFilesButtons"></div>' .
+                                '</div>';
+                                echo '<div id="result">' . $showInfo . '</div>';
+                                echo '</div>';
+
+                                $aeProgress->getHTML();
+                            }
+                        ?>
+                    </div>
+
+                    <?php echo $aeScan->getHTMLFooter(); ?>
+
+                </div>
+            </div>
+        </div>
+
         <?php
-         echo aeSecureFct::addJavascript('libs/jquery/js/jquery.min.js', '//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js');
-         echo aeSecureFct::addJavascript('libs/bootstrap/js/bootstrap.min.js', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js');
-         echo aeSecureFct::addJavascript('libs/tablesorter/js/jquery.tablesorter.combined.js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.5/js/jquery.tablesorter.combined.js', true);
-         //echo aeSecureFct::addJavascript('jquery.tablesorter.widgets.min.js','https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.5/js/jquery.tablesorter.widgets.min.js', true);
-         echo aeSecureFct::addJavascript('libs/alertify/js/alertify.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/alertify.js/0.3.11/alertify.min.js', true);
+            echo aeSecureFct::addJavascript(
+                'libs/jquery/js/jquery.min.js', 
+                '//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'
+            );
+
+            echo aeSecureFct::addJavascript(
+                'libs/bootstrap/js/bootstrap.min.js', 
+                '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'
+            );
+
+            echo aeSecureFct::addJavascript(
+                'libs/tablesorter/js/jquery.tablesorter.combined.js', 
+                'https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.5/js/jquery.tablesorter.combined.js', 
+                true
+            );
+
+            echo aeSecureFct::addJavascript(
+                'libs/alertify/js/alertify.min.js', 
+                'https://cdnjs.cloudflare.com/ajax/libs/alertify.js/0.3.11/alertify.min.js', 
+                true
+            );
         ?>
-      <script defer="defer">
-         $(document).ready(function() {
 
-            var $body   = $(document.body);
-            var navHeight = $('.navbar').outerHeight(true) + 10;
+        <script defer="defer">
+            $(document).ready(function() {
 
-            // For esthetic purpose; scroll back to top-left before displaying the Expert menu
-            $('#open-button').bind('click', function() { window.scrollTo(0,0); });
+                var $body   = $(document.body);
+                var navHeight = $('.navbar').outerHeight(true) + 10;
 
-            // Set the TOP position of the advanced menu button and area depending on the top horizontal navigation bar
-            $top = $("nav").height();
+                // For esthetic purpose; scroll back to top-left before 
+                // displaying the Expert menu
+                $('#open-button').bind('click', function() { window.scrollTo(0,0); });
 
-            if($top!==null) {
-               $("#open-button").css({ top: $top +'px' });
-               $(".menu-wrap").css({ top: $top +'px' });
+                // Set the TOP position of the advanced menu button and area 
+                // depending on the top horizontal navigation bar
+                $top = $("nav").height();
+
+                if($top!==null) {
+                    $("#open-button").css({ top: $top +'px' });
+                    $(".menu-wrap").css({ top: $top +'px' });
+                }
+
+                try {
+                    // OffCanvasMenuEffects from http://tympanus.net/Development/OffCanvasMenuEffects/
+                    !function(s){"use strict";function e(s){return new RegExp("(^|\\s+)"+s+"(\\s+|$)")}function n(s,e){var n=a(s,e)?c:t;n(s,e)}var a,t,c;"classList"in document.documentElement?(a=function(s,e){return s.classList.contains(e)},t=function(s,e){s.classList.add(e)},c=function(s,e){s.classList.remove(e)}):(a=function(s,n){return e(n).test(s.className)},t=function(s,e){a(s,e)||(s.className=s.className+" "+e)},c=function(s,n){s.className=s.className.replace(e(n)," ")});var i={hasClass:a,addClass:t,removeClass:c,toggleClass:n,has:a,add:t,remove:c,toggle:n};"function"==typeof define&&define.amd?define(i):s.classie=i}(window);
+                    !function(){function e(){n()}function n(){d.addEventListener("click",t),u&&u.addEventListener("click",t),o.addEventListener("click",function(e){var n=e.target;i&&n!==d&&t()})}function t(){i?classie.remove(c,"show-menu"):classie.add(c,"show-menu"),i=!i}var c=document.body,o=document.querySelector(".content-wrap"),d=document.getElementById("open-button"),u=document.getElementById("close-button"),i=!1;e()}();
+                } catch (e) {
+                }
+
+            });
+        </script>
+
+        <script defer="defer">
+
+            var $maxFilesByCycle=parseInt($('#nbrFilesCycle').val());
+            var $debug=<?php echo true === $aeSession::get('Debug', DEBUG) ? 'true' : 'false'; ?>;
+            var $demo=<?php echo DEMO ? 'true' : 'false'; ?>;
+            var $rootfolder='<?php echo str_replace('\\', '\\\\', $aeScan->directory()); ?>';
+
+            /**
+             * Format a number in javascript; display 15.202 (with thousand separator) instead 15202
+             * @param {type} x
+             * @returns {unresolved}
+             */
+            function numberWithCommas(x) {
+                return x.toString().replace(
+                    /\B(?=(\d{3})+(?!\d))/g, 
+                    "<?php echo $aeLanguage->get('THOUSANDSEPARATOR'); ?>"
+                );
             }
 
-            try {
-               // OffCanvasMenuEffects from http://tympanus.net/Development/OffCanvasMenuEffects/
-               !function(s){"use strict";function e(s){return new RegExp("(^|\\s+)"+s+"(\\s+|$)")}function n(s,e){var n=a(s,e)?c:t;n(s,e)}var a,t,c;"classList"in document.documentElement?(a=function(s,e){return s.classList.contains(e)},t=function(s,e){s.classList.add(e)},c=function(s,e){s.classList.remove(e)}):(a=function(s,n){return e(n).test(s.className)},t=function(s,e){a(s,e)||(s.className=s.className+" "+e)},c=function(s,n){s.className=s.className.replace(e(n)," ")});var i={hasClass:a,addClass:t,removeClass:c,toggleClass:n,has:a,add:t,remove:c,toggle:n};"function"==typeof define&&define.amd?define(i):s.classie=i}(window);
-               !function(){function e(){n()}function n(){d.addEventListener("click",t),u&&u.addEventListener("click",t),o.addEventListener("click",function(e){var n=e.target;i&&n!==d&&t()})}function t(){i?classie.remove(c,"show-menu"):classie.add(c,"show-menu"),i=!i}var c=document.body,o=document.querySelector(".content-wrap"),d=document.getElementById("open-button"),u=document.getElementById("close-button"),i=!1;e()}();
-            } catch (e) {
-            }
-
-         });
-
-      </script>
-
-      <script defer="defer">
-
-         var $maxFilesByCycle=parseInt($('#nbrFilesCycle').val());
-         var $debug=<?php echo true === $aeSession::get('Debug', DEBUG) ? 'true' : 'false'; ?>;
-         var $demo=<?php echo DEMO ? 'true' : 'false'; ?>;
-         var $rootfolder='<?php echo str_replace('\\', '\\\\', $aeScan->directory()); ?>';
-
-         /**
-          * Format a number in javascript; display 15.202 (with thousand separator) instead 15202
-          * @param {type} x
-          * @returns {unresolved}
-          */
-         function numberWithCommas(x) {
-            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "<?php echo $aeLanguage->get('THOUSANDSEPARATOR'); ?>");
-         }
-
-         $('[data-toggle="popover"]').popover({trigger:'hover',html:true});
+            $('[data-toggle="popover"]').popover({trigger:'hover',html:true});
 
             <?php $aeProgress->getJSFunction('initialize'); ?>
 
-         // Submit button of the advanced form
-         $('#btnSubmit').click(function(e) {
+            // Submit button of the advanced form
+            $('#btnSubmit').click(function(e) {
 
-            e.stopImmediatePropagation();
+                e.stopImmediatePropagation();
 
-            var $data = '';
+                var $data = '';
 
-            $data+="lang="+$('#lang').val()+"&";
+                $data += "lang=" + $('#lang').val() + "&";
 
-            // Prepare a string with all checkboxes and their status (on or off).
-            $('input[type=checkbox]').each(function () {
-                $data+=this.id + "=" + (this.checked ? "on" : "off") + "&";
+                // Prepare a string with all checkboxes and their status (on or off).
+                $('input[type=checkbox]').each(function () {
+                    $data+=this.id + "=" + (this.checked ? "on" : "off") + "&";
+                });
+
+                if($demo==true) {
+                    alert('Expert and Debug modes aren\'t allowed in demo mode. ' + 
+                        'These options won\'t be accessible at this time');
+                }
+
+                $data += "formTask=SaveSession&nbFiles=" + parseInt($('#nbrFilesCycle').val());
+
+                // Post the data and reload the page to take the new settings into account
+                $.post("<?php echo FILE; ?>", $data).done(function( data ) {
+                    var $url = window.location.href;
+                    $url = removeURLParameter($url,'lang') + 'lang=' + $('#lang').val();
+                    window.location.href=$url;
+                });
+
             });
 
-            if($demo==true) {
-               alert('Expert and Debug modes aren\'t allowed in demo mode. These options won\'t be accessible at this time');
-            }
+            // Start the scan process
+            $('#cleansite').click(function (e) {
+                e.stopImmediatePropagation();
+                var btn=this;
+                $.ajax({
+                    beforeSend: function() {
+                        if(!$debug) $('#cleansite').prop("disabled", true);
+                        $('.popover').popover('hide');
+                        $('#result').empty();
+                        $('#resultGetCountFilesNumber').empty();
+                        <?php $aeProgress->getJSFunction('ajax_before'); ?>
+                    },
+                    async:true,
+                    type:($debug?'GET':'POST'),
+                    url: "<?php echo FILE; ?>",
+                    data:"task=cleansite&folder="+(btoa($('#folder').val())),
+                    success: function (data) {
+                        <?php $aeProgress->getJSFunction('ajax_success'); ?>
+                        $('#cleansite').html("1. <?php echo $aeLanguage->get('BTNCLEANDONE');?>");
+                        $('#result').html(data);
+                        $('#getcountfiles').prop("disabled", false);
+                        // To remember that we've already click on this button
+                        $(btn).addClass('btn-success');
 
-            $data += "formTask=SaveSession&nbFiles="+parseInt($('#nbrFilesCycle').val());
-
-            // Post the data and reload the page to take the new settings into account
-            $.post("<?php echo FILE; ?>", $data).done(function( data ) {
-               var $url=window.location.href;
-               $url=removeURLParameter($url,'lang')+'lang='+$('#lang').val();
-               window.location.href=$url;
+                    }
+                });
             });
 
-         });
+            // Get the number of files that will be analyzed during the scan
+            $('#getcountfiles').click(function (e) {
+                e.stopImmediatePropagation();
+                var $data = new Object;
+                $data.task = "getcountfiles"
+                $data.folder=btoa($('#folder').val());
 
-         // Start the scan process
-         $('#cleansite').click(function (e) {
-            e.stopImmediatePropagation();
-            var btn=this;
-            $.ajax({
-               beforeSend: function() {
-                  if(!$debug) $('#cleansite').prop("disabled", true);
-                  $('.popover').popover('hide');
-                  $('#result').empty();
-                  $('#resultGetCountFilesNumber').empty();
-                    <?php $aeProgress->getJSFunction('ajax_before'); ?>
-               },
-               async:true,
-               type:($debug?'GET':'POST'),
-               url: "<?php echo FILE; ?>",
-               data:"task=cleansite&folder="+(btoa($('#folder').val())),
-               success: function (data) {
-                    <?php $aeProgress->getJSFunction('ajax_success'); ?>
-                  $('#cleansite').html("1. <?php echo $aeLanguage->get('BTNCLEANDONE');?>");
-                  $('#result').html(data);
-                  $('#getcountfiles').prop("disabled", false);
-                  $(btn).addClass('btn-success');        // To remember that we've already click on this button
+                // Define the "toString()" method to get a string representation of the object
+                Object.prototype.toString = function dogToString() {
+                    var ret = 'task=' + this.task + '&folder=' + this.folder;
+                    return ret;
+                }
 
-               }
-            });
-         }); // $('#cleansite')
-         // Get the number of files that will be analyzed during the scan
-         $('#getcountfiles').click(function (e) {
-            e.stopImmediatePropagation();
-            var $data = new Object;
-            $data.task = "getcountfiles"
-            $data.folder=btoa($('#folder').val());
+                var btn=this;
 
-            // Define the "toString()" method to get a string representation of the object
-            Object.prototype.toString = function dogToString() {
-               var ret = 'task=' + this.task + '&folder=' + this.folder;
-               return ret;
-            }
+                $.ajax({
+                    beforeSend: function() {
+                        if(!$debug) $('#getcountfiles').prop("disabled", true);
+                        $('.popover').popover('hide');
+                        $('#getcountfiles').html("2. <?php echo $aeLanguage->get('RUNNING');?>");
+                        $('#result').empty();
+                        $('#resultGetCountFilesNumber').empty();
+                        $('#result').html('<div class="blink" id="gettingFiles"><?php echo str_replace("'", "\'", $aeLanguage->get('GETTINGFILES'));?></div>');
+                    },
+                    async:true,
+                    cache:false,
+                    type:($debug?'GET':'POST'),
+                    url: "<?php echo FILE; ?>",
+                    data:$data,
+                    dataType:"json",
+                    success: function (json) {
+                        var $msg="<?php echo str_replace('"', '\"', $aeLanguage->get('GETCOUNTFILESDONE'));?>".replace("%s",numberWithCommas(json.count));
+                        $msg=$msg.replace("%s",numberWithCommas(json.blacklisted));
+                        $msg=$msg.replace("%s",numberWithCommas(json.edited));
+                        $msg=$msg.replace("%s",numberWithCommas(json.whitelisted));
+                        $msg=$msg.replace("%s",numberWithCommas(json.skipped));
 
-            var btn=this;
+                        var $tmp="<?php echo $aeLanguage->get('FILES');?>".replace("%s",numberWithCommas(json.count));
 
-            $.ajax({
-               beforeSend: function() {
-                  if(!$debug) $('#getcountfiles').prop("disabled", true);
-                  $('.popover').popover('hide');
-                  $('#getcountfiles').html("2. <?php echo $aeLanguage->get('RUNNING');?>");
-                  $('#result').empty();
-                  $('#resultGetCountFilesNumber').empty();
-                  $('#result').html('<div class="blink" id="gettingFiles"><?php echo str_replace("'", "\'", $aeLanguage->get('GETTINGFILES'));?></div>');
-               },
-               async:true,
-               cache:false,
-               type:($debug?'GET':'POST'),
-               url: "<?php echo FILE; ?>",
-               data:$data,
-               dataType:"json",
-               success: function (json) {
-                  var $msg="<?php echo str_replace('"', '\"', $aeLanguage->get('GETCOUNTFILESDONE'));?>".replace("%s",numberWithCommas(json.count));
-                  $msg=$msg.replace("%s",numberWithCommas(json.blacklisted));
-                  $msg=$msg.replace("%s",numberWithCommas(json.edited));
-                  $msg=$msg.replace("%s",numberWithCommas(json.whitelisted));
-                  $msg=$msg.replace("%s",numberWithCommas(json.skipped));
+                        $('#startscan').html("3. <?php echo $aeLanguage->get('SCANFILES');?>".replace("%s",numberWithCommas(json.count)));
 
-                  var $tmp="<?php echo $aeLanguage->get('FILES');?>".replace("%s",numberWithCommas(json.count));
+                        if(json.count<=$maxFilesByCycle) {
 
-                  $('#startscan').html("3. <?php echo $aeLanguage->get('SCANFILES');?>".replace("%s",numberWithCommas(json.count)));
+                            $('button[id^=startscan_]').hide();
 
-                  if(json.count<=$maxFilesByCycle) {
+                        } else {
 
-                     $('button[id^=startscan_]').hide();
+                            // There are for instance 5.560 files and we process 1.000 files at a time
+                            // We need then dynamically generate six buttons
+                            //  1.  Files 1 -> 999
+                            //  2.  Files 1.000 -> 1.999
+                            //  3.  Files 2.000 -> 2.999
+                            //  4.  Files 3.000 -> 3.999
+                            //  5.  Files 4.000 -> 4.999
+                            //  6.  Files 5.000 -> 5.560
 
-                  } else {
+                            var $wBtn=0;
+                            var $start=0;
+                            var $end=0;
 
-                     // There are for instance 5.560 files and we process 1.000 files at a time
-                     // We need then dynamically generate six buttons
-                     //  1.  Files 1 -> 999
-                     //  2.  Files 1.000 -> 1.999
-                     //  3.  Files 2.000 -> 2.999
-                     //  4.  Files 3.000 -> 3.999
-                     //  5.  Files 4.000 -> 4.999
-                     //  6.  Files 5.000 -> 5.560
+                            while ($start<json.count) {
+                                $wBtn+=1;
+                                $end=$start+$maxFilesByCycle;
 
-                     var $wBtn=0;
-                     var $start=0;
-                     var $end=0;
+                                if ($end>json.count) $end=json.count;
+                                
+                                btn='<button type="button" id="startscan_'+$wBtn+'" data-start="'+$start+'" data-end="'+$maxFilesByCycle+'" disabled="disabled" class="btn btnscan btn-primary" data-toggle="popover" data-placement="bottom" data-html="true" data-content="" data-old-caption="'+numberWithCommas($start+1)+' -> '+numberWithCommas($end)+'">'+
+                                numberWithCommas($start+1)+' -> '+numberWithCommas($end)+'</button>&nbsp;';
+                                
+                                $('#resultGetCountFilesButtons').append(btn);
 
-                     while ($start<json.count) {
-                        $wBtn+=1;
-                        $end=$start+$maxFilesByCycle;
-                        if ($end>json.count) $end=json.count;
-                        btn='<button type="button" id="startscan_'+$wBtn+'" data-start="'+$start+'" data-end="'+$maxFilesByCycle+'" disabled="disabled" class="btn btnscan btn-primary" data-toggle="popover" data-placement="bottom" data-html="true" data-content="" data-old-caption="'+numberWithCommas($start+1)+' -> '+numberWithCommas($end)+'">'+
-                        numberWithCommas($start+1)+' -> '+numberWithCommas($end)+'</button>&nbsp;';
-                        $('#resultGetCountFilesButtons').append(btn);
-                        $start+=$maxFilesByCycle;
-                     }
+                                $start+=$maxFilesByCycle;
+                            }
 
-                  } // if(json.count<=$maxFilesByCycle)
+                        } // if(json.count<=$maxFilesByCycle)
 
-                  // Call initButtons to set the onClick event for these buttons
-                  initButtons();
+                        // Call initButtons to set the onClick event for these buttons
+                        initButtons();
 
-                  $('#result').empty();
-                  $('#getcountfiles').html("2. "+$tmp);
-                  $('#resultGetCountFilesNumber').html($msg);
-                  $('#resultGetCountFiles').show();
-                  $('button[id^=startscan]').prop("disabled", false);
-                  
-                  // No viruses immediatly detected after the count files?
-                  // Ok, great, remove the warning
-                  if(json.blacklisted==0) {
-                     $('#virusalreadyfound').remove();
-                  }
+                        $('#result').empty();
+                        $('#getcountfiles').html("2. "+$tmp);
+                        $('#resultGetCountFilesNumber').html($msg);
+                        $('#resultGetCountFiles').show();
+                        $('button[id^=startscan]').prop("disabled", false);
+                        
+                        // No viruses immediatly detected after the count files?
+                        // Ok, great, remove the warning
+                        if(json.blacklisted==0) {
+                            $('#virusalreadyfound').remove();
+                        }
 
-                  // No files having virus in it immediatly detected after the count files?
-                  // Ok, great, remove the warning
-                  if(json.editied==0) {
-                     $('#virusaddedfound').remove();
-                  }
+                        // No files having virus in it immediatly detected after the count files?
+                        // Ok, great, remove the warning
+                        if(json.edited==0) {
+                            $('#virusaddedfound').remove();
+                        }
 
-                  // To remember that we've already click on this button
-                  $(btn).addClass('btn-success');
+                        // To remember that we've already click on this button
+                        $(btn).addClass('btn-success');
+
+                    },
+                    error: function(Request, textStatus, errorThrown) {
+                        // Restore the caption of the button and put it in red
+                        $(btn).text($(btn).attr('data-old-caption'));
+                        $(btn).removeClass('btn-warning').addClass('btn-danger');
+
+                        // Re-enable the button so the user can restart the scan once he made some changes (like f.i. modifying the
+                        // number of files to scan in one pass
+                        $(btn).prop("disabled", false);
+
+                        // Display an error message to inform the user about the problem
+                        var $msg = '<div class="bg-danger text-danger img-rounded" style="margin-top:25px;padding:10px;">';
+                        $msg = $msg + '<strong>An error has occured :</strong><br/>';
+                        $msg = $msg + 'Internal status: '+textStatus+'<br/>';
+                        $msg = $msg + 'HTTP Status: '+Request.status+' ('+Request.statusText+')<br/>';
+                        $msg = $msg + 'XHR ReadyState: ' + Request.readyState + '<br/>';
+                        $msg = $msg + 'Raw server response:<br/>'+Request.responseText+'<br/>';
+
+                        if($debug) {
+                            $url='<?php echo FILE; ?>?'+$data.toString();
+                            $msg = $msg + 'URL that has returned the error : <a target="_blank" href="'+$url+'">'+$url+'</a><br/><br/>';
+                        }
+
+                        $msg = $msg + '<?php echo str_replace("'", "\'", sprintf($aeLanguage->get('QUICKSCANFAQ'), $aeLanguage->get('QUICKSCANURL'))); ?>';
+                        $msg = $msg + '</div>';
+
+                        $('#result').html($msg);
+                    }
+                });
 
 
-               }, // success
-               error: function(Request, textStatus, errorThrown) {
-                  // Restore the caption of the button and put it in red
-                  $(btn).text($(btn).attr('data-old-caption'));
-                  $(btn).removeClass('btn-warning').addClass('btn-danger');
-                  // Re-enable the button so the user can restart the scan once he made some changes (like f.i. modifying the
-                  // number of files to scan in one pass
-                  $(btn).prop("disabled", false);
-                  // Display an error message to inform the user about the problem
-                  var $msg = '<div class="bg-danger text-danger img-rounded" style="margin-top:25px;padding:10px;">';
-                  $msg = $msg + '<strong>An error has occured :</strong><br/>';
-                  $msg = $msg + 'Internal status: '+textStatus+'<br/>';
-                  $msg = $msg + 'HTTP Status: '+Request.status+' ('+Request.statusText+')<br/>';
-                  $msg = $msg + 'XHR ReadyState: ' + Request.readyState + '<br/>';
-                  $msg = $msg + 'Raw server response:<br/>'+Request.responseText+'<br/>';
-                  if($debug) {
-                     $url='<?php echo FILE; ?>?'+$data.toString();
-                     $msg = $msg + 'URL that has returned the error : <a target="_blank" href="'+$url+'">'+$url+'</a><br/><br/>';
-                  }
-                  $msg = $msg + '<?php echo str_replace("'", "\'", sprintf($aeLanguage->get('QUICKSCANFAQ'), $aeLanguage->get('QUICKSCANURL'))); ?>';
-                  $msg = $msg + '</div>';
-                  $('#result').html($msg);
-               } // error
-            });
-         }); // $('#getcountfiles')
-         // Destroy, delete this script on the server
-         $('#destroy').click(function (e) {
-            e.stopImmediatePropagation();
-
-            var $bExists=0;
-            var $keepWhiteList=1;
-
-            // Check if a whitelist file exists; the checkwhitelist task will return 1 or 0
-            $.ajax({
-               async:false,
-               type:($debug?'GET':'POST'),
-               url: "<?php echo FILE; ?>",
-               data:"task=checkwhitelist",
-               success: function (data) { $bExists=(data==1?true:false); }
             });
 
-            // If there is a whitelist file, ask if we need
-            if ($bExists) var $keepWhiteList=confirm("<?php echo $aeLanguage->get('JS_KEEPWHITELIST');?>");
+            // Destroy, delete this script on the server
+            $('#destroy').click(function (e) {
+                e.stopImmediatePropagation();
 
-            // Now, start the request for the deletion of this script
-            $.ajax({
-               beforeSend: function() {
-                  $('#cleansite').prop("disabled", true);
-                  $('#getcountfiles').prop("disabled", true);
-                  $('#startscan').prop("disabled", true);
-                  $('#destroy').prop("disabled", true);
-                  $('.popover').popover('hide');
-                  $('#result').empty();
-               },
-               async:true,
-               type:($debug?'GET':'POST'),
-               url: "<?php echo FILE; ?>",
-               data:"task=byebye&keepwhitelist="+$keepWhiteList,
-               success: function (data) {
-                  $('#cleansite').html("<?php echo $aeLanguage->get('BTNKILLMEDONE');?>");
-                  $('#getcountfiles').html("<?php echo $aeLanguage->get('BTNKILLMEDONE');?>");
-                  $('#startscan').html("<?php echo $aeLanguage->get('BTNKILLMEDONE');?>");
-                  $('#destroy').html("<?php echo $aeLanguage->get('BTNKILLMEDONE');?>");
-                  $('#result').html(data);
-               }
+                var $bExists=0;
+                var $keepWhiteList=1;
+
+                // Check if a whitelist file exists; the checkwhitelist task will return 1 or 0
+                $.ajax({
+                    async:false,
+                    type:($debug?'GET':'POST'),
+                    url: "<?php echo FILE; ?>",
+                    data:"task=checkwhitelist",
+                    success: function (data) { 
+                        $bExists=(data==1?true:false); 
+                    }
+                });
+
+                // If there is a whitelist file, ask if we need
+                if ($bExists) var $keepWhiteList=confirm("<?php echo $aeLanguage->get('JS_KEEPWHITELIST');?>");
+
+                // Now, start the request for the deletion of this script
+                $.ajax({
+                    beforeSend: function() {
+                        $('#cleansite').prop("disabled", true);
+                        $('#getcountfiles').prop("disabled", true);
+                        $('#startscan').prop("disabled", true);
+                        $('#destroy').prop("disabled", true);
+                        $('.popover').popover('hide');
+                        $('#result').empty();
+                    },
+                    async:true,
+                    type:($debug?'GET':'POST'),
+                    url: "<?php echo FILE; ?>",
+                    data:"task=byebye&keepwhitelist="+$keepWhiteList,
+                    success: function (data) {
+                        $('#cleansite').html("<?php echo $aeLanguage->get('BTNKILLMEDONE');?>");
+                        $('#getcountfiles').html("<?php echo $aeLanguage->get('BTNKILLMEDONE');?>");
+                        $('#startscan').html("<?php echo $aeLanguage->get('BTNKILLMEDONE');?>");
+                        $('#destroy').html("<?php echo $aeLanguage->get('BTNKILLMEDONE');?>");
+                        $('#result').html(data);
+                    }
+                });
             });
-         }); // $('#destroy')
 
             // Change the folder to scan
             $('#folder').change(function (e) {
@@ -3975,203 +4421,216 @@ class aeSecureScan
                 });
             });
 
-         if($debug){
-            $('#DebugMode').click(function(e) {
-              e.stopImmediatePropagation();
-              $.ajax({
-                 async:true,
-                 type:($debug?'GET':'POST'),
-                 url: "<?php echo FILE; ?>",
-                 data:"task=seedebug",
-                 datatype:"html",
-                 success: function (data) {
-                    var w = window.open("", "_blank");
-                    if(w!=undefined) { var $w = $(w.document.body); $w.html(data); }
-                 } // success
-              }); // $.ajax()
-           }); // $('#DebugMode').click()
-         }
-
-         function initButtons() {
-
-            // See file handler
-            $('.seefile').click(function(e) {
-               e.preventDefault();
-               e.stopImmediatePropagation();
-               var $filename=$(this).attr('data-filename');
-               var $button=$(this);
-               $.ajax({
-                  async:true,
-                  type:($debug?'GET':'POST'),
-                  url: "<?php echo FILE; ?>",
-                  data:"task=seefile&filename="+$filename,
-                  datatype:"html",
-                  success: function (data) {
-                     var w = window.open("", "_blank");
-                     if(w!=undefined) { var $w = $(w.document.body); $w.html(data); }
-                  } // success
-               }); // $.ajax()
-            }); // $('.seefile').click()
-
-            // Hide the file
-            $('.hidefile').click(function(e) {
-               e.preventDefault();
-               e.stopImmediatePropagation();
-               $(this).parent().fadeOut('slow');
-            }); // $('.seefile').click()
-
-            // Add to the white list handler
-            //$('.whitelist').mouseover(function(e) { $(this).html($(this).attr("data-caption")); });
-            //$('.whitelist').mouseleave(function(e) { $(this).html($(this).attr("data-old-caption")); });
-            $('.whitelist').click(function(e) {
-               e.preventDefault();
-               e.stopImmediatePropagation();
-               // Add to the white list file handler
-               var $filename=$(this).attr('data-filename');
-               var $button=$(this);
-               $.ajax({
-                  async:true,
-                  type:($debug?'GET':'POST'),
-                  url: "<?php echo FILE; ?>",
-                  data:"task=whitelist&filename="+$filename,
-                  success: function (data) { $button.parent().parent().fadeOut(500); }
-               }); // $.ajax()
-            }); // $('.whitelist').click()
-
-            // Trigger click on the StartScan buttons
-            $("[id^=startscan]").click(function(e) {
-
-               e.stopImmediatePropagation();
-
-               // Check if the startscan button has data-start and/or data-end attributes.  If yes, use it to limit the scan action
-               // For instance data-start=100 data-end=50  ==> process files from the file number 100 and process 50 files max.
-               var $start=0;
-               var $end=0;
-               if ($(this).attr('data-start')) $start=$(this).attr('data-start');
-               if ($(this).attr('data-end')) $end=$(this).attr('data-end');
-
-               var $data = new Object;
-               $data.task = "doscan"
-               $data.folder=btoa($('#folder').val());
-               $data.start=$start;
-               $data.end=$end;
-
-               // Define the "toString()" method to get a string representation of the object
-               Object.prototype.toString = function dogToString() {
-                  var ret = 'task=' + this.task + '&folder=' + this.folder + '&start=' + this.start + '&end=' + this.end;
-                  return ret;
-               }
-
-               var btn=this;
-
-               $.ajax({
-                  beforeSend: function() {
-                     $("[id^=startscan_]").each(function() {
-                        $(this).removeClass('btn-warning');
-                     });
-
-                     $(btn).addClass('btn-warning');
-                     $(btn).prop("disabled", true);
-                     $('.popover').popover('hide');
-
-                        <?php $aeProgress->getJSFunction('ajax_before'); ?>
-
-                     $(btn).html("3. <?php echo $aeLanguage->get('RUNNING');?>");
-                     $('#result').empty();
-                  }, // beforeSend()
-                  async:true,
-                  cache:false,
-                  type:($debug?'GET':'POST'),
-                  url: "<?php echo FILE; ?>",
-                  data:$data,
-                  success: function (data) {
-                        <?php $aeProgress->getJSFunction('ajax_success'); ?>
-                     $('#result').html(data);
-                     $(btn).removeClass('btn-warning');      // To remember that we've already click on this button
-                     $(btn).addClass('btn-success');         // To remember that we've already click on this button
-                     $(btn).prop("disabled", false);
-                     $(btn).text($(btn).attr('data-old-caption'));
-                  }, // success
-                  error: function(Request, textStatus, errorThrown) {
-                     // Hide the progress bar
-                        <?php $aeProgress->getJSFunction('ajax_success'); ?>
-                     // Restore the caption of the button and put it in red
-                     $(btn).text($(btn).attr('data-old-caption'));
-                     $(btn).removeClass('btn-warning').addClass('btn-danger');
-                     // Re-enable the button so the user can restart the scan once he made some changes (like f.i. modifying the
-                     // number of files to scan in one pass
-                     $(btn).prop("disabled", false);
-                     // Display an error message to inform the user about the problem
-                     var $msg = '<div class="bg-danger text-danger img-rounded" style="margin-top:25px;padding:10px;">';
-                     $msg = $msg + '<strong>An error has occured :</strong><br/>';
-                     $msg = $msg + 'Internal status: '+textStatus+'<br/>';
-                     $msg = $msg + 'HTTP Status: '+Request.status+' ('+Request.statusText+')<br/>';
-                     $msg = $msg + 'XHR ReadyState: ' + Request.readyState + '<br/>';
-                     $msg = $msg + 'Raw server response:<br/>'+Request.responseText+'<br/>';
-                     if ($debug) {
-                        $url='<?php echo FILE; ?>?'+$data.toString();
-                        $msg = $msg + 'URL that has returned the error : <a target="_blank" href="'+$url+'">'+$url+'</a><br/><br/>';
-                     }
-                     $msg = $msg + '<?php echo str_replace("'", "\'", $aeLanguage->get('QUICKSCANFAQ')); ?>';
-                     $msg = $msg + '</div>';
-                     $('#result').html($msg);
-                  } // error
-               });
-            }); // $("[id^=startscan]").click()
-
-            <?php if (true === $aeSession::get('Expert', EXPERT)) {
-            ?>
-
-               $('.killfile').mouseover(function(e) { $(this).html($(this).attr("data-caption")); });
-               $('.killfile').mouseleave(function(e) { $(this).html($(this).attr("data-old-caption")); });
-               $('.killfile').click(function(e) {
-                  e.stopImmediatePropagation();
-                  // Kill file handler
-                  var $filename=$(this).attr('data-filename');
-                  var $button=$(this);
-                  var $confirm="<?php echo $aeLanguage->get('JS_CONFIRMKILL'); ?>".replace("%s",atob($filename));
-                  if (confirm($confirm)) {
-                     $.ajax({
+            if($debug){
+                $('#DebugMode').click(function(e) {
+                    e.stopImmediatePropagation();
+                    $.ajax({
                         async:true,
                         type:($debug?'GET':'POST'),
                         url: "<?php echo FILE; ?>",
-                        data:"task=killfile&filename="+$filename,
+                        data:"task=seedebug",
+                        datatype:"html",
                         success: function (data) {
-                           if(data==-1) {
-                              // Delete successfull when returned value is -1
-                              $button.parent().parent().fadeOut(500);
-                              $button.parent().html("<?php echo str_replace('"', '\"', $aeLanguage->get('JS_UNLINKSUCCESS')); ?>");
-                           } else {
-                              if(data==-50) {
-                                 $button.parent().html("<?php echo str_replace('"', '\"', $aeLanguage->get('JS_FILENOTFOUND')); ?>");
-                              } else {
-                                 $button.parent().html("<?php echo str_replace('"', '\"', $aeLanguage->get('JS_UNLINKERROR')); ?>");
-                              }
-                           }
-                        } // success
-                     }); // $.ajax()
-                  } // if (confirm($confirm))
-               }); // $('.killfile').click()
-
-                <?php
-        }?>
-
-         } // function initButtons()
-
-         function removeURLParameter(url, parameter) {
-            var rtn = url.split("?")[0], param, params_arr = [], queryString = (url.indexOf("?") !== -1) ? url.split("?")[1] : "";
-            if (queryString !== "") {
-               params_arr = queryString.split("&");
-               for (var i = params_arr.length - 1; i >= 0; i -= 1) {
-                  param = params_arr[i].split("=")[0];
-                  if (param === parameter) params_arr.splice(i, 1);
-               }
-               rtn = rtn + "?" + params_arr.join("&");
-            } else {
-               rtn += "?";
+                            var w = window.open("", "_blank");
+                            if(w!=undefined) { var $w = $(w.document.body); $w.html(data); }
+                        }
+                    });
+                });
             }
-            return rtn;
-         } // function removeURLParameter()
+
+            function initButtons() {
+
+                // See file handler
+                $('.seefile').click(function(e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    var $filename=$(this).attr('data-filename');
+                    var $button=$(this);
+                    $.ajax({
+                        async:true,
+                        type:($debug?'GET':'POST'),
+                        url: "<?php echo FILE; ?>",
+                        data:"task=seefile&filename="+$filename,
+                        datatype:"html",
+                        success: function (data) {
+                            var w = window.open("", "_blank");
+                            if(w!=undefined) { var $w = $(w.document.body); $w.html(data); }
+                        }
+                    });
+                });
+
+                // Hide the file
+                $('.hidefile').click(function(e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    $(this).parent().fadeOut('slow');
+                });
+
+                // Add to the white list handler
+                $('.whitelist').click(function(e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    // Add to the white list file handler
+                    var $filename=$(this).attr('data-filename');
+                    var $button=$(this);
+                    $.ajax({
+                        async:true,
+                        type:($debug?'GET':'POST'),
+                        url: "<?php echo FILE; ?>",
+                        data:"task=whitelist&filename="+$filename,
+                        success: function (data) { 
+                            $button.parent().parent().fadeOut(500); 
+                        }
+                    });
+                });
+
+                // Trigger click on the StartScan buttons
+                $("[id^=startscan]").click(function(e) {
+
+                    e.stopImmediatePropagation();
+
+                    // Check if the startscan button has data-start and/or data-end attributes.  If yes, use it to limit the scan action
+                    // For instance data-start=100 data-end=50  ==> process files from the file number 100 and process 50 files max.
+                    var $start=0;
+                    var $end=0;
+                    if ($(this).attr('data-start')) $start=$(this).attr('data-start');
+                    if ($(this).attr('data-end')) $end=$(this).attr('data-end');
+
+                    var $data = new Object;
+                    $data.task = "doscan"
+                    $data.folder=btoa($('#folder').val());
+                    $data.start=$start;
+                    $data.end=$end;
+
+                    // Define the "toString()" method to get a string representation of the object
+                    Object.prototype.toString = function dogToString() {
+                        var ret = 'task=' + this.task + '&folder=' + this.folder + '&start=' + this.start + '&end=' + this.end;
+                        return ret;
+                    }
+
+                    var btn=this;
+
+                    $.ajax({
+                        beforeSend: function() {
+                            $("[id^=startscan_]").each(function() {
+                                $(this).removeClass('btn-warning');
+                            });
+
+                            $(btn).addClass('btn-warning');
+                            $(btn).prop("disabled", true);
+                            $('.popover').popover('hide');
+
+                            <?php $aeProgress->getJSFunction('ajax_before'); ?>
+
+                            $(btn).html("3. <?php echo $aeLanguage->get('RUNNING');?>");
+                            $('#result').empty();
+                        },
+                        async:true,
+                        cache:false,
+                        type:($debug?'GET':'POST'),
+                        url: "<?php echo FILE; ?>",
+                        data:$data,
+                        success: function (data) {
+                            <?php $aeProgress->getJSFunction('ajax_success'); ?>
+                            $('#result').html(data);
+                            // To remember that we've already click on this button
+                            $(btn).removeClass('btn-warning');
+                            // To remember that we've already click on this button
+                            $(btn).addClass('btn-success');
+                            $(btn).prop("disabled", false);
+                            $(btn).text($(btn).attr('data-old-caption'));
+                        },
+                        error: function(Request, textStatus, errorThrown) {
+                            // Hide the progress bar
+                            <?php $aeProgress->getJSFunction('ajax_success'); ?>
+
+                            // Restore the caption of the button and put it in red
+                            $(btn).text($(btn).attr('data-old-caption'));
+                            $(btn).removeClass('btn-warning').addClass('btn-danger');
+
+                            // Re-enable the button so the user can restart the scan once he made some changes (like f.i. modifying the
+                            // number of files to scan in one pass
+                            $(btn).prop("disabled", false);
+
+                            // Display an error message to inform the user about the problem
+                            var $msg = '<div class="bg-danger text-danger img-rounded" style="margin-top:25px;padding:10px;">';
+                            $msg = $msg + '<strong>An error has occured :</strong><br/>';
+                            $msg = $msg + 'Internal status: '+textStatus+'<br/>';
+                            $msg = $msg + 'HTTP Status: '+Request.status+' ('+Request.statusText+')<br/>';
+                            $msg = $msg + 'XHR ReadyState: ' + Request.readyState + '<br/>';
+                            $msg = $msg + 'Raw server response:<br/>'+Request.responseText+'<br/>';
+                            
+                            if ($debug) {
+                                $url='<?php echo FILE; ?>?'+$data.toString();
+                                $msg = $msg + 'URL that has returned the error : <a target="_blank" href="'+$url+'">'+$url+'</a><br/><br/>';
+                            }
+
+                            $msg = $msg + '<?php echo str_replace("'", "\'", $aeLanguage->get('QUICKSCANFAQ')); ?>';
+                            $msg = $msg + '</div>';
+
+                            $('#result').html($msg);
+                        }
+                    });
+                });
+
+                <?php if (true === $aeSession::get('Expert', EXPERT)) {?>
+                    $('.killfile').mouseover(function(e) { 
+                        $(this).html($(this).attr("data-caption")); 
+                    });
+
+                    $('.killfile').mouseleave(function(e) { 
+                        $(this).html($(this).attr("data-old-caption")); 
+                    });
+
+                    $('.killfile').click(function(e) {
+                        e.stopImmediatePropagation();
+                        // Kill file handler
+                        var $filename=$(this).attr('data-filename');
+                        var $button=$(this);
+                        var $confirm="<?php echo $aeLanguage->get('JS_CONFIRMKILL'); ?>".replace("%s",atob($filename));
+                        if (confirm($confirm)) {
+                            $.ajax({
+                                async:true,
+                                type:($debug?'GET':'POST'),
+                                url: "<?php echo FILE; ?>",
+                                data:"task=killfile&filename="+$filename,
+                                success: function (data) {
+                                    if(data==-1) {
+                                        // Delete successfull when returned value is -1
+                                        $button.parent().parent().fadeOut(500);
+                                        $button.parent().html("<?php echo str_replace('"', '\"', $aeLanguage->get('JS_UNLINKSUCCESS')); ?>");
+                                    } else {
+                                        if(data==-50) {
+                                            $button.parent().html("<?php echo str_replace('"', '\"', $aeLanguage->get('JS_FILENOTFOUND')); ?>");
+                                        } else {
+                                            $button.parent().html("<?php echo str_replace('"', '\"', $aeLanguage->get('JS_UNLINKERROR')); ?>");
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    });
+
+                <?php }?>
+
+            }
+
+            function removeURLParameter(url, parameter) {
+                var rtn = url.split("?")[0], param, params_arr = [], queryString = (url.indexOf("?") !== -1) ? url.split("?")[1] : "";
+                
+                if (queryString !== "") {
+                    params_arr = queryString.split("&");
+                    for (var i = params_arr.length - 1; i >= 0; i -= 1) {
+                        param = params_arr[i].split("=")[0];
+                        if (param === parameter) params_arr.splice(i, 1);
+                    }
+                    rtn = rtn + "?" + params_arr.join("&");
+                } else {
+                    rtn += "?";
+                }
+
+                return rtn;
+            }
 
             <?php $aeProgress->getJSFunction('function'); ?>
 

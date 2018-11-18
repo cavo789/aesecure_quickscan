@@ -1,7 +1,12 @@
 [
   {
     "risk": "danger",
-    "pattern": "(eval *\\(.*\\( *\\$_(COOKIES|REQUEST|POST|SESSION))",
+    "pattern": "(\\@?(eval|include|system) *\\( *\\$_(COOKIES|GET|REQUEST|POST|SESSION))",
+    "disclaimer": "HIGHPROBALITY"
+  },
+  {
+    "risk": "danger",
+    "pattern": "(eval *\\(.*\\( *\\$_(COOKIES|GET|REQUEST|POST|SESSION))",
     "disclaimer": "HIGHPROBALITY"
   },
   {
@@ -41,12 +46,22 @@
   },
   {
     "risk": "warning",
+    "pattern": "(c2hlbG|NoZWxs|zaGVsb|c3lzdGVt|N5c3Rlb|zeXN0ZW|cmVwbGFjZ|JlcGxhY2|yZXBsYWNl|ZXhlYy|VjaG|lY2hv|ZnVuY3Rpb2|Z1bmN0aW9u|mdW5jdGlvb|aW5jbHVkZ|luY2x1ZG|pbmNsdWRl|cmVxdWlyZ|JlcXVpcm|yZXF1aXJl|YmFzZTY0|Jhc2U2N|iYXNlNj|SFRUUF9VU0VSX0FHRU5U|hUVFBfVVNFUl9BR0VOV|IVFRQX1VTRVJfQUdFTl|Z3ppbmZsYXRl|d6aW5mbGF0Z|nemluZmxhdG|Y3NsYXNoZX|NzbGFzaGVz|jc2xhc2hlc|ZXh0cmFjd|V4dHJhY3|leHRyYWN0|JF9HRV|RfR0VU|kX0dFV|JF9QT1NU|RfUE9TV|kX1BPU1|JF9DT09LSU|RfQ09PS0lF|kX0NPT0tJR|JF9SRVFVRVNU|RfUkVRVUVTV|kX1JFUVVFU1|R0xPQkFMU|dMT0JBTF|HTE9CQUxT|c2l6ZW9m|NpemVvZ|zaXplb2|cHJpbnRm|ByaW50Z|wcmludG|ZGVmaW5l|RlZmluZ|kZWZpbm)",
+    "disclaimer": "WARNINGBASE64ENCODEDPATTERN"
+  },
+  {
+    "risk": "warning",
+    "pattern": "(Shell by .*)",
+    "disclaimer": "WARNINGNOTMANDATORYAVIRUS"
+  },
+  {
+    "risk": "warning",
     "pattern": "(base64_decode|gzdecode|gzdeflate|gzuncompress|gzcompress|readgzfile|uudecode|zlib_decode|zlib_encode|gzfile|gzget|gzpassthru)",
     "disclaimer": "WARNINGNOTMANDATORYAVIRUS"
   },
   {
     "risk": "warning",
-    "pattern": "(AnonGhost|bash_history|bckdrprm|bitchx|crystalshell|cwings|dalnet|directmail|eggdrop|ekibastos|FilesMan|FilesTools|guardservices|Hackeado|HaCkEr|hackmeplz|HackTeam|Hmei7|Inbox Mass Mailer|JCE Fucker|m0rtix|multiviews|phpremoteview|phpshell|phpshell|psybnc|r0nin|r57shell|raslan58|shell_exec|shellbot|spymeta|uname -a|undernet|upl0ad|vandal|viagra|vulnscan|Web Shell|Webshell|wrgggthhd|WSOsetcookie)",
+    "pattern": "(AnonGhost|Backdoor|bash_history|bckdrprm|bindshell|bitchx|ConnectBackShell|Cybester90|crystalshell|cwings|dalnet|directmail|eggdrop|ekibastos|FaTaLisTiCz_Fx|FilesMan|FilesTools|fopo\\.com|guardservices|Hackeado|HaCkEr|hackmeplz|HackTeam|Hmei7|Inbox Mass Mailer|JCE Fucker|m0rtix|multiviews|phpremoteview|phpshell|phpshell|psybnc|r0nin|r57shell|raslan58|shell_exec|shellbot|\\$sh3llColor|spymeta|uname -a|undernet|upl0ad|vandal|viagra|vulnscan|Web Shell|Webshell|wrgggthhd|WSOsetcookie|WSOstripslashes|MagelangCyber|Baby_Drakon|3xp1r3|NinjaVirus|Hacked By|Punker2Bot|Zed0x|darkminz|ReaL_PuNiShEr|OoN_Boy|Pashkela|Webcommander|YENI3ERI|d3lete|K!LL3r|MrHazem|DX_Header_drawn|Dr\\.abolalh|C0derz\\.com|Mr\\.HiTman|IrSecTeam|FLoodeR|eriuqer|freetellafriend|c99ftpbrutecheck|profexor|.hell|ZOBUGTEL|M4ll3r|itsoknoproblembro|tmhapbzcerff)",
     "disclaimer": "WARNINGNOTMANDATORYAVIRUS"
   }
 ]
