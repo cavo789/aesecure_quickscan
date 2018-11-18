@@ -130,7 +130,7 @@ define('ExtFonts', 'eot, otf, ttf, ttf2, woff, woff2');
 define('ExtImages', 'bmp, eps, gif, ico, icon, jpeg, jpg, png, psd, svg, tiff, webp');
 define('ExtMedia', 'css, js, less');
 define('ExtSoundMovies', 'aiff, asf, avi, fla, flv, f4v, m4v, mkv, mov, mp3, mp4, mpeg, mpg, ogg, ogv, swf, wav, webm, wma');
-define('ExtText', 'ini, log, md, mo, po, sql, text, txt, xml, xsl');
+define('ExtText', 'ini, json, log, md, mo, po, sql, text, txt, xml, xsl');
 
 define('CRLF', "\r\n");
 
