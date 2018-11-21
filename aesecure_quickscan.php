@@ -104,6 +104,10 @@ define('REPO', 'https://github.com/cavo789/aesecure_quickscan');
 define('DIR', str_replace('/', DIRECTORY_SEPARATOR, dirname($_SERVER['SCRIPT_FILENAME'])));
 define('FILE', str_replace('/', DIRECTORY_SEPARATOR, basename($_SERVER['SCRIPT_FILENAME'])));
 
+// Don't allow to kill this script when demo mode is enabled
+// Don't show the "Enable expert mode" checkbox in Demo mode
+define('DEMO', false);
+
 define('DEBUG', false);              // Enable debugging (Note: there is no progress bar in debug mode)
 define('FULLDEBUG', false);          // Output a lot of information
 define('VERSION', '1.2');            // Version number of this script
@@ -114,13 +118,10 @@ define('CONTEXT_NBRCHARS', 100);     // When a suspicious pattern is found, the 
 define('SHOWMD5', false);            // Allow to generate a hash file
 define('PROGRESSBARFREQUENCY', 3);   // Frequency of updates for the progress bar. In seconds.
 define('MEMORY_LIMIT', '256M');      // DEBUG MODE ONLY - Maximum memory limit that will be used
-define('DEMO', false);               // Don't allow to kill this script when demo mode is enabled
 define('CURL_TIMEOUT', 2);           // Max number of seconds before the timeout when requesting a JSON file from aesecure.com
 
 // Download URL for the file with CMS hashes
 define('DOWNLOAD_URL', 'https://raw.githubusercontent.com/cavo789/aesecure_quickscan/master/');
-
-define('DS', DIRECTORY_SEPARATOR);
 
 // List of extensions, by "category". Add an extension if you want to skip that files when 
 // skipping the category
@@ -133,6 +134,7 @@ define('ExtSoundMovies', 'aiff, asf, avi, fla, flv, f4v, m4v, mkv, mov, mp3, mp4
 define('ExtText', 'ini, json, log, md, mo, po, sql, text, txt, xml, xsl');
 
 define('CRLF', "\r\n");
+define('DS', DIRECTORY_SEPARATOR);
 
 // Register error handling functions
 set_error_handler(function ($code, $string, $file, $line) {
@@ -3754,17 +3756,20 @@ class aeSecureScan
                             &nbsp;:
 
                             <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" id="chkExpert" name="chkExpert" title="" 
-                                        <?php 
-                                            if (true === $aeSession::get('Expert', EXPERT)) {
-                                                echo 'checked="checked" ';
-                                            }
-                                        ?>
-                                    >
-                                    <?php echo $aeLanguage->get('EXPERT_MODE');?>
-                                </label>
-                                <br/>
+
+                                <?php if (!DEMO) { ?>
+                                    <label>
+                                        <input type="checkbox" id="chkExpert" name="chkExpert" title="" 
+                                            <?php 
+                                                if (true === $aeSession::get('Expert', EXPERT)) {
+                                                    echo 'checked="checked" ';
+                                                }
+                                            ?>
+                                        >
+                                        <?php echo $aeLanguage->get('EXPERT_MODE');?>
+                                    </label>
+                                    <br/>
+                                <?php }?>
                                 <label>
                                     <input type="checkbox" id="chkDebug" name="chkDebug" title="" 
                                         <?php 
