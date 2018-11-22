@@ -3634,12 +3634,12 @@ class aeSecureScan
         <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8;" />
         <meta property="og:title" content="<?php echo $aeLanguage->get('PAGETITLE');?>" />
         <meta property="og:description" content="<?php echo $aeLanguage->get('DESCRIPTION');?>" />
-        <meta property="og:image" content="https://www.aesecure.com/images/aesecure.png" />
+        <meta property="og:image" content="aesecure.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         
         <title><?php echo $aeLanguage->get('PAGETITLE');?> | AVONTURE Christophe - www.aesecure.com</title>
         
-        <link href="https://www.aesecure.com/templates/moments/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon"/>
+        <link href="favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon"/>
         <?php
             echo aeSecureFct::addStylesheet('libs/bootstrap/css/bootstrap.min.css', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css');
             echo aeSecureFct::addStylesheet('libs/tablesorter/css/theme.ice.min.css', 'https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.5/css/theme.ice.min.css');
