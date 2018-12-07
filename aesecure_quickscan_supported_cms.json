@@ -1,0 +1,90 @@
+{
+    "cake": {
+        "prefix": "cake",
+        "archives": "https:\/\/github.com\/cakephp\/cakephp\/releases"
+    },
+    "concrete5": {
+        "prefix": "concrete5",
+        "archives": "http:\/\/www.concrete5.org\/developers\/developer-downloads\/"
+    },
+    "contao": {
+        "prefix": "contao",
+        "archives": "https:\/\/contao.org\/en\/download.html"
+    },
+    "dolibarr": {
+        "prefix": "dolibarr",
+        "archives": "http:\/\/sourceforge.net\/projects\/dolibarr\/files\/Dolibarr%20ERP-CRM\/"
+    },
+    "drupal": {
+        "prefix": "dru",
+        "archives": "https:\/\/www.drupal.org\/node\/3060\/release"
+    },
+    "efront": {
+        "prefix": "efront",
+        "archives": "http:\/\/sourceforge.net\/projects\/efrontlearning\/files\/efrontlearning\/"
+    },
+    "espocrm": {
+        "prefix": "espocrm",
+        "archives": "http:\/\/sourceforge.net\/projects\/espocrm\/files\/"
+    },
+    "formalms": {
+        "prefix": "formalms",
+        "archives": "http:\/\/sourceforge.net\/projects\/forma\/files\/version%201.x\/"
+    },
+    "grav": {
+        "prefix": "grav",
+        "archives": "https:\/\/getgrav.org\/downloads\/"
+    },
+    "grr": {
+        "prefix": "grr",
+        "archives": "http:\/\/grr.devome.com\/fr\/telechargement\/"
+    },
+    "joomla": {
+        "prefix": "J!",
+        "archives": "https:\/\/mirror.myjoomla.io\/"
+    },
+    "magento": {
+        "prefix": "mag",
+        "archives": "https:\/\/www.magentocommerce.com\/download"
+    },
+    "mediawiki": {
+        "prefix": "mediawiki",
+        "archives": "https:\/\/releases.wikimedia.org\/mediawiki"
+    },
+    "phpbb": {
+        "prefix": "phpBB",
+        "archives": "http:\/\/www.phpbb-fr.com\/telechargements\/"
+    },
+    "phplist": {
+        "prefix": "phpList",
+        "archives": "http:\/\/sourceforge.net\/projects\/phplist\/files\/phplist\/"
+    },
+    "phpmyadmin": {
+        "prefix": "pma",
+        "archives": "https:\/\/www.phpmyadmin.net\/files\/"
+    },
+    "piwik": {
+        "prefix": "piwik",
+        "archives": "https:\/\/builds.piwik.org\/"
+    },
+    "pmb": {
+        "prefix": "pmb",
+        "archives": "http:\/\/forge.sigb.net\/redmine\/projects\/pmb\/files\/"
+    },
+    "prestashop": {
+        "prefix": "presta",
+        "archives": "https:\/\/www.prestashop.com\/fr\/versions-developpeurs"
+    },
+    "silverstripe": {
+        "prefix": "silverstripe",
+        "archives": "http:\/\/www.silverstripe.org\/download\/release-archive\/"
+    },
+    "wordpress": {
+        "prefix": "WP",
+        "archives": "https:\/\/wordpress.org\/download\/release-archive"
+    },
+    "x3cms": {
+        "prefix": "x3cms",
+        "archives": "https:\/\/github.com\/paolocerto\/x3cms\/releases"
+    }
+}
