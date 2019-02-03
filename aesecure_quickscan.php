@@ -1586,9 +1586,22 @@ class aeSecureCMS
         }
 
         if (file_exists($filename)) {
+
             $content = file_get_contents($filename);
 
-            $arr = ['RELEASE' => 0, 'DEV_LEVEL' => 0, 'DEV_STATUS' => 0, 'RELDATE' => 0, 'RELTIME' => 0, 'RELTZ' => 0];
+            $pattern = '/MAJOR_VERSION = (\d+)/';
+
+            if (preg_match($pattern, $content, $arrMatches, PREG_OFFSET_CAPTURE)>0) {
+
+                // As from Joomla 4, RELEASE, DEV_LEVEL, ... are removed.
+
+                $arr = ['MAJOR_VERSION' => 0, 'MINOR_VERSION' => 0, 'PATCH_VERSION' => 0, 'RELDATE' => 0, 'RELTIME' => 0, 'RELTZ' => 0];
+
+            } else {
+
+                $arr = ['RELEASE' => 0, 'DEV_LEVEL' => 0, 'DEV_STATUS' => 0, 'RELDATE' => 0, 'RELTIME' => 0, 'RELTZ' => 0];
+
+            }
 
             foreach ($arr as $key => $value) {
                 // Use [[:blank:]] and not just a space character because sometimes the 
@@ -1596,16 +1609,24 @@ class aeSecureCMS
                 // this is the case for J1.5.26
                 // Note : since J3.5, variables are now constants and without the preceding dollar sign so
                 //     before J3.5, it was $RELEASE f.i., since 3.5, it's just RELEASE
-                $pattern = '/.*\$?' . $key . "[[:blank:]]*=[[:blank:]]*'([0-9A-Za-z\-\.]*)'/";
+                $pattern = '/.*\$?' . $key . "[[:blank:]]*=[[:blank:]]*'?([0-9A-Za-z\-\.]*)'?/";
+
                 preg_match($pattern, $content, $arrMatches, PREG_OFFSET_CAPTURE);
                 if (count($arrMatches) > 0) {
                     $arr[$key] = $arrMatches[1][0];
                 }
             }
 
-            $MainVersion = $arr['RELEASE'];
-            $Version     = $arr['RELEASE'] . '.' . $arr['DEV_LEVEL'];
-            $FullVersion = $arr['RELEASE'] . '.' . $arr['DEV_LEVEL'] . ' (' . $arr['DEV_STATUS'] . ') ' . '(' . $arr['RELDATE'] . ' ' . $arr['RELTIME'] . ' ' . $arr['RELTZ'] . ')';
+            if (isset($arr['MAJOR_VERSION'])) {
+                // Joomla 3.8.2 or greater
+                $MainVersion = $arr['MAJOR_VERSION'] . '.' . $arr['MINOR_VERSION'] ;
+                $Version = $arr['MAJOR_VERSION'] . '.' . $arr['MINOR_VERSION']. '.'. $arr['PATCH_VERSION'];
+                $FullVersion = $arr['MAJOR_VERSION'] . '.' . $arr['MINOR_VERSION'] . '.' . $arr['PATCH_VERSION'] . ' ' . '(' . $arr['RELDATE'] . ' ' . $arr['RELTIME'] . ' ' . $arr['RELTZ'] . ')';
+            } else {
+                $MainVersion = $arr['RELEASE'];
+                $Version = $arr['RELEASE'] . '.' . $arr['DEV_LEVEL'];
+                $FullVersion = $arr['RELEASE'] . '.' . $arr['DEV_LEVEL'] . ' (' . $arr['DEV_STATUS'] . ') ' . '(' . $arr['RELDATE'] . ' ' . $arr['RELTIME'] . ' ' . $arr['RELTZ'] . ')';
+            }
 
             return [true, 'Joomla', $filename, $FullVersion, $MainVersion, $Version];
         } else {
