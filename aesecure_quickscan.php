@@ -166,7 +166,7 @@ class aeSecureDebug
      *
      * @return void
      */
-    public function __construct(bool $debugMode = false)
+    public function __construct($debugMode = false)
     {
         // Informs PHP where to store errors
         ini_set('error_log', DIR . 'aesecure_quickscan_error_log');
@@ -182,7 +182,7 @@ class aeSecureDebug
      *
      * @return void
      */
-    public static function setDebugMode(bool $onOff = false)
+    public static function setDebugMode($onOff = false)
     {
         static::$debugMode = $onOff;
 
@@ -218,7 +218,7 @@ class Download
     private static $bDebug         = false;
     private static $sDebugFileName = '';
 
-    public function __construct(string $ApplicationName)
+    public function __construct($ApplicationName)
     {
         static::$bDebug   = false;
         static::$sAppName = $ApplicationName;
@@ -227,7 +227,7 @@ class Download
     /**
      * Enable the debug mode for this class.
      */
-    public function debugMode(bool $bOnOff)
+    public function debugMode($bOnOff)
     {
         static::$bDebug = $bOnOff;
         if ($bOnOff) {
@@ -238,7 +238,7 @@ class Download
     }
 
     // URL where the script will find a file to download
-    public function setURL(string $sURL)
+    public function setURL($sURL)
     {
         static::$sSourceURL = trim($sURL);
     }
@@ -247,7 +247,7 @@ class Download
      * Once download, a file will be created on the disk.
      * Use this property to specify the name of that file.
      */
-    public function setFileName(string $sName)
+    public function setFileName($sName)
     {
         static::$sFileName = trim($sName);
     }
@@ -260,7 +260,7 @@ class Download
      *
      * @return string
      */
-    public function download(): int
+    public function download()
     {
         $wError = 0;
 
@@ -365,7 +365,7 @@ class Download
     /**
      * Return a text for the encountered error.
      */
-    public function getErrorMessage(int $code): string
+    public function getErrorMessage($code)
     {
         $sReturn =
             '<p>Your system configuration doesn\'t allow to download the file.</p>' .
@@ -383,7 +383,7 @@ class Download
     /**
      * Detect if the CURL library is loaded.
      */
-    private function iscURLEnabled(): bool
+    private function iscURLEnabled()
     {
         return  (!function_exists('curl_init') && !function_exists('curl_setopt') && 
             !function_exists('curl_exec') && !function_exists('curl_close')) ? false : true;
@@ -2544,7 +2544,7 @@ class aeSecureScan
                         '<meta name="viewport" content="width=device-width, initial-scale=1" />' .
                         '<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />' .
                         '<title>aeSecure QuickScan | ' . basename($filename) . '</title>' .
-                        '<link href="https://www.aesecure.com/templates/moments/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon"/>' .
+                        '<link href="https://www.aesecure.com/images/medias/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon"/>' .
                         '<style type="text/css">' .
                             '.highlight {border-bottom:dotted;color:red;padding:0px;font-weight:bolder;}' .
                             '.blink {animation: blink 1s steps(5, start) infinite; -webkit-animation: blink 1s steps(5, start) infinite; } @keyframes blink {to {visibility: hidden;}} @-webkit-keyframes blink {to {visibility: hidden;}}' .
@@ -3658,7 +3658,7 @@ class aeSecureScan
         <meta property="og:image" content="aesecure.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         
-        <title><?php echo $aeLanguage->get('PAGETITLE');?> | AVONTURE Christophe - www.aesecure.com</title>
+        <title><?php echo $aeLanguage->get('PAGETITLE');?> | AVONTURE Christophe - www.avonture.be</title>
         
         <link href="favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon"/>
         <?php
