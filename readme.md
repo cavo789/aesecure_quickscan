@@ -10,9 +10,14 @@
 
 ## Table of Contents
 
+- [Demo](#demo)
 - [Install](#install)
 - [Usage](#usage)
 - [License](#license)
+
+## Demo
+
+You can play online with a demo here : [https://quickscan.avonture.be/](https://quickscan.avonture.be/)
 
 ## Install
 
