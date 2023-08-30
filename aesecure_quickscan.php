@@ -1,11 +1,12 @@
+
 <?php
 
 /**
  * Name          : aeSecure QuickScan - Free scanner
  * URL           : https://www.aesecure.com/fr/blog/aesecure-quickscan.html  (user guide)
  * Description   : Scan your website for possible hacks, viruses, malwares, SEO black hat and exploits
- * Version       : 1.2
- * Date          : November 2018
+ * Version       : 2.0
+ * Date          : March 2022
  * Author        : AVONTURE Christophe (christophe@avonture.be)
  * Author website: https://www.aesecure.com.
  *
@@ -29,6 +30,10 @@
  *      ###############################################################################################
  *
  * Changelog:
+ *
+ * version 2.0
+ *    + PHP 8.2 compatibility
+ *    + look for hashes in hashes directory
  *
  * version 1.2
  *    + Rewrite for downloading all settings and signatures files from GitHub
@@ -138,7 +143,7 @@ define('DS', DIRECTORY_SEPARATOR);
 
 // Register error handling functions
 set_error_handler(function ($code, $string, $file, $line) {
-    throw new ErrorException($string, null, $code, $file, $line);
+    throw new ErrorException($string, 0, $code, $file, $line);
 });
 
 register_shutdown_function(function () {
@@ -472,7 +477,7 @@ class aeSecureLanguage
         $aeSession = aeSecureSession::getInstance();
 
         if (null == $lang) {
-            $lang = str_replace('_', '-', aeSecureFct::getParam('lang', 'string', null, 5));
+            $lang = str_replace('_', '-', aeSecureFct::getParam('lang', 'string', '', 5));
         }
 
         // Initialize the list of supported languages
@@ -882,13 +887,13 @@ class aeSecureFct
 
         if (isset($_POST[$name])) {
             if (in_array($type, ['int', 'integer'])) {
-                $return = filter_input(INPUT_POST, $name, FILTER_SANITIZE_NUMBER_INT);
+                $return = htmlspecialchars($_POST[$name], ENT_QUOTES); // filter_input(INPUT_POST, $name, FILTER_SANITIZE_NUMBER_INT);
             } elseif ('boolean' == $type) {
                 // false = 5 characters
-                $tmp    = substr(filter_input(INPUT_POST, $name, FILTER_SANITIZE_STRING), 0, 5);
+                $tmp    = substr(htmlspecialchars($_POST[$name], ENT_QUOTES),0,5); // substr(filter_input(INPUT_POST, $name, FILTER_SANITIZE_STRING), 0, 5);
                 $return = (in_array(strtolower($tmp), ['on', 'true'])) ? true : false;
             } elseif ('string' == $type) {
-                $return = filter_input(INPUT_POST, $name, FILTER_SANITIZE_STRING);
+                $return = htmlspecialchars($_POST[$name], ENT_QUOTES); //filter_input(INPUT_POST, $name, FILTER_SANITIZE_STRING);
                 if ($maxlen > 0) {
                     $return = substr($return, 0, $maxlen);
                 }
@@ -904,13 +909,13 @@ class aeSecureFct
             if ((true === $aeSession->get('Debug', DEBUG)) || in_array($name, ['aes', 'lang'])) {
                 if (isset($_GET[$name])) {
                     if (in_array($type, ['int', 'integer'])) {
-                        $return = filter_input(INPUT_GET, $name, FILTER_SANITIZE_NUMBER_INT);
+                        $return = htmlspecialchars($_GET[$name], ENT_QUOTES); //filter_input(INPUT_GET, $name, FILTER_SANITIZE_NUMBER_INT);
                     } elseif ('boolean' == $type) {
                         // false = 5 characters
-                        $tmp    = substr(filter_input(INPUT_GET, $name, FILTER_SANITIZE_STRING), 0, 5);
+                        $tmp    = substr(htmlspecialchars($_GET[$name], ENT_QUOTES), 0, 5);
                         $return = (in_array(strtolower($tmp), ['1', 'on', 'true'])) ? true : false;
                     } elseif ('string' == $type) {
-                        $return = filter_input(INPUT_GET, $name, FILTER_SANITIZE_STRING);
+                        $return = htmlspecialchars($_GET[$name], ENT_QUOTES);
                     } elseif ('unsafe' == $type) {
                         $return = $_GET[$name];
                     }
@@ -1295,7 +1300,7 @@ class aeSecureCMS
         foreach ($arrCMS as $key => $value) {
             if (method_exists('aeSecureCMS', 'is' . $key)) {
 
-                $method = 'self::is' . $key;
+                $method = self::class.'::is' . $key; // PHP 8.2
 
                 list($return, $CMS, $Filename, $FullVersion, $MainVersion, $Version) = call_user_func($method, $root);
 
@@ -2651,6 +2656,8 @@ class aeSecureScan
         // Build the name of the JSON file with whitelisted hash for the CMS found on the system
         // Build a filename like c:/site/hacked/aesecure_quickscan_J!3.9.0.json
         $json = DIR . DS . sprintf(self::CMS, $prefix . $version);
+        // Pascal : recherche dans repertoire hashes : 
+		// $json = DIR . DS . 'hashes'. DS.strtolower($CMS).DS.$prefix . $version.'.json';
 
         // If the file has zero byte, remove it, not normal.
 
@@ -3553,7 +3560,7 @@ class aeSecureScan
     $aeSession = aeSecureSession::getInstance();
     $aeSession->set('Debug', DEBUG);
 
-    $lang = str_replace('_', '-', aeSecureFct::getParam('lang', 'string', null, 5));
+    $lang = str_replace('_', '-', aeSecureFct::getParam('lang', 'string', '', 5));
 
     $aeLanguage = aeSecureLanguage::getInstance($lang);
 
