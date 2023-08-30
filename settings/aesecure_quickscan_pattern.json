@@ -45,6 +45,11 @@
     "disclaimer": "HIGHPROBALITYBASE64KEYWORD"
   },
   {
+    "risk": "danger",
+    "pattern": "(_COOKIE)",
+    "disclaimer": "HIGHPROBALITYBASE64KEYWORD"
+  },
+  {
     "risk": "warning",
     "pattern": "(c2hlbG|NoZWxs|zaGVsb|c3lzdGVt|N5c3Rlb|zeXN0ZW|cmVwbGFjZ|JlcGxhY2|yZXBsYWNl|ZXhlYy|VjaG|lY2hv|ZnVuY3Rpb2|Z1bmN0aW9u|mdW5jdGlvb|aW5jbHVkZ|luY2x1ZG|pbmNsdWRl|cmVxdWlyZ|JlcXVpcm|yZXF1aXJl|YmFzZTY0|Jhc2U2N|iYXNlNj|SFRUUF9VU0VSX0FHRU5U|hUVFBfVVNFUl9BR0VOV|IVFRQX1VTRVJfQUdFTl|Z3ppbmZsYXRl|d6aW5mbGF0Z|nemluZmxhdG|Y3NsYXNoZX|NzbGFzaGVz|jc2xhc2hlc|ZXh0cmFjd|V4dHJhY3|leHRyYWN0|JF9HRV|RfR0VU|kX0dFV|JF9QT1NU|RfUE9TV|kX1BPU1|JF9DT09LSU|RfQ09PS0lF|kX0NPT0tJR|JF9SRVFVRVNU|RfUkVRVUVTV|kX1JFUVVFU1|R0xPQkFMU|dMT0JBTF|HTE9CQUxT|c2l6ZW9m|NpemVvZ|zaXplb2|cHJpbnRm|ByaW50Z|wcmludG|ZGVmaW5l|RlZmluZ|kZWZpbm)",
     "disclaimer": "WARNINGBASE64ENCODEDPATTERN"
