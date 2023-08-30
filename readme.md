@@ -1,6 +1,8 @@
 
 # aeSecure - QuickScan
 
+![php 8.2](https://img.shields.io/badge/php-8.2-brightgreen?style=flat)
+
 ![banner](./banner.svg)
 
 > PHP script to install on your site (preferably in localhost for better performance) to scan files for viruses.
