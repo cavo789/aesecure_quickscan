@@ -122,6 +122,8 @@ define('CURL_TIMEOUT', 2);           // Max number of seconds before the timeout
 
 // Download URL for the file with CMS hashes
 define('DOWNLOAD_URL', 'https://raw.githubusercontent.com/cavo789/aesecure_quickscan/master/');
+define('MD5', '');
+define('DIRNOTFOUND', 'Directory not found');
 
 // List of extensions, by "category". Add an extension if you want to skip that files when
 // skipping the category
@@ -478,7 +480,7 @@ class aeSecureLanguage
         $aeSession = aeSecureSession::getInstance();
 
         if (null == $lang) {
-            $lang = str_replace('_', '-', aeSecureFct::getParam('lang', 'string', '', 5));
+            $lang = str_replace('_', '-', (string) aeSecureFct::getParam('lang', 'string', '', 5));
         }
 
         // Initialize the list of supported languages
@@ -623,7 +625,7 @@ class aeSecureLanguage
         return true;
     }
 
-    public function ready()
+    public function ready(): bool
     {
         return $this->_bLoaded;
     }
@@ -631,12 +633,8 @@ class aeSecureLanguage
     /**
      * Translation functionality, search the CODE in the json file and returns its
      * value (the translated text).
-     *
-     * @param mixed $code
-     *
-     * @return type
      */
-    public function get($code)
+    public function get(string $code): string
     {
         $sText = '';
         if (isset($this->_arrLanguage[$code])) {
@@ -646,7 +644,7 @@ class aeSecureLanguage
         return $sText;
     }
 
-    public function getlang()
+    public function getlang(): string
     {
         return $this->_lang;
     }
@@ -655,13 +653,8 @@ class aeSecureLanguage
      * $language can be initialized or not.  If not, the script will detect supported
      * languages as defined in the user's browser. If initialized, should be something
      * like 'en-GB', 'fr-FR', ...
-     *
-     * @param string     $language
-     * @param null|mixed $lang
-     *
-     * @return bool
      */
-    public static function getInstance($lang = null)
+    public static function getInstance(?string $lang = null): self
     {
         if (null === self::$instance) {
             self::$instance = new aeSecureLanguage($lang);
@@ -676,7 +669,7 @@ class aeSecureLanguage
      *
      * @return string Returns f.i. en-GB, fr-FR, nl-NL, ...
      */
-    private function getBrowserLanguage()
+    private function getBrowserLanguage(): string
     {
         $default       = null;
         $httplanguages = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
@@ -731,17 +724,13 @@ class aeSecureFct
 {
     /**
      * Remove special characters, f.i clean('a|"bc!@£de^&$f g') will return 'abcdef-g'.
-     *
-     * @param type $string
-     *
-     * @return type
      */
-    public static function sanitize($string)
+    public static function sanitize(string $string): string
     {
         // Replaces all spaces with hyphens.
         $string = str_replace(' ', '-', $string);
         // Removes special chars.
-        return preg_replace('/[^A-Za-z0-9\-]/', '', $string);
+        return (string) preg_replace('/[^A-Za-z0-9\-]/', '', $string);
     }
 
     /**
@@ -811,12 +800,8 @@ class aeSecureFct
      * Return a string like '1 an 10 mois 6 jours 3 heures'... ie the age of f.i. a file.
      *
      *    echo aeSecureFct::time_elapsed_string(filemtime($filename))
-     *
-     * @param type $ptime
-     *
-     * @return type
      */
-    public static function time_elapsed_string($ptime)
+    public static function time_elapsed_string(int $ptime): string
     {
         $diff       = time() - $ptime;
         $calc_times = [];
@@ -845,10 +830,8 @@ class aeSecureFct
 
     /**
      * Return true when the call to the php script has been done through an ajax request.
-     *
-     * @return type
      */
-    public static function isAjaxRequest()
+    public static function isAjaxRequest(): bool
     {
         $bAjax = (isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
             ('XMLHttpRequest' == $_SERVER['HTTP_X_REQUESTED_WITH']));
@@ -875,14 +858,9 @@ class aeSecureFct
     /**
      * Safely read values from posted forms ($_POST).
      *
-     * @param type  $name
-     * @param type  $type
-     * @param type  $default
-     * @param mixed $maxlen
-     *
-     * @return type
+     * @param mixed $type
      */
-    public static function getParam($name, $type = 'string', $default = '', $maxlen = 0)
+    public static function getParam(string $name, $type = 'string', mixed $default = '', int $maxlen = 0): mixed
     {
         $tmp    = '';
         $return = $default;
@@ -1018,7 +996,7 @@ class aeSecureFiles
         $this->aeSession = aeSecureSession::getInstance();
     }
 
-    public function SeeFile($filename = null)
+    public function SeeFile(?string $filename = null): ?string
     {
         $return = null;
 
@@ -1034,17 +1012,15 @@ class aeSecureFiles
     /**
      * Kill physically a file.
      *
-     * @param null|mixed $filename
-     *
      * @return type -1 if the file has been removed successfully
      */
-    public function KillFile($filename = null)
+    public function KillFile(?string $filename = null): int
     {
-        if (null == $filename) {
-            return;
-        }
-
         $return = 0;
+
+        if (null == $filename) {
+            return $return;
+        }
 
         if ((is_file($filename)) && is_writable($filename)) {
             try {
@@ -1073,15 +1049,11 @@ class aeSecureFiles
      * (f.i. rrmdir(__DIR__/hashes/cms/joomla/2.5.27) will kill the full tree below
      * the specified folder).
      *
-     * @param type $folder
-     * @param type $killroot       If true, the folder himself will be removed.
-     *                             rrmdir(__DIR__/hashes/cms/joomla/2.5.27, true) ==>
-     *                             remove folder 2.5.27 too and not only his children
-     * @param type $arrIgnoreFiles
-     *
-     * @return bool
+     * @param bool $killroot If true, the folder himself will be removed.
+     *                       rrmdir(__DIR__/hashes/cms/joomla/2.5.27, true) ==>
+     *                       remove folder 2.5.27 too and not only his children
      */
-    public function rrmdir($folder, $killroot = false, $arrIgnoreFiles = ['.htaccess', 'index.html'])
+    public function rrmdir(string $folder, bool $killroot = false, array $arrIgnoreFiles = ['.htaccess', 'index.html']): bool
     {
         try {
             if (!is_dir($folder) && file_exists($folder)) {
@@ -1125,7 +1097,7 @@ class aeSecureFiles
         }
     }
 
-    public static function getInstance()
+    public static function getInstance(): self
     {
         if (null === self::$instance) {
             self::$instance = new aeSecureFiles();
@@ -1134,7 +1106,7 @@ class aeSecureFiles
         return self::$instance;
     }
 
-    public static function getFileMimeType($filename)
+    public static function getFileMimeType(string $filename): ?string
     {
         $mime_type = null;
 
@@ -1166,10 +1138,8 @@ class aeSecureFiles
 
     /**
      * Return true if the file contains text content.
-     *
-     * @param type $filename
      */
-    public static function isTextFileContent($filename)
+    public static function isTextFileContent(string $filename): string
     {
         $mimeType   = aeSecureFiles::getFileMimeType($filename);
         $isTextType = false;
@@ -1244,7 +1214,7 @@ class aeSecureSession
         return true;
     }
 
-    public static function getInstance($bDestroy = false)
+    public static function getInstance($bDestroy = false): self
     {
         if (null === self::$instance) {
             self::$instance = new aeSecureSession($bDestroy);
@@ -1253,12 +1223,12 @@ class aeSecureSession
         return self::$instance;
     }
 
-    public static function set($name, $value)
+    public static function set(string $name, mixed $value): void
     {
         $_SESSION[static::$prefix . $name] = $value;
     }
 
-    public static function get($name, $defaultvalue)
+    public static function get(string $name, mixed $defaultvalue): mixed
     {
         return $_SESSION[static::$prefix . $name] ?? $defaultvalue;
     }
@@ -1273,17 +1243,13 @@ class aeSecureCMS
 
     /**
      * Try to determine if the site is a CMS site and in that case, get the CMS version.
-     *
-     * @param type $directory
-     *
-     * @return type
      */
-    public static function getInfo($directory)
+    public static function getInfo(string $directory): array
     {
-        $CMS         = null;
-        $MainVersion = null;
-        $Version     = null;
-        $FullVersion = null;
+        $CMS         = '';
+        $MainVersion = '';
+        $Version     = '';
+        $FullVersion = '';
 
         // Try to derive the root folder
         $root = rtrim($directory, DS) . DS;
@@ -1313,17 +1279,13 @@ class aeSecureCMS
             }
         }
 
-        return [$CMS, $FullVersion, $MainVersion, $Version, $root];
+        return [(string) $CMS, (string) $FullVersion, (string) $MainVersion, (string) $Version, (string) $root];
     }
 
     /**
      * Detect if the CMS is Cake.
-     *
-     * @param type $root
-     *
-     * @return bool
      */
-    private static function iscake($root)
+    private static function iscake(string $root): bool|array
     {
         $filename = rtrim($root, DS) . DS . 'admin' . DS . 'cake' . DS . 'config' . DS . 'config.php';
 
@@ -1331,7 +1293,7 @@ class aeSecureCMS
             $content = file_get_contents($filename);
 
             preg_match('/.*\\Cake\.version\'\] *= *\'(.*)\'/', $content, $arrMatches, PREG_OFFSET_CAPTURE);
-            $FullVersion = (count($arrMatches) > 0) ? $arrMatches[1][0] : '';
+            $FullVersion = (count($arrMatches) > 0) ? (string) $arrMatches[1][0] : '';
 
             return [true, 'Cake', $filename, $FullVersion, $FullVersion, $FullVersion];
         } else {
@@ -1341,12 +1303,8 @@ class aeSecureCMS
 
     /**
      * Detect if the CMS is Concrete5.
-     *
-     * @param type $root
-     *
-     * @return bool
      */
-    private static function isConcrete5($root)
+    private static function isConcrete5(string $root): bool|array
     {
         $filename = rtrim($root, DS) . DS . 'concrete' . DS . 'config' . DS . 'concrete.php';
 
@@ -1354,7 +1312,7 @@ class aeSecureCMS
             $content = file_get_contents($filename);
 
             preg_match('/.*\'version\' *\=\> *\'(.*)\'/', $content, $arrMatches, PREG_OFFSET_CAPTURE);
-            $FullVersion = (count($arrMatches) > 0) ? $arrMatches[1][0] : '';
+            $FullVersion = (count($arrMatches) > 0) ? (string) $arrMatches[1][0] : '';
 
             return [true, 'Concrete5', $filename, $FullVersion, $FullVersion, $FullVersion];
         } else {
@@ -1364,12 +1322,8 @@ class aeSecureCMS
 
     /**
      * Detect if the CMS is Contao.
-     *
-     * @param type $root
-     *
-     * @return bool
      */
-    private static function isContao($root)
+    private static function isContao(string $root): bool|array
     {
         $filename = rtrim($root, DS) . DS . 'system' . DS . 'config' . DS . 'constants.php';
 
@@ -1380,7 +1334,7 @@ class aeSecureCMS
             $MainVersion = (count($arrMatches) > 0) ? $arrMatches[1][0] : '';
 
             preg_match('/.*BUILD\', *\'(.*)\'/', $content, $arrMatches, PREG_OFFSET_CAPTURE);
-            $FullVersion = $MainVersion . '.' . ((count($arrMatches) > 0) ? $arrMatches[1][0] : '');
+            $FullVersion = $MainVersion . '.' . ((count($arrMatches) > 0) ? (string) $arrMatches[1][0] : '');
 
             return [true, 'Contao', $filename, $FullVersion, $MainVersion, $FullVersion];
         } else {
@@ -1390,12 +1344,8 @@ class aeSecureCMS
 
     /**
      * Detect if the CMS is Dolibarr.
-     *
-     * @param type $root
-     *
-     * @return bool
      */
-    private static function isDolibarr($root)
+    private static function isDolibarr(string $root): bool|array
     {
         $filename = rtrim($root, DS) . DS . 'htdocs' . DS . 'filefunc.inc.php';
 
@@ -1403,7 +1353,7 @@ class aeSecureCMS
             $content = file_get_contents($filename);
 
             preg_match('/.*DOL_VERSION\', *\'(.*)\'/', $content, $arrMatches, PREG_OFFSET_CAPTURE);
-            $FullVersion = (count($arrMatches) > 0) ? $arrMatches[1][0] : '';
+            $FullVersion = (count($arrMatches) > 0) ? (string) $arrMatches[1][0] : '';
 
             return [true, 'Dolibarr', $filename, $FullVersion, $FullVersion, $FullVersion];
         } else {
@@ -1413,12 +1363,8 @@ class aeSecureCMS
 
     /**
      * Detect if the CMS is Drupal.
-     *
-     * @param type $root
-     *
-     * @return bool
      */
-    private static function isDrupal($root)
+    private static function isDrupal(string $root): bool|array
     {
         $filename = rtrim($root, DS) . DS . 'modules' . DS . 'system' . DS . 'system.module';
 
@@ -1436,12 +1382,8 @@ class aeSecureCMS
 
     /**
      * Detect if the CMS is eFront.
-     *
-     * @param type $root
-     *
-     * @return bool
      */
-    private static function iseFront($root)
+    private static function iseFront(string $root): bool|array
     {
         $filename = rtrim($root, DS) . DS . 'libraries' . DS . 'configuration.php';
 
@@ -1449,7 +1391,7 @@ class aeSecureCMS
             $content = file_get_contents($filename);
 
             preg_match('/.*G_VERSION_NUM\', *\'(.*)\'/', $content, $arrMatches, PREG_OFFSET_CAPTURE);
-            $FullVersion = (count($arrMatches) > 0) ? $arrMatches[1][0] : '';
+            $FullVersion = (count($arrMatches) > 0) ? (string) $arrMatches[1][0] : '';
 
             return [true, 'eFront', $filename, $FullVersion, $FullVersion, $FullVersion];
         } else {
@@ -1459,12 +1401,8 @@ class aeSecureCMS
 
     /**
      * Detect if the CMS is EspoCRM.
-     *
-     * @param type $root
-     *
-     * @return bool
      */
-    private static function isEspoCRM($root)
+    private static function isEspoCRM(string $root): bool|array
     {
         $filename = rtrim($root, DS) . DS . 'data' . DS . 'config.php';
 
@@ -1472,7 +1410,7 @@ class aeSecureCMS
             $content = file_get_contents($filename);
 
             preg_match('/.*version\' \=\> *\'(.*)\'/', $content, $arrMatches, PREG_OFFSET_CAPTURE);
-            $FullVersion = (count($arrMatches) > 0) ? $arrMatches[1][0] : '';
+            $FullVersion = (count($arrMatches) > 0) ? (string) $arrMatches[1][0] : '';
 
             return [true, 'EspoCRM', $filename, $FullVersion, $FullVersion, $FullVersion];
         } else {
@@ -1482,12 +1420,8 @@ class aeSecureCMS
 
     /**
      * Detect if the CMS is FormaLMS.
-     *
-     * @param type $root
-     *
-     * @return bool
      */
-    private static function isFormaLMS($root)
+    private static function isFormaLMS(string $root): bool|array
     {
         $filename = rtrim($root, DS) . DS . 'appCore' . DS . 'index.php';
 
@@ -1495,7 +1429,7 @@ class aeSecureCMS
             $content = file_get_contents($filename);
 
             preg_match('/.*_file_version_\', *\'(.*)\'/', $content, $arrMatches, PREG_OFFSET_CAPTURE);
-            $FullVersion = (count($arrMatches) > 0) ? $arrMatches[1][0] : '';
+            $FullVersion = (count($arrMatches) > 0) ? (string) $arrMatches[1][0] : '';
 
             return [true, 'FormaLMS', $filename, $FullVersion, $FullVersion, $FullVersion];
         } else {
@@ -1505,12 +1439,8 @@ class aeSecureCMS
 
     /**
      * Detect if the CMS is Grav.
-     *
-     * @param type $root
-     *
-     * @return bool
      */
-    private static function isGrav($root)
+    private static function isGrav(string $root): bool|array
     {
         $filename = rtrim($root, DS) . DS . 'system' . DS . 'defines.php';
 
@@ -1518,7 +1448,7 @@ class aeSecureCMS
             $content = file_get_contents($filename);
 
             preg_match('/.*define\(\'GRAV_VERSION\', *\'(.*)\'/', $content, $arrMatches, PREG_OFFSET_CAPTURE);
-            $FullVersion = (count($arrMatches) > 0) ? $arrMatches[1][0] : '';
+            $FullVersion = (count($arrMatches) > 0) ? (string) $arrMatches[1][0] : '';
 
             return [true, 'Grav', $filename, $FullVersion, $FullVersion, $FullVersion];
         } else {
@@ -1528,12 +1458,8 @@ class aeSecureCMS
 
     /**
      * Detect if the CMS is GRR.
-     *
-     * @param type $root
-     *
-     * @return bool
      */
-    private static function isGrr($root)
+    private static function isGrr(string $root): bool|array
     {
         $filename = rtrim($root, DS) . DS . 'include' . DS . 'misc.inc.php';
 
@@ -1544,7 +1470,7 @@ class aeSecureCMS
 
             preg_match($pattern, $content, $arrMatches, PREG_OFFSET_CAPTURE);
 
-            $FullVersion = (count($arrMatches) > 0) ? $arrMatches[1][0] : '';
+            $FullVersion = (count($arrMatches) > 0) ? (string) $arrMatches[1][0] : '';
 
             return [true, 'GRR', $filename, $FullVersion, $FullVersion, $FullVersion, $root];
         } else {
@@ -1554,12 +1480,8 @@ class aeSecureCMS
 
     /**
      * Detect if the CMS is Joomla.
-     *
-     * @param type $root
-     *
-     * @return type
      */
-    private static function isJoomla($root)
+    private static function isJoomla(string $root): bool|array
     {
         if ((($wpos = strpos($root, DS . 'administrator' . DS)) > 0) ||
             (($wpos = strpos($root, DS . 'bin' . DS)) > 0) ||
@@ -1600,7 +1522,6 @@ class aeSecureCMS
 
             if (preg_match($pattern, $content, $arrMatches, PREG_OFFSET_CAPTURE) > 0) {
                 // As from Joomla 4, RELEASE, DEV_LEVEL, ... are removed.
-
                 $arr = ['MAJOR_VERSION' => 0, 'MINOR_VERSION' => 0, 'PATCH_VERSION' => 0, 'RELDATE' => 0, 'RELTIME' => 0, 'RELTZ' => 0];
             } else {
                 $arr = ['RELEASE' => 0, 'DEV_LEVEL' => 0, 'DEV_STATUS' => 0, 'RELDATE' => 0, 'RELTIME' => 0, 'RELTZ' => 0];
@@ -1631,7 +1552,7 @@ class aeSecureCMS
                 $FullVersion = $arr['RELEASE'] . '.' . $arr['DEV_LEVEL'] . ' (' . $arr['DEV_STATUS'] . ') ' . '(' . $arr['RELDATE'] . ' ' . $arr['RELTIME'] . ' ' . $arr['RELTZ'] . ')';
             }
 
-            return [true, 'Joomla', $filename, $FullVersion, $MainVersion, $Version];
+            return [true, 'Joomla', $filename, (string) $FullVersion, (string) $MainVersion, (string) $Version];
         } else {
             return false;
         }
@@ -1639,12 +1560,8 @@ class aeSecureCMS
 
     /**
      * Detect if the CMS is Magento.
-     *
-     * @param type $root
-     *
-     * @return type
      */
-    private static function isMagento($root)
+    private static function isMagento(string $root): bool|array
     {
         $filename = rtrim($root, DS) . DS . 'app' . DS . 'Mage.php';
 
@@ -1655,7 +1572,7 @@ class aeSecureCMS
             foreach ($arr as $key => $value) {
                 preg_match('/.*\'' . $key . '\' *=\> *\'(\\d+)\'/', $content, $arrMatches, PREG_OFFSET_CAPTURE);
                 if (count($arrMatches) > 0) {
-                    $arr[$key] = $arrMatches[1][0];
+                    (string) $arr[$key] = $arrMatches[1][0];
                 }
             }
 
@@ -1669,12 +1586,8 @@ class aeSecureCMS
 
     /**
      * Detect if the CMS is MediaWiki.
-     *
-     * @param type $root
-     *
-     * @return bool
      */
-    private static function isMediaWiki($root)
+    private static function isMediaWiki(string $root): bool|array
     {
         $filename = rtrim($root, DS) . DS . 'includes' . DS . 'DefaultSettings.php';
 
@@ -1685,7 +1598,7 @@ class aeSecureCMS
 
             preg_match($pattern, $content, $arrMatches, PREG_OFFSET_CAPTURE);
 
-            $FullVersion = (count($arrMatches) > 0) ? $arrMatches[1][0] : '';
+            $FullVersion = (count($arrMatches) > 0) ? (string) $arrMatches[1][0] : '';
 
             return [true, 'MediaWiki', $filename, $FullVersion, $FullVersion, $FullVersion, $root];
         } else {
@@ -1695,12 +1608,8 @@ class aeSecureCMS
 
     /**
      * Detect if the CMS is phpBB.
-     *
-     * @param type $root
-     *
-     * @return bool
      */
-    private static function isphpBB($root)
+    private static function isphpBB(string $root): bool|array
     {
         $filename = rtrim($root, DS) . DS . 'styles' . DS . 'prosilver' . DS . 'style.cfg';
 
@@ -1711,7 +1620,7 @@ class aeSecureCMS
 
             preg_match($pattern, $content, $arrMatches, PREG_OFFSET_CAPTURE);
 
-            $FullVersion = (count($arrMatches) > 0) ? $arrMatches[1][0] : '';
+            $FullVersion = (count($arrMatches) > 0) ? (string) $arrMatches[1][0] : '';
 
             return [true, 'phpBB', $filename, $FullVersion, $FullVersion, $FullVersion];
         } else {
@@ -1721,12 +1630,8 @@ class aeSecureCMS
 
     /**
      * Detect if the CMS is phpList.
-     *
-     * @param type $root
-     *
-     * @return type
      */
-    private static function isphpList($root)
+    private static function isphpList(string $root): bool|array
     {
         $filename = rtrim($root, DS) . DS . 'public_html' . DS . 'lists' . DS . 'admin' . DS . 'init.php';
 
@@ -1735,7 +1640,7 @@ class aeSecureCMS
 
             preg_match('/.*"VERSION", "(.*)"/', $content, $arrMatches, PREG_OFFSET_CAPTURE);
 
-            $FullVersion = (count($arrMatches) > 0) ? $arrMatches[1][0] : '';
+            $FullVersion = (count($arrMatches) > 0) ? (string) $arrMatches[1][0] : '';
 
             return [true, 'phpList', $filename, $FullVersion, $FullVersion, $FullVersion];
         } else {
@@ -1745,12 +1650,8 @@ class aeSecureCMS
 
     /**
      * Detect if the framework is phpMyAdmin.
-     *
-     * @param type $root
-     *
-     * @return bool
      */
-    private static function isphpmyadmin($root)
+    private static function isphpmyadmin(string $root): bool|array
     {
         $filename = rtrim($root, DS) . DS . 'libraries' . DS . 'config.class.php';
         if (!file_exists($filename)) {
@@ -1764,7 +1665,7 @@ class aeSecureCMS
 
             preg_match($pattern, $content, $arrMatches, PREG_OFFSET_CAPTURE);
 
-            $FullVersion = (count($arrMatches) > 0) ? $arrMatches[1][0] : '';
+            $FullVersion = (count($arrMatches) > 0) ? (string) $arrMatches[1][0] : '';
 
             return [true, 'phpmyadmin', $filename, $FullVersion, $FullVersion, $FullVersion, $root];
         } else {
@@ -1774,12 +1675,8 @@ class aeSecureCMS
 
     /**
      * Detect if the framework is PMP.
-     *
-     * @param type $root
-     *
-     * @return bool
      */
-    private static function isPMB($root)
+    private static function isPMB(string $root): bool|array
     {
         $filename = rtrim($root, DS) . DS . 'includes' . DS . 'config.inc.php';
 
@@ -1790,7 +1687,7 @@ class aeSecureCMS
 
             preg_match($pattern, $content, $arrMatches, PREG_OFFSET_CAPTURE);
 
-            $FullVersion = (count($arrMatches) > 0) ? $arrMatches[1][0] : '';
+            $FullVersion = (count($arrMatches) > 0) ? (string) $arrMatches[1][0] : '';
 
             return [true, 'PMB', $filename, $FullVersion, $FullVersion, $FullVersion, $root];
         } else {
@@ -1800,12 +1697,8 @@ class aeSecureCMS
 
     /**
      * Detect if the CMS is Prestashop.
-     *
-     * @param type $root
-     *
-     * @return bool
      */
-    private static function isPrestashop($root)
+    private static function isPrestashop(string $root): bool|array
     {
         $filename = rtrim($root, DS) . DS . 'config' . DS . 'settings.inc.php';
 
@@ -1816,7 +1709,7 @@ class aeSecureCMS
 
             preg_match($pattern, $content, $arrMatches, PREG_OFFSET_CAPTURE);
 
-            $FullVersion = (count($arrMatches) > 0) ? $arrMatches[1][0] : '';
+            $FullVersion = (count($arrMatches) > 0) ? (string) $arrMatches[1][0] : '';
 
             return [true, 'Prestashop', $filename, $FullVersion, $FullVersion, $FullVersion];
         } else {
@@ -1826,17 +1719,13 @@ class aeSecureCMS
 
     /**
      * Detect if the CMS is SilverStripe.
-     *
-     * @param type $root
-     *
-     * @return bool
      */
-    private static function isSilverStripe($root)
+    private static function isSilverStripe(string $root): bool|array
     {
         $filename = rtrim($root, DS) . DS . 'cms' . DS . 'silverstripe_version';
 
         if (file_exists($filename)) {
-            $FullVersion = file_get_contents($filename);
+            $FullVersion = (string) file_get_contents($filename);
 
             return [true, 'silverstripe', $filename, $FullVersion, $FullVersion, $FullVersion];
         } else {
@@ -1846,14 +1735,10 @@ class aeSecureCMS
 
     /**
      * Detect if the CMS is WordPress.
-     *
-     * @param type $root
-     *
-     * @return bool
      */
-    private static function isWordPress($root)
+    private static function isWordPress(string $root): bool|array
     {
-        $filename = null;
+        $filename = '';
         if (strpos($root, 'wp-admin') > 0) {
             $filename = rtrim(substr($filename, 0, strpos($root, 'wp-admin')), DS) . DS . 'wp-includes' . DS . 'version.php';
         } elseif (strpos($root, 'wp-content') > 0) {
@@ -1880,12 +1765,12 @@ class aeSecureCMS
 
             preg_match($pattern, $configuration, $arrMatches, PREG_OFFSET_CAPTURE);
 
-            $FullVersion = (count($arrMatches) > 0) ? $arrMatches[1][0] : '';
+            $FullVersion = (count($arrMatches) > 0) ? (string) $arrMatches[1][0] : '';
 
             // Get the website root folder
             $root = dirname(dirname($filename));
 
-            return [true, 'WordPress', $filename, $FullVersion, $FullVersion, $FullVersion];
+            return [true, $CMS, $filename, $FullVersion, $FullVersion, $FullVersion];
         } else {
             return false;
         }
@@ -1893,12 +1778,8 @@ class aeSecureCMS
 
     /**
      * Detect if the CMS is x3cms.
-     *
-     * @param type $root
-     *
-     * @return bool
      */
-    private static function isx3cms($root)
+    private static function isx3cms(string $root): bool|array
     {
         $filename = rtrim($root, DS) . DS . 'INSTALL' . DS . 'index.php';
 
@@ -1909,7 +1790,7 @@ class aeSecureCMS
 
             preg_match($pattern, $content, $arrMatches, PREG_OFFSET_CAPTURE);
 
-            $FullVersion = (count($arrMatches) > 0) ? $arrMatches[1][0] : '';
+            $FullVersion = (count($arrMatches) > 0) ? (string) $arrMatches[1][0] : '';
 
             return [true, 'x3cms', $filename, $FullVersion, $FullVersion, $FullVersion];
         } else {
@@ -1953,30 +1834,26 @@ class aeSecureProgressBar
 
     /**
      * Getter & Setter for the Start position of the progress bar (by default, 0).
-     *
-     * @param type $value
      */
-    public function getStart()
+    public function getStart(): int
     {
         return $this->_start;
     }
 
-    public function setStart($value = 0)
+    public function setStart(int $value = 0): void
     {
         $this->_start = $value;
     }
 
     /**
      * Getter & Setter for the End position of the progress bar (by default, 100).
-     *
-     * @param type $value
      */
-    public function getEnd()
+    public function getEnd(): int
     {
         return 0 == $this->_end ? 1 : $this->_end;
     }
 
-    public function setEnd($value = 100)
+    public function setEnd(int $value = 100): void
     {
         $this->_end = $value;
     }
@@ -2006,7 +1883,7 @@ class aeSecureProgressBar
         ++$this->_start;
 
         if (($this->_start / $this->getEnd()) > $this->_pct) {
-            $this->_pct = $this->_start / $this->getEnd();
+            $this->_pct = intval(intval($this->_start) / $this->getEnd());
 
             // *******************************************************************
             // *******************************************************************
@@ -2245,7 +2122,7 @@ class aeSecureScan
         // In Expert mode, allow to use a session to store the name of the folder
         // Get the folder to process
         if (true === $this->aeSession->get('Expert', EXPERT)) {
-            $folder = base64_decode(aeSecureFct::getParam('folder', 'string', ''));
+            $folder = base64_decode((string) aeSecureFct::getParam('folder', 'string', ''));
             if ('' == $folder) {
                 $folder = $this->aeSession->get('folder', $rootFolder);
             }
@@ -2317,10 +2194,8 @@ class aeSecureScan
 
     /**
      * Add a file in the whitelist.
-     *
-     * @param type $filename
      */
-    public function WhiteList($filename = null)
+    public function WhiteList(?string $filename = null)
     {
         // Don't white list files in demo mode, simulate that everything was ok (return -1)
         if (DEMO) {
@@ -2458,7 +2333,7 @@ class aeSecureScan
                         die(-1);
                     }
 
-                    $filename = base64_decode(aeSecureFct::getParam('filename', 'string', ''));
+                    $filename = base64_decode((string) aeSecureFct::getParam('filename', 'string', ''));
 
                     if ('' != $filename) {
                         die($this->aeFiles->KillFile($filename));
@@ -2488,7 +2363,7 @@ class aeSecureScan
                         die();
                     }
 
-                    $filename = base64_decode(aeSecureFct::getParam('filename', 'string', ''));
+                    $filename = base64_decode((string) aeSecureFct::getParam('filename', 'string', ''));
                     $src      = htmlentities((string) $this->aeFiles->SeeFile($filename));
 
                     // Highlight patterns in the file source code
@@ -2583,7 +2458,7 @@ class aeSecureScan
                 }
 
                 case 'whitelist': {
-                    $filename = base64_decode(aeSecureFct::getParam('filename', 'string', ''));
+                    $filename = base64_decode((string) aeSecureFct::getParam('filename', 'string', ''));
 
                     die($this->WhiteList($filename));
 
@@ -2606,17 +2481,17 @@ class aeSecureScan
      * in the same folder than this script, name : aesecure_quickscan_CMS.json. This file will be killed
      * when the user will click on the "Kill this script" button available on the user's form.
      *
-     * @param type $CMS     f.i. "Joomla"
-     * @param type $version f.i. "2.5.27"
+     * @param string $CMS     f.i. "Joomla"
+     * @param string $version f.i. "2.5.27"
      *
-     * @return type array of hashes like below.  All these hashes are native files => no scan needed
-     *              array(3707) {
-     *              ["a62f6525e7418dc679ad1c6c2ebe662dc67207cb"]=> int(1)
-     *              ["43ae5dae1df4bec4ecb2879146518283f55eab67"]=> int(1)
-     *              ["9b0661ab4d6d640ef8275995dfc2830c974af781"]=> int(1)
-     *              ["6e71c8f8ba7b9318d57773c4cdb60e98ffb43eb0"]=> int(1)
+     * @return array array of hashes like below.  All these hashes are native files => no scan needed
+     *               array(3707) {
+     *               ["a62f6525e7418dc679ad1c6c2ebe662dc67207cb"]=> int(1)
+     *               ["43ae5dae1df4bec4ecb2879146518283f55eab67"]=> int(1)
+     *               ["9b0661ab4d6d640ef8275995dfc2830c974af781"]=> int(1)
+     *               ["6e71c8f8ba7b9318d57773c4cdb60e98ffb43eb0"]=> int(1)
      */
-    public function gethashes($CMS, $version)
+    public function gethashes(string $CMS, string $version): array
     {
         if (null == $CMS) {
             return [null, null];
@@ -2679,7 +2554,7 @@ class aeSecureScan
         return [$arrHashes];
     }
 
-    public function getHTMLFooter()
+    public function getHTMLFooter(): string
     {
         $aeLanguage = aeSecureLanguage::getInstance();
 
@@ -2694,7 +2569,7 @@ class aeSecureScan
         '</footer>';
     }
 
-    public function getCountPatterns()
+    public function getCountPatterns(): int
     {
         return count($this->_arrRegex);
     }
@@ -2704,7 +2579,7 @@ class aeSecureScan
      *
      * @return type
      */
-    private function doCleanSite()
+    private function doCleanSite(): void
     {
         $output = '';
 
@@ -2741,10 +2616,8 @@ class aeSecureScan
     /**
      * Read the json files with hashes (whitelist, other and blacklist) and initialize arrays
      * This function is called by the GetCountFiles() and doScan() functions.
-     *
-     * @return bool
      */
-    private function initializeHashes()
+    private function initializeHashes(): bool
     {
         // Try to determine the CMS used and, if found one, try to get a json file
         // with hashes of native files. If found, this is a tremendous news since
@@ -2819,13 +2692,8 @@ class aeSecureScan
     /**
      * Scan the disk and search for each files that will be then processed by the scanner.
      * This function will initialize the arrFiles session variable.
-     *
-     * @param mixed      $echo
-     * @param null|mixed $arrFiles
-     *
-     * @return bool
      */
-    private function getCountFiles($echo = true, &$arrFiles = null)
+    private function getCountFiles(mixed $echo = true, mixed &$arrFiles = null): bool
     {
         try {
             clearstatcache();
@@ -2972,7 +2840,7 @@ class aeSecureScan
             // The user is running the script once more for the same folder
             // ==> don't scan the disk again, just user the session variable to speed up the process
 
-            $arrFiles = json_decode($arrFiles, null, 512, JSON_THROW_ON_ERROR);
+            $arrFiles = json_decode((string) $arrFiles, null, 512, JSON_THROW_ON_ERROR);
         }
 
         if (null == $arrFiles) {
@@ -3537,7 +3405,7 @@ aeSecureDebug::setDebugMode(DEBUG);
 $aeSession = aeSecureSession::getInstance();
 $aeSession->set('Debug', DEBUG);
 
-$lang = str_replace('_', '-', aeSecureFct::getParam('lang', 'string', '', 5));
+$lang = str_replace('_', '-', (string) aeSecureFct::getParam('lang', 'string', '', 5));
 
 $aeLanguage = aeSecureLanguage::getInstance($lang);
 
@@ -3731,9 +3599,9 @@ if (is_file($cat = __DIR__ . DIRECTORY_SEPARATOR . 'octocat.tmpl')) {
                             <div>
                                 <select class="form-control" id="lang" name="lang">
                                     <?php
-                // Retrieve the list of JSON files that match
-                // aesecure_quickscan_*.json
-                // f.i. aesecure_quickscan
+    // Retrieve the list of JSON files that match
+    // aesecure_quickscan_*.json
+    // f.i. aesecure_quickscan
                                     $script  = str_replace('.php', '', basename(__FILE__));
 
 // f.i. aesecure_quickscan_lang_*.json
