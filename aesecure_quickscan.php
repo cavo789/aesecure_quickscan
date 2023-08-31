@@ -3,7 +3,7 @@
 /**
  * Name          : aeSecure QuickScan - Free scanner
  * Description   : Scan your website for possible hacks, viruses, malwares, SEO black hat and exploits
- * Version       : 2.0
+ * Version       : 2.0.2
  * Date          : November 2018
  * Last update   : August 2023
  * Author        : AVONTURE Christophe (christophe@avonture.be)
@@ -26,6 +26,12 @@
  *
  * Changelog:
  *
+ * version 2.0.2
+ *    + Revert to PHP 8.0 compatibility
+ * 
+ * version 2.0.1
+ *    + Add the "_COOKIE" pattern in aesecure_quickscan_pattern.json
+ * 
  * version 2.0
  *    + PHP 8.2 compatibility
  *    + look for hashes in hashes directory
@@ -110,7 +116,7 @@ define('DEMO', false);
 
 define('DEBUG', false);              // Enable debugging (Note: there is no progress bar in debug mode)
 define('FULLDEBUG', false);          // Output a lot of information
-define('VERSION', '2.0');            // Version number of this script
+define('VERSION', '2.0.2');          // Version number of this script
 define('EXPERT', false);             // Display Kill file button and allow to specify a folder
 define('MAX_SIZE', 1 * 1024 * 1024); // One megabyte: skip files when filesize is greater than this max size.
 define('MAXFILESBYCYCLE', 500);      // Number of files to process by cycle, reduce this figure if you receive HTTP error 504 - Gateway timeout
@@ -211,8 +217,8 @@ class aeSecureDebug
 class Download
 {
     // Timeout delay in seconds
-    final public const CURL_TIMEOUT = 2;
-    final public const ERROR_CURL   = 1001;
+    public const CURL_TIMEOUT = 2;
+    public const ERROR_CURL   = 1001;
 
     private static $sAppName              = '';
     private static string $sFileName      = '';
@@ -457,14 +463,14 @@ class aeSecureDownload
  */
 class aeSecureLanguage
 {
-    final public const DEFAULT_LANGUAGE = 'en-GB';
+    public const DEFAULT_LANGUAGE = 'en-GB';
 
     // Filename pattern for languages files
-    final public const LANG_FILE = 'aesecure_quickscan_lang_%s.json';
+    public const LANG_FILE = 'aesecure_quickscan_lang_%s.json';
 
     // Hard-coded list of supported languages
     // @See https://github.com/cavo789/aesecure_quickscan for xxx_lang_xxxx.json files
-    final public const SUPPORTED_LANGUAGES = 'en;en-GB;fr;fr-FR;nl;nl-BE';
+    public const SUPPORTED_LANGUAGES = 'en;en-GB;fr;fr-FR;nl;nl-BE';
 
     private string $_filename              = '';
     private $_lang                         = null;
@@ -1239,7 +1245,7 @@ class aeSecureSession
  */
 class aeSecureCMS
 {
-    final public const SUPPORTED_CMS = 'aesecure_quickscan_supported_cms.json';
+    public const SUPPORTED_CMS = 'aesecure_quickscan_supported_cms.json';
 
     /**
      * Try to determine if the site is a CMS site and in that case, get the CMS version.
@@ -2058,27 +2064,27 @@ class aeSecureProgressBar
 class aeSecureScan
 {
     // hash of files already scanned and are viruses (the file is a virus)
-    final public const BLACKLIST = 'aesecure_quickscan_blacklist.json';
+    public const BLACKLIST = 'aesecure_quickscan_blacklist.json';
 
     // JSON for the detected CMS (f. i. aesecure_quickscan_J!3.9.0.json for a Joomla 3.9.0 version)
-    final public const CMS = 'aesecure_quickscan_%s.json';
+    public const CMS = 'aesecure_quickscan_%s.json';
 
     // hash of files already scanned and where a virus was found (the file contains a virus)
-    final public const EDITED = 'aesecure_quickscan_edited.json';
+    public const EDITED = 'aesecure_quickscan_edited.json';
 
     // hash of files that can be considered as safe
-    final public const OTHER = 'aesecure_quickscan_other.json';
+    public const OTHER = 'aesecure_quickscan_other.json';
 
     // JSON with patterns to scan for finding viruses
-    final public const PATTERN   = 'aesecure_quickscan_pattern.json';
+    public const PATTERN   = 'aesecure_quickscan_pattern.json';
 
     // hash of files that can be considered as safe
-    final public const WHITELIST = 'aesecure_quickscan_whitelist.json';
+    public const WHITELIST = 'aesecure_quickscan_whitelist.json';
 
     // List of supported CMS
-    final public const SUPPORTED_CMS = 'aesecure_quickscan_supported_cms.json';
+    public const SUPPORTED_CMS = 'aesecure_quickscan_supported_cms.json';
 
-    final public const FOLDERS = 'aesecure_quickscan_folders.json';
+    public const FOLDERS = 'aesecure_quickscan_folders.json';
 
     protected $aeFiles    = null;
     protected $aeLanguage = null;
