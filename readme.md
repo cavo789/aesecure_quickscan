@@ -1,15 +1,16 @@
 
 # aeSecure - QuickScan
 
-![php 8.2](https://img.shields.io/badge/php-8.2-brightgreen?style=flat)
+![php 8.0](https://img.shields.io/badge/php-8.0-brightgreen?style=flat)
 
 ![banner](./banner.svg)
 
 > PHP script to install on your site (preferably in localhost for better performance) to scan files for viruses.
 
-**aeSecure QuickScan already RECOGNIZE MORE THAN 45.000 VIRUSES (November 2018) and use whitelist hashes to avoid to scan WordPress and Joomla native files (all versions). Thanks these hashes aeSecure QuickScan already detect more than 725.000 files as healthy.**
+**aeSecure QuickScan already RECOGNIZE MORE THAN 45.000 VIRUSES (November 2018) and use whitelist hashes to avoid to scan [WordPress](https://github.com/cavo789/aesecure_quickscan/tree/master/hashes/wordpress) and [Joomla](https://github.com/cavo789/aesecure_quickscan/tree/master/hashes/joomla) native files.**
 
-----> Installation: you just need to get a copy of `aesecure_quickscan.php` and nothing else; please read [installation guide](#install).
+> ℹ️ **INSTALLATION**
+> You just need to get a copy of `aesecure_quickscan.php` and nothing else; please read [installation guide](#install).
 
 ## Table of Contents
 
@@ -26,12 +27,16 @@ You can play online with a demo here : [https://quickscan.avonture.be/](https://
 
 aeSecure QuickScan will automatically download the files he needs, so the only thing you need to do is get a copy of the file `aesecure_quickscan.php` and nothing else.
 
-1. Click on the following link to open the file in a new window: <a href="https://raw.githubusercontent.com/cavo789/aesecure_quickscan/master/aesecure_quickscan.php" target="_blank noreferrer noopener">get a copy of the script</a>
-2. Save the file at the root of your website _(preferably a local website for performance reasons)_
+1. Click on the following link to open the file in a new window: [get a copy of the script](https://raw.githubusercontent.com/cavo789/aesecure_quickscan/master/aesecure_quickscan.php)
+2. Save the file at the root of your website *(preferably a local website for performance reasons)*
 
 Note: you're not obliged to name the file aesecure_quickscan, you can f.i. name it `scan.php`.
 
 In principle, you do not need to recover any other files, only the script `aesecure_quickscan.php` is sufficient.
+
+### Old version
+
+If you need a version for PHP 7.x, please download that one: [https://raw.githubusercontent.com/cavo789/aesecure_quickscan/fa76e4c01fc8819c32953ad747e5e81aec228df0/aesecure_quickscan.php](https://raw.githubusercontent.com/cavo789/aesecure_quickscan/fa76e4c01fc8819c32953ad747e5e81aec228df0/aesecure_quickscan.php)
 
 ## Usage
 
@@ -43,7 +48,7 @@ So, in the root folder of your website, you've the `aesecure_quickscan.php` file
 
 #### When the interface is displayed
 
-aeSecure Quickscan will automatically download three or four files:
+aeSecure QuickScan will automatically download three or four files:
 
 - `aesecure_quickscan_lang_en-GB.json` (can also be fr-FR or nl-BE) which is the file for your language. The preferred language will be detected from your browser's configuration;
 - `aesecure_quickscan_pattern.json` contains configuration's items for the scanner;
@@ -57,7 +62,7 @@ If something goes wrong with the automatic download (no `CURL` support f.i.), yo
 
 #### When 'Getting the file list' is fired
 
-aeSecure Quickscan will automatically three or four more files:
+aeSecure QuickScan will automatically three or four more files:
 
 - `aesecure_quickscan_blacklist.json` contains md5 hash of viruses;
 - `aesecure_quickscan_edited.json` contains md5 hash of files where viruses have been added;
@@ -86,7 +91,7 @@ You need to click on this button first.
 
 Before starting the scan, QuickScan needs to know how many files he needs to scan. The `Getting the file list` action will get the list of all files of your site and all whitelisted files will be ignored. A whitelisted file is a file that QuickScan knows he's clean. How? Because the md5 hash of the file is mentioned in a whitelist file like the `aesecure_quickscan_J!3.9.0.json` (or any other whitelist files).
 
-In other words: `Getting the file list` will only retrieve files that need to be scanned. In a fresh Joomla or Wordpress installation, you'll have a very few files to scan since the native, core, files are whitelisted (if unchanged of course).
+In other words: `Getting the file list` will only retrieve files that need to be scanned. In a fresh Joomla or WordPress installation, you'll have a very few files to scan since the native, core, files are whitelisted (if unchanged of course).
 
 As you can see here below, on a fresh installation of Joomla 3.9.0, the number of files to scan is: zero. This because nothing was added to the site and thus 100% of files are in our whitelist.
 
@@ -102,7 +107,7 @@ Remaining files will be scanned and if something is found based on
 
 ![Virus of mine](images/virus_of_mine.png)
 
-Then the file will be displayed and you'll be able to whitelist him (if the file is clean (i.e. false positive)), ignore the file (just close the item) or kill the file.
+Then the file will be displayed, and you'll be able to whitelist him (if the file is clean (i.e. false positive)), ignore the file (just close the item) or kill the file.
 
 Note: you can kill the file only when you're running in the expert mode of QuickScan.
 
@@ -116,7 +121,7 @@ By clicking on the hamburger icon at the top left of the interface, you'll show 
 
 In that mode, you'll be able to specify a path (like making a scan of a subfolder) and you'll be able to kill a detected file. A `Delete this file` button will be displayed in the scan results.
 
-You'll have another options:
+You'll have another option:
 
 ![Expert mode](images/expert.png)
 
