@@ -7,7 +7,7 @@
 
 > PHP script to install on your site (preferably in localhost for better performance) to scan files for viruses.
 
-**aeSecure QuickScan already RECOGNIZE MORE THAN 45.000 VIRUSES (November 2018) and use whitelist hashes to avoid to scan [WordPress](https://github.com/cavo789/aesecure_quickscan/tree/master/hashes/wordpress) and [Joomla](https://github.com/cavo789/aesecure_quickscan/tree/master/hashes/joomla) native files.**
+**aeSecure QuickScan already RECOGNIZE MORE THAN 47.750 VIRUSES (September 2023) and use whitelist hashes to avoid to scan [WordPress](https://github.com/cavo789/aesecure_quickscan/tree/master/hashes/wordpress) and [Joomla](https://github.com/cavo789/aesecure_quickscan/tree/master/hashes/joomla) native files.**
 
 > ℹ️ **INSTALLATION**
 > You just need to get a copy of `aesecure_quickscan.php` and nothing else; please read [installation guide](#install).
