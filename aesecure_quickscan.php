@@ -3,9 +3,9 @@
 /**
  * Name          : aeSecure QuickScan - Free scanner
  * Description   : Scan your website for possible hacks, viruses, malwares, SEO black hat and exploits
- * Version       : 2.0.2
+ * Version       : 2.0.3
  * Date          : November 2018
- * Last update   : August 2023
+ * Last update   : September 2023
  * Author        : AVONTURE Christophe (christophe@avonture.be)
  * Author website: https://www.avonture.be.
  *
@@ -25,6 +25,9 @@
  * services.
  *
  * Changelog:
+ *
+ * version 2.0.3
+ *    + Prevent empty files to be scanned
  *
  * version 2.0.2
  *    + Revert to PHP 8.0 compatibility
@@ -116,7 +119,7 @@ define('DEMO', false);
 
 define('DEBUG', false);              // Enable debugging (Note: there is no progress bar in debug mode)
 define('FULLDEBUG', false);          // Output a lot of information
-define('VERSION', '2.0.2');          // Version number of this script
+define('VERSION', '2.0.3');          // Version number of this script
 define('EXPERT', false);             // Display Kill file button and allow to specify a folder
 define('MAX_SIZE', 1 * 1024 * 1024); // One megabyte: skip files when filesize is greater than this max size.
 define('MAXFILESBYCYCLE', 500);      // Number of files to process by cycle, reduce this figure if you receive HTTP error 504 - Gateway timeout
@@ -2772,8 +2775,9 @@ class aeSecureScan
                 }
 
                 try {
-                    // Only files
-                    if (is_file($filename)) {
+                    // Only files and only when size is greater than zero 
+                    // (A virus can't be an empty file)
+                    if (is_file($filename) && (filesize($filename) !== 0)) {
                         $md5 = md5_file($filename);
 
                         if (isset($this->_arrBlackListHashes[$md5])) {
