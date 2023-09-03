@@ -28,6 +28,8 @@
  *
  * version 2.0.3
  *    + Prevent empty files to be scanned
+ *    + Immediately show the listing of files having detected as being a virus (blacklist) or 
+ *      containing a virus (edited file having a virus load)
  *
  * version 2.0.2
  *    + Revert to PHP 8.0 compatibility
@@ -2739,6 +2741,8 @@ class aeSecureScan
             unset($dir);
 
             $arrFiles = [];
+            $arrFilesBlacklisted = [];
+            $arrFilesEditlisted = [];
 
             // Collect all files but ignore this script
             $IgnoreArchives    = $this->aeSession->get('IgnoreArchives', true);
@@ -2783,10 +2787,12 @@ class aeSecureScan
                         if (isset($this->_arrBlackListHashes[$md5])) {
                             // Already known as bad?
                             $arrFiles[] = $filename;
+                            $arrFilesBlacklisted[] = str_replace(DIR.'/', '', $filename);
                             ++$wNbrBlacklisted;
                         } elseif (isset($this->_arrEditedHashes[$md5])) {
                             // Already known as having a virus in it?
                             $arrFiles[] = $filename;
+                            $arrFilesEditlisted[] = str_replace(DIR.'/', '', $filename);
                             ++$wNbrEdited;
                         } elseif (isset($this->_arrCMSHashes[$md5]) || isset($this->_arrWhiteListHashes[$md5]) || isset($this->_arrOtherHashes[$md5])) {
                             // if the hash of file is listed in the CMS core file,
@@ -2859,15 +2865,17 @@ class aeSecureScan
             } catch (\Exception $exception) {
             }
 
-            echo json_encode(
-                [
-                    'count'       => count($arrFiles),
-                    'whitelisted' => $wNbrWhitelisted,
-                    'blacklisted' => $wNbrBlacklisted,
-                    'edited'      => $wNbrEdited,
-                    'skipped'     => $wNbrSkipped,
-                ],
-                JSON_THROW_ON_ERROR
+            sort($arrFilesBlacklisted);
+
+            echo sprintf(
+                '{"count":%d,"whitelisted":%d,"blacklisted":%d,"blacklisting":%s,"edited":%d,"editlisting":%s,"skipped":%d}',
+                count($arrFiles),
+                $wNbrWhitelisted ?? 0,
+                $wNbrBlacklisted ?? 0,
+                json_encode($arrFilesBlacklisted),
+                $wNbrEdited ?? 0,
+                json_encode($arrFilesEditlisted),
+                $wNbrSkipped ?? 0
             );
 
             // Prevent a warning; flush only if there is something to flush
@@ -4128,7 +4136,9 @@ if (is_file($cat = __DIR__ . DIRECTORY_SEPARATOR . 'octocat.tmpl')) {
                     data:$data,
                     dataType:"json",
                     success: function (json) {
+
                         var $msg="<?php echo str_replace('"', '\"', (string) $aeLanguage->get('GETCOUNTFILESDONE'));?>".replace("%s",numberWithCommas(json.count));
+
                         $msg=$msg.replace("%s",numberWithCommas(json.blacklisted));
                         $msg=$msg.replace("%s",numberWithCommas(json.edited));
                         $msg=$msg.replace("%s",numberWithCommas(json.whitelisted));
@@ -4137,6 +4147,22 @@ if (is_file($cat = __DIR__ . DIRECTORY_SEPARATOR . 'octocat.tmpl')) {
                         var $tmp="<?php echo $aeLanguage->get('FILES');?>".replace("%s",numberWithCommas(json.count));
 
                         $('#startscan').html("3. <?php echo $aeLanguage->get('SCANFILES');?>".replace("%s",numberWithCommas(json.count)));
+
+                        if (json.blacklisting != "") {
+                            $blacklisting='';
+                            $.each(json.blacklisting, function(){
+                                $blacklisting+="<li><?php echo $aeLanguage->get('ISAVIRUS');?>: "+this+"</li>";
+                            });
+                            $('#resultGetCountFilesButtons').append("<ol>"+$blacklisting+"</ol>");
+                        }
+                        
+                        if (json.editlisting != "") {
+                            $editlisting='';
+                            $.each(json.editlisting, function(){
+                                $editlisting+="<li><?php echo $aeLanguage->get('CONTAINAVIRUS');?>: "+this+"</li>";
+                            });
+                            $('#resultGetCountFilesButtons').append("<ol>"+$editlisting+"</ol>");
+                        }
 
                         if(json.count<=$maxFilesByCycle) {
 
