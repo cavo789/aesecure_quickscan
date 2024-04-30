@@ -252,8 +252,8 @@ foreach ($arrFolder as $arr) {
     $Folder = key($arr);      // For instance "joomla"; name of the CMS; name of the subfolder
     $prefix = $arr[$Folder];  // For instance "J!"; prefix to use for naming files (f.i. "J!3.4.1" for the Joomla file for version 3.4.1)
 
-    // Check if we have a folder called __DIR__/hashes/cms/joomla (or wordpress or ...)
-    $hashFolder = __DIR__ . DS . 'cms' . DS . $Folder;
+    // Check if we have a folder called __DIR__/hashes/joomla (or wordpress or ...)
+    $hashFolder = __DIR__ . DS . 'hashes' . DS . $Folder;
 
     if (!is_dir($hashFolder)) {
         @mkdir($hashFolder);
@@ -272,8 +272,7 @@ foreach ($arrFolder as $arr) {
             $tmp = '';
 
             foreach ($subfolders as $folder) {
-                // The file with the hashes will be something like hashes/cms/joomla/J!2.5.27.json
-
+                // The file with the hashes will be something like hashes/joomla/J!2.5.27.json
                 if (!in_array($Folder, ['blacklist', 'other'])) {
                     $filename = $hashFolder . DS . $prefix . str_replace($hashFolder . DS, '', $folder) . '.json';
                 } else {
