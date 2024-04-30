@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fieldset>
+        <!--<field type="hidden" name="id"-->
+               <!--label="JGLOBAL_FIELD_ID_LABEL"-->
+               <!--description ="JGLOBAL_FIELD_ID_DESC"/>-->
+        <!--<field type="hidden" name="content_id[]"/>-->
+        <field type="textarea" name="message"
+               cols="10" rows="15"
+               hint="COM_TZ_PORTFOLIO_PLUS_REJECT_DESC"
+               label="MESSAGE"
+               description="COM_TZ_PORTFOLIO_PLUS_REJECT_DESC"/>
+    </fieldset>
+</form>

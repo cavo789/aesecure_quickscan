@@ -1,0 +1,27 @@
+# Changelog
+	1.2.5
+	# Fixed Pause on Hover Bug
+
+	1.2.4
+	# Fixed Deprecated $classes in PHP 8
+	
+	1.2.3
+	# Fixed Shadow inline
+
+	1.2.2
+	# Fixed Autoplay Interval
+
+	1.2.1
+	+ Fixed Link Target > blank self
+
+	1.2.0
+	+ Initial Release
+
+
+	* -> Security Fix
+	# -> Bug Fix
+	$ -> Language fix or change
+	+ -> Addition
+	^ -> Change
+	- -> Removed
+	! -> Note

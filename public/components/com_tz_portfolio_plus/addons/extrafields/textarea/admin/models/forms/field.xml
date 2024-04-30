@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <!-- Start parameters for field's create or edit view -->
+    <fields name="params">
+        <fieldset name="basic">
+            <field type="text" name="width"
+                   label="PLG_EXTRAFIELDS_TEXTAREA_WIDTH_LABEL"
+                   description="PLG_EXTRAFIELDS_TEXTAREA_WIDTH_DESC"/>
+            <field type="text" name="height"
+                   label="PLG_EXTRAFIELDS_TEXTAREA_HEIGHT_LABEL"
+                   description="PLG_EXTRAFIELDS_TEXTAREA_HEIGHT_DESC"/>
+            <field type="text" name="cols"
+                   label="PLG_EXTRAFIELDS_TEXTAREA_COLUMNS_LABEL"
+                   description="PLG_EXTRAFIELDS_TEXTAREA_COLUMNS_DESC"/>
+            <field type="text" name="rows"
+                   label="PLG_EXTRAFIELDS_TEXTAREA_ROWS_LABEL"
+                   description="PLG_EXTRAFIELDS_TEXTAREA_ROWS_DESC"/>
+            <field type="list" name="use_editor_back_end"
+                   label="PLG_EXTRAFIELDS_TEXTAREA_USE_EDITOR_BACKEND_LABEL">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field type="plugins" name="backend_editor"
+                   folder="editors" filter="cmd"
+                   label="PLG_EXTRAFIELDS_TEXTAREA_BACKEND_EDITOR_LABEL"
+                   description="PLG_EXTRAFIELDS_TEXTAREA_BACKEND_EDITOR_DESC">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+            </field>
+            <field type="list" name="use_editor_front_end"
+                   label="PLG_EXTRAFIELDS_TEXTAREA_USE_EDITOR_FRONTEND_LABEL">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field type="plugins" name="frontend_editor"
+                   folder="editors" filter="cmd"
+                   label="PLG_EXTRAFIELDS_TEXTAREA_FRONTEND_EDITOR_LABEL"
+                   description="PLG_EXTRAFIELDS_TEXTAREA_FRONTEND_EDITOR_DESC">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+            </field>
+            <field type="accesslevel" name="groups_can_use_frontend_editor"
+                   multiple="true"
+                   label="PLG_EXTRAFIELDS_TEXTAREA_USER_GROUPS_CAN_USE_FRONTEND_EDITOR_LABEL"
+                   description="PLG_EXTRAFIELDS_TEXTAREA_USER_GROUPS_CAN_USE_FRONTEND_EDITOR_DESC">
+                <option value="none">JNONE</option>
+            </field>
+            <field type="list" name="filter"
+                   label="PLG_EXTRAFIELDS_TEXTAREA_FILTER_LABEL">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="none">JNONE</option>
+                <option value="RAW">PLG_EXTRAFIELDS_TEXTAREA_RAW</option>
+                <option value="SAFEHTML">PLG_EXTRAFIELDS_TEXTAREA_SAFE_HTML</option>
+            </field>
+            <field type="text" name="placeholder"
+                   label="PLG_EXTRAFIELDS_TEXTAREA_PLACEHOLDER_LABEL"/>
+        </fieldset>
+    </fields>
+    <!-- End parameters for field's create or edit view -->
+</form>

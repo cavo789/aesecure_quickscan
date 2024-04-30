@@ -1,0 +1,1 @@
+!function(){"use strict";!function(t,n){n.addEventListener("DOMContentLoaded",(function(){var e=n.getElementById("btn-login-submit");e&&e.addEventListener("click",(function(i){i.preventDefault(),n.formvalidator.isValid(e.form)&&t.submitbutton("login")}))}))}(window.Joomla,document)}();

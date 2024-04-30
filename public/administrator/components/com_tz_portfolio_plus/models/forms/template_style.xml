@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fieldset name="template_details" addfieldpath="/administrator/components/com_tz_portfolio_plus/models/fields">
+        <field name="id"  type="text" class="readonly" label="JGLOBAL_FIELD_ID_LABEL"
+               description ="JGLOBAL_FIELD_ID_DESC" size="10" default="0"
+               readonly="true"  />
+        <field type="text" name="title"
+               required="true" label="JGLOBAL_TITLE"/>
+        <field name="home" type="radio"
+                label="JDEFAULT"
+                description="COM_TZ_PORTFOLIO_PLUS_FIELD_HOME_ADMINISTRATOR_DESC"
+                class="switcher btn-group btn-group-yesno"
+               layout="joomla.form.field.radio.switcher"
+                default="0">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        <field name="template" type="text"
+               readonly="true"
+               label="COM_TZ_PORTFOLIO_PLUS_TEMPLATE_LABEL"/>
+
+        <field type="hidden" name="menus_assignment"/>
+
+        <field type="categoriesassignment" name="categories_assignment" class="menu-assignment checkbox"/>
+
+        <field type="modal_article" name="articles_assignment"
+               edit="true" multiple="true"
+               label="COM_TZ_PORTFOLIO_PLUS_ARTICLES_ASSIGNMENT"/>
+
+        <field type="hidden" name="preset"/>
+    </fieldset>
+
+    <fields name="params">
+        <fieldset name="basic" label="JGLOBAL_FIELDSET_OPTIONS">
+            <field type="tzfolderlist" name="layout" default=""
+                   hide_none="true" hide_default="true" directory=""
+                   filter="" exclude="" stripext=""
+                   label="COM_TZ_PORTFOLIO_PLUS_LAYOUT_LABEL"
+                    description="COM_TZ_PORTFOLIO_PLUS_LAYOUT_DESC"/>
+            <field type="radio" name="use_single_layout_builder"
+                   class="switcher btn-group" default="1"
+                   layout="joomla.form.field.radio.switcher"
+                   label="COM_TZ_PORTFOLIO_PLUS_USE_SINGLE_LAYOUT_BUILDER_LABEL"
+                    description="COM_TZ_PORTFOLIO_PLUS_USE_SINGLE_LAYOUT_BUILDER_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field name="date_format" type="text"
+                   default="l, d F Y H:i"
+                   label="COM_TZ_PORTFOLIO_PLUS_DATE_FORMAT"
+                   description="COM_TZ_PORTFOLIO_PLUS_DATE_FORMAT_DESC"/>
+
+        </fieldset>
+        <fieldset name="advanced" label="JGLOBAL_FIELDSET_ADVANCED">
+        </fieldset>
+    </fields>
+
+    <fields name="presets">
+        <field type="text" name="name"
+               label="JFIELD_NAME_LABEL"/>
+        <field type="media" name="image"
+               label="COM_TZ_PORTFOLIO_PLUS_FORM_IMAGE"/>
+        <field type="text" name="demo_link"
+               label="COM_TZ_PORTFOLIO_PLUS_DEMO_LINK_LABEL"/>
+        <field type="text" name="doc_link"
+               label="COM_TZ_PORTFOLIO_PLUS_DOCUMENT_LINK_LABEL"/>
+        <field type="file" name="upload_preset"
+               label="Upload Preset File"/>
+    </fields>
+</form>

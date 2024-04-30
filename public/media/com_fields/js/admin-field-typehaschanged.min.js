@@ -1,0 +1,1 @@
+(e=>{e.typeHasChanged=e=>{document.body.appendChild(document.createElement("joomla-core-loader")),document.querySelector("input[name=task]").value="field.reload",e.form.submit()}})(Joomla);

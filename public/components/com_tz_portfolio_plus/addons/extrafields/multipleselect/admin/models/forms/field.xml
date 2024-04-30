@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <!-- Start parameters for field's create or edit view -->
+    <fields name="params">
+        <fieldset name="basic">
+            <field type="text" name="size"
+                   label="PLG_EXTRAFIELDS_MULTIPLESELECT_SIZE_LABEL"/>
+            <field type="list" name="search_type"
+                   label="PLG_EXTRAFIELDS_MULTIPLESELECT_SEARCH_TYPE_LABEL">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="multiselect">PLG_EXTRAFIELDS_MULTIPLESELECT_TITLE</option>
+                <option value="dropdownlist">PLG_EXTRAFIELDS_MULTIPLESELECT_DROPDOWNLIST</option>
+                <option value="checkbox">PLG_EXTRAFIELDS_MULTIPLESELECT_CHECKBOX</option>
+            </field>
+        </fieldset>
+    </fields>
+    <!-- End parameters for field's create or edit view -->
+</form>

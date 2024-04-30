@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.1" type="tz_portfolio_plus-plugin" group="extrafields" method="upgrade">
+    <name>plg_extrafields_multipleselect</name>
+    <author>DuongTVTemPlaza</author>
+    <creationDate>October 20th 2015</creationDate>
+    <copyright>Copyright (C) 2015 TemPlaza. All rights reserved.</copyright>
+    <license>GNU/GPL v2 or later http://www.gnu.org/licenses/gpl-2.0.html</license>
+    <authorEmail>support@templaza.com</authorEmail>
+    <authorUrl>www.templaza.com/</authorUrl>
+    <version>2.6.0</version>
+    <description>PLG_EXTRAFIELDS_MULTIPLESELECT_XML_DESCRIPTION</description>
+
+    <files>
+        <filename plugin="multipleselect">multipleselect.php</filename>
+        <filename>index.html</filename>
+        <folder>admin</folder>
+        <folder>language</folder>
+        <folder>tmpl</folder>
+    </files>
+
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field type="text" name="size" default="5"
+                       label="PLG_EXTRAFIELDS_MULTIPLESELECT_SIZE_LABEL"/>
+                <field type="list" name="search_type"
+                       default="multiselect"
+                       label="PLG_EXTRAFIELDS_MULTIPLESELECT_SEARCH_TYPE_LABEL">
+                    <option value="multiselect">PLG_EXTRAFIELDS_MULTIPLESELECT_TITLE</option>
+                    <option value="dropdownlist">PLG_EXTRAFIELDS_MULTIPLESELECT_DROPDOWNLIST</option>
+                    <option value="checkbox">PLG_EXTRAFIELDS_MULTIPLESELECT_CHECKBOX</option>
+                </field>
+            </fieldset>
+        </fields>
+    </config>
+</extension>

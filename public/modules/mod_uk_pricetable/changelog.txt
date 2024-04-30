@@ -1,0 +1,26 @@
+# Changelog
+
+	1.2.4
+	# Fixed Pause on Hover Option
+	# Fixed Endless Slides Option
+
+	1.2.3
+	- Removed Tooltip in Joomla 4
+	
+	1.2.2
+	# Fixed Bug in Autoplay Interval
+
+	1.2.1
+	# Fixed Link Self and Blank
+
+	1.2.0
+	+ Initial Release
+
+
+	* -> Security Fix
+	# -> Bug Fix
+	$ -> Language fix or change
+	+ -> Addition
+	^ -> Change
+	- -> Removed
+	! -> Note

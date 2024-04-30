@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <!-- Parameters for article's create or edit view -->
+    <fields name="params">
+        <!-- Start article options in category listings -->
+        <fieldset name="article_category_listing">
+            <field type="spacer" hr="true"/>
+            <field type="spacer" name="spacer_image_article_category_listing_name"
+                   class="alert alert-warning btn-block"
+                   label="PLG_MEDIATYPE_IMAGE_OPTIONS_LABEL"/>
+            <field type="list" name="mt_image_show_image_category"
+                   label="PLG_MEDIATYPE_IMAGE_SHOW_IMAGE_LABEL"
+                   description="PLG_MEDIATYPE_IMAGE_SHOW_IMAGE_DESC">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+            <field type="tzimagesizelist" addon="image"
+                   addon_group="mediatype"
+                   param_name="image_size"
+                   param_text="title"
+                   param_value="image_name_prefix"
+                   name="mt_cat_image_size"
+                   label="PLG_MEDIATYPE_IMAGE_SIZE_LABEL"
+                   description="PLG_MEDIATYPE_IMAGE_SIZE_DESC">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="o">PLG_MEDIATYPE_IMAGE_ORIGINAL</option>
+            </field>
+
+            <!-- Start article options in tag article listings -->
+            <field type="spacer" name="spacer_image_tag_article_listing_name"
+                   class="alert alert-warning btn-block"
+                   label="COM_TZ_PORTFOLIO_PLUS_FIELDSET_TAG_LISTINGS_LABEL"/>
+            <field type="list" name="mt_image_show_image_tag"
+                   label="PLG_MEDIATYPE_IMAGE_SHOW_IMAGE_LABEL"
+                   description="PLG_MEDIATYPE_IMAGE_SHOW_IMAGE_DESC">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+            <!-- End article options in tag article listings -->
+
+            <!-- Start article options in user article listings -->
+            <field type="spacer" name="spacer_image_user_article_listing_name"
+                   class="alert alert-warning btn-block"
+                   label="COM_TZ_PORTFOLIO_PLUS_FIELDSET_USER_LISTINGS_LABEL"/>
+            <field type="list" name="mt_image_show_image_user"
+                   label="PLG_MEDIATYPE_IMAGE_SHOW_IMAGE_LABEL"
+                   description="PLG_MEDIATYPE_IMAGE_SHOW_IMAGE_DESC">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+            <!-- End article options in user article listings -->
+
+            <!-- Start article options in date article listings -->
+            <field type="spacer" name="spacer_image_date_article_listing_name"
+                   class="alert alert-warning btn-block"
+                   label="COM_TZ_PORTFOLIO_PLUS_FIELDSET_DATE_LISTINGS_LABEL"/>
+            <field type="list" name="mt_image_show_image_date"
+                   label="PLG_MEDIATYPE_IMAGE_SHOW_IMAGE_LABEL"
+                   description="PLG_MEDIATYPE_IMAGE_SHOW_IMAGE_DESC">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+            <!-- End article options in date article listings -->
+        </fieldset>
+        <!-- End article options in category listings -->
+
+        <!-- Start article options -->
+        <fieldset name="article">
+            <field type="spacer" hr="true"/>
+            <field type="spacer" name="spacer_image_article_name"
+                   class="alert alert-warning btn-block"
+                   label="PLG_MEDIATYPE_IMAGE_OPTIONS_LABEL"/>
+            <field type="list" name="mt_image_show_image_article"
+                   label="PLG_MEDIATYPE_IMAGE_SHOW_IMAGE_LABEL"
+                   description="PLG_MEDIATYPE_IMAGE_SHOW_IMAGE_DESC">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+            <field type="tzimagesizelist" name="mt_image_size"
+                   addon="image" addon_group="mediatype"
+                   param_name="image_size"
+                   param_text="title"
+                   param_value="image_name_prefix"
+                   label="PLG_MEDIATYPE_IMAGE_SIZE_LABEL"
+                   description="PLG_MEDIATYPE_IMAGE_SIZE_DESC">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="o">PLG_MEDIATYPE_IMAGE_ORIGINAL</option>
+            </field>
+
+            <!-- Start related options -->
+            <field type="list" name="mt_image_related_show_image"
+                   label="PLG_MEDIATYPE_IMAGE_RELATED_SHOW_IMAGE_LABEL">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+            <field type="tzimagesizelist" name="mt_image_related_size"
+                   addon="image"
+                   addon_group="mediatype"
+                   param_name="image_size"
+                   param_text="title"
+                   param_value="image_name_prefix"
+                   label="PLG_MEDIATYPE_IMAGE_RELATED_SIZE_LABEL"
+                   description="PLG_MEDIATYPE_IMAGE_RELATED_SIZE_DESC">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="o">PLG_MEDIATYPE_IMAGE_ORIGINAL</option>
+            </field>
+            <!-- End related options -->
+        </fieldset>
+        <!-- End article options -->
+
+        <fieldset name="mediatype_image_options" label="PLG_MEDIATYPE_IMAGE_ADDON_OPTIONS">
+            <fields name="mt_image_watermark_admin_options">
+                <field type="list" name="mt_image_watermark"
+                       label="PLG_MEDIATYPE_IMAGE_WATERMARK_LABEL">
+                    <option value="">COM_TZ_PORTFOLIO_PLUS_USE_GLOBAL_ADDON</option>
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field type="list" name="mt_image_wtm_original_image"
+                       label="PLG_MEDIATYPE_IMAGE_ALLOW_IMAGE_ORIGINAL_LABEL"
+                       description="PLG_MEDIATYPE_IMAGE_ALLOW_IMAGE_ORIGINAL_DESC">
+                    <option value="">COM_TZ_PORTFOLIO_PLUS_USE_GLOBAL_ADDON</option>
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field type="list" name="mt_image_watermark_img_detail"
+                       label="PLG_MEDIATYPE_IMAGE_ALLOW_IMAGE_DETAIL_LABEL">
+                    <option value="">COM_TZ_PORTFOLIO_PLUS_USE_GLOBAL_ADDON</option>
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field type="list" name="mt_image_watermark_stype"
+                       label="PLG_MEDIATYPE_IMAGE_WATERMARK_SOURCE_TYPE_LABEL">
+                    <option value="">COM_TZ_PORTFOLIO_PLUS_USE_GLOBAL_ADDON</option>
+                    <option value="text">COM_TZ_PORTFOLIO_PLUS_TEXT</option>
+                    <option value="image">COM_TZ_PORTFOLIO_PLUS_FORM_IMAGE</option>
+                </field>
+            </fields>
+        </fieldset>
+    </fields>
+    <!-- End parameters for article's create or edit view -->
+</form>

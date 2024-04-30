@@ -1,0 +1,29 @@
+@font-face {
+  font-family: 'tzicons';
+  src:url('#{$tp-tzicon-font-path}/tzicons.eot');
+  src:url('#{$tp-tzicon-font-path}/tzicons.eot?#iefix') format('embedded-opentype'),
+  url('#{$tp-tzicon-font-path}/tzicons.ttf') format('truetype'),
+  url('#{$tp-tzicon-font-path}/tzicons.woff') format('woff'),
+  url('#{$tp-tzicon-font-path}/tzicons.svg#tzicons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="tz-icon-"], [class*=" tz-icon-"] {
+  font-family: 'tzicons';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  display: inline-block;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.tz-icon-spinner:before {
+  content: "\e680";
+}

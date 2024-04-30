@@ -1,0 +1,35 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "plg_multifactorauth_webauthn",
+  "version": "4.0.0",
+  "description": "WebAuthn integration for Joomla Multi-factor Authentication",
+  "license": "GPL-2.0-or-later",
+  "assets": [
+    {
+      "name": "plg_multifactorauth_webauthn.webauthn",
+      "type": "script",
+      "uri": "plg_multifactorauth_webauthn/webauthn.min.js",
+      "dependencies": [
+        "plg_multifactorauth_webauthn.webauthn.es5",
+        "core"
+      ],
+      "attributes": {
+        "defer": true
+      },
+      "version": "2ba7d17619cb8551832b33488b50aeed1592744f"
+    },
+    {
+      "name": "plg_multifactorauth_webauthn.webauthn.es5",
+      "type": "script",
+      "uri": "plg_multifactorauth_webauthn/webauthn-es5.min.js",
+      "dependencies": [
+        "core"
+      ],
+      "attributes": {
+        "nomodule": true,
+        "defer": true
+      },
+      "version": "8db62e5c9d39ca286ddfeeb8f35a066e2c255af7"
+    }
+  ]
+}

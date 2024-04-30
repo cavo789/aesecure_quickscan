@@ -1,0 +1,32 @@
+# Changelog
+	1.2.7
+	# Fixed Pause on Hover Option
+	# Fixed Endless Slides Option
+
+	1.2.6
+	# Fixed Deprecated $classes in PHP 8
+	
+	1.2.5
+	# Fixed non closed DIV
+	- Removed Tooltip
+
+	1.2.3
+	# Fixed "none" style
+
+	1.2.2
+	# Fixed Bug in Autoplay Interval
+
+	1.2.1
+	# Automatic Start fixed
+
+	1.2.0
+	+ Initial Release
+
+
+	* -> Security Fix
+	# -> Bug Fix
+	$ -> Language fix or change
+	+ -> Addition
+	^ -> Change
+	- -> Removed
+	! -> Note

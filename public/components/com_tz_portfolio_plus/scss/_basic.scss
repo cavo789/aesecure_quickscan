@@ -1,0 +1,260 @@
+div#infscr-loading{
+  position: relative;
+  left: auto;
+  bottom: auto;
+  img{
+    display: none;
+    margin-right: 5px;
+    margin-top: -3px;
+  }
+}
+.tz-icon-spinner {
+  -webkit-animation: spin 1s infinite linear;
+  -moz-animation: spin 1s infinite linear;
+  -o-animation: spin 1s infinite linear;
+  animation: spin 1s infinite linear;
+  font-size: 20px;
+  margin-right: 5px;
+  position: relative;
+  top: 3px;
+}
+@-moz-keyframes spin {
+  0% { -moz-transform: rotate(0deg); }
+  100% { -moz-transform: rotate(359deg); }
+}
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(359deg); }
+}
+@-o-keyframes spin {
+  0% { -o-transform: rotate(0deg); }
+  100% { -o-transform: rotate(359deg); }
+}
+@-ms-keyframes spin {
+  0% { -ms-transform: rotate(0deg); }
+  100% { -ms-transform: rotate(359deg); }
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(359deg); }
+}
+
+.date-group{
+  .date {
+    display: inline-block;
+    padding-bottom: 7px;
+    margin-top: 0;
+    //margin-bottom: 25px;
+    border-bottom: 1px solid #3A87AD;
+  }
+}
+
+/* Since v2.2.5 */
+[data-option-key="filter"]{
+  position: relative;
+  &.subcategory-active > a{
+    zoom: 1;
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transform: translateY(-20px);
+    -moz-transform: translateY(-20px);
+    -ms-transform: translateY(-20px);
+    -o-transform: translateY(-20px);
+    transform: translateY(-20px);
+  }
+  a{
+    -webkit-transition: all .2s cubic-bezier(.445, .050, .55, .95);
+    -moz-transition: all .2s cubic-bezier(.445, .050, .55, .95);
+    -ms-transition: all .2s cubic-bezier(.445, .050, .55, .95);
+    -o-transition: all .2s cubic-bezier(.445, .050, .55, .95);
+    transition: all .2s cubic-bezier(.445, .050, .55, .95);
+    -webkit-transition-delay: 50ms;
+    -moz-transition-delay: 50ms;
+    -ms-transition-delay: 50ms;
+    -o-transition-delay: 50ms;
+    transition-delay: 50ms;
+  }
+  > a + a{
+    -webkit-transition-delay: 0.1s;
+    -moz-transition-delay: 0.1s;
+    -ms-transition-delay: 0.1s;
+    -o-transition-delay: 0.1s;
+    transition-delay: 0.1s;
+  }
+  [data-sub-category-of]{
+    position: absolute;
+    top: 0;
+    z-index: 10;
+    visibility: hidden;
+    > a{
+      zoom: 1;
+      opacity: 0;
+      visibility: hidden;
+      margin-bottom: 10px;
+      -webkit-transform: translateY(-20px);
+      -moz-transform: translateY(-20px);
+      -ms-transform: translateY(-20px);
+      -o-transform: translateY(-20px);
+      transform: translateY(-20px);
+    }
+    &.is-active{
+      visibility: visible;
+      > a {
+        zoom: 1;
+        opacity: 1;
+        visibility: visible;
+        -webkit-transform: translateY(0);
+        -moz-transform: translateY(0);
+        -ms-transform: translateY(0);
+        -o-transform: translateY(0);
+        transform: translateY(0);
+      }
+    }
+  }
+  .js-subcategory-back-href{
+    color: #999999;
+    background: none;
+  }
+}
+/* End since v2.2.5 */
+/* Since v2.3.0*/
+.tpp-bootstrap .option-combo{
+  .btn-outline-secondary{
+    &.selected{
+      color: white;
+      background-image: none;
+      background-color: #6c757d;
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none;
+    }
+  }
+}
+/* Since v2.3.9*/
+html[dir="rtl"]{
+  .isotope .isotope-item {
+    -webkit-transition-property: right, top, -webkit-transform, opacity;
+    -moz-transition-property: right, top, -moz-transform, opacity;
+    -ms-transition-property: right, top, -ms-transform, opacity;
+    -o-transition-property: right, top, -o-transform, opacity;
+    transition-property: right, top, transform, opacity;
+  }
+}
+/* Since v2.4.0 */
+//.element{
+//  opacity: 0;
+//}
+
+.isotope,
+.tpItemPage,
+.blog,
+.search-results,
+.categories-list{
+  img{
+    //&.lazyload{
+    //  background: #f5f5f5;
+    //}
+    &.lazyloading {
+      width: 0 !important;
+      height: 0 !important;
+      min-height: 60px;
+      display: block;
+      position: relative;
+      background: transparent url("../../../assets/loading.gif") no-repeat center;
+    }
+  }
+}
+/* Since v2.4.3 */
+.tpp-categories-grid-page{
+  margin-bottom: 15px;
+  .cat-grids{
+    display: grid;
+    grid-gap: 30px;
+    grid-template-columns: repeat(auto-fill, minmax(250px,1fr));
+  }
+  .cat-item{
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #ebebeb;
+    -webkit-transition: all .5s;
+    -moz-transition: all .5s;
+    -ms-transition: all .5s;
+    -o-transition: all .5s;
+    transition: all .5s;
+  }
+  .cat-item-content{
+    padding: 12px 20px 10px;
+  }
+  .title{
+    .cat-badge{
+      top: -5px;
+      position: relative;
+    }
+  }
+  .cat-faded{
+    -webkit-transform: scale(0.9);
+    -moz-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    -o-transform: scale(0.9);
+    transform: scale(0.9);
+    opacity: 0.3;
+  }
+  .cat-child-btn {
+    width: 30px;
+    height: 30px;
+    color: #404040;
+    line-height: 30px;
+    text-align: center;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    -webkit-box-shadow: 0 0 5px 1px rgba(0,0,0,0.1);
+    -moz-box-shadow: 0 0 5px 1px rgba(0,0,0,0.1);
+    box-shadow: 0 0 5px 1px rgba(0,0,0,0.1);
+    &.float-right {
+      float: right;
+      margin-top: 7px;
+      margin-right: -10px;
+    }
+    .cat-caret-down{
+      display: none;
+    }
+    &.cat-active{
+      .cat-caret-left{
+        display: none;
+      }
+      .cat-caret-down{
+        display: inline-block;
+      }
+    }
+  }
+  .tpp-cat__meta{
+    margin-bottom: 22px;
+  }
+}
+/* Since v2.6.6 */
+.tp-edit-page{
+  .choices__button_joomla{
+    background: none;
+    text-indent: -9999px;
+    border: none;
+    position: relative;
+    color: #fff;
+    opacity: 0.5;
+    padding: 0 10px;
+    &:before{
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      display: block;
+      text-align: center;
+      text-indent: 0;
+      content: "×";
+    }
+    &:hover{
+      opacity: 1;
+    }
+  }
+}

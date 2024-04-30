@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+   <fields name="params">
+	<fieldset icon="fas fa-paint-brush" label="Sidebar Menu" name="astroid_colours" addfieldpath="/libraries/astroid/framework/fields" order="1">
+		<field type="astroidgroup" name="sidebar" title="Sidebar Menu" />
+				<field astroidgroup="sidebar" name="active_link_color" type="astroidcolor" large="true" label="TPL_ASTROID_ACTIVE_LINK_COLOR_LABEL" ></field>
+
+		<field astroidgroup="main_menu" name="main_menu_link_active_bg" type="astroidcolor" large="true" label="TPL_ASTROID_ACTIVE_BACKGROUND_COLOR_LABEL" ></field>
+		
+		
+   </fieldset>
+   </fields>
+   
+    <fields name="params">
+        <fieldset icon="fas fa-cogs" label="Uikit 3" name="uikit3" addfieldpath="/libraries/astroid/framework/fields" order="1">
+        <field type="astroidgroup" name="uikit3" title="Uikit 3" />
+		  
+         <field astroidgroup="uikit3" description="Must be activated if you want to use the Uikit 3 Modules and Framework like Slideshow ect. But Uikit 3 is not working with Yootheme Widgetkit and Warp 7" name="uikit" type="astroidradio" default="1" label="Load Uikit 3">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+            
+         </field>
+
+			
+        </fieldset>
+    </fields>   
+   
+   <fields name="params">
+     <fieldset label="ASTROID_OPTIONS_BASIC" icon="fas fa-home" name="basic" addfieldpath="/libraries/astroid/framework/fields" order="1">
+         <field astroidgroup="layout_setting" name="theme_width" type="text" default="1200px" label="Theme Container Width" class="form-control">
+       
+           
+            </field>
+      </fieldset>
+   </fields>
+
+</form> 

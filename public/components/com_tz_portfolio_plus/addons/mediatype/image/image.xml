@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.1" type="tz_portfolio_plus-plugin" group="mediatype" method="upgrade">
+    <name>plg_mediatype_image</name>
+    <author>DuongTVTemPlaza</author>
+    <creationDate>May 4th 2021</creationDate>
+    <copyright>Copyright (C) 2021 TemPlaza. All rights reserved.</copyright>
+    <license>GNU/GPL v2 or later http://www.gnu.org/licenses/gpl-2.0.html</license>
+    <authorEmail>support@templaza.com</authorEmail>
+    <authorUrl>www.templaza.com/</authorUrl>
+    <version>2.6.6</version>
+    <description>PLG_MEDIATYPE_IMAGE_XML_DESCRIPTION</description>
+
+    <files>
+        <filename plugin="image">image.php</filename>
+        <filename>index.html</filename>
+        <filename>controller.php</filename>
+        <folder>admin</folder>
+        <folder>css</folder>
+        <folder>js</folder>
+        <folder>language</folder>
+        <folder>models</folder>
+        <folder>modules</folder>
+        <folder>tmpl</folder>
+        <folder>views</folder>
+    </files>
+
+    <config>
+        <fields name="params" addfieldpath="administrator/components/com_tz_portfolio_plus/models/fields">
+            <!-- Parameters for back-end -->
+            <fieldset name="basic">
+                <field type="text" name="image_file_size"
+                       default="10"
+                       label="PLG_MEDIATYPE_IMAGE_MAXIMUM_FILE_SIZE_LABEL"
+                       description="PLG_MEDIATYPE_IMAGE_MAXIMUM_FILE_SIZE_DESC"/>
+                <field type="text" name="image_file_type"
+                       default="bmp,gif,jpg,jpeg,png,BMP,GIF,JPG,JPEG,PNG"
+                       label="PLG_MEDIATYPE_IMAGE_FILE_TYPES_LABEL"
+                       description="PLG_MEDIATYPE_IMAGE_FILE_TYPES_DESC"/>
+                <field type="text" name="image_mime_type"
+                       default="image/jpeg,image/gif,image/png,image/bmp"
+                       label="PLG_MEDIATYPE_IMAGE_LEGAL_MIME_TYPE_LABEL"
+                       description="PLG_MEDIATYPE_IMAGE_LEGAL_MIME_TYPE_DESC"/>
+                <field type="tzmultiplefield" name="image_size"
+                       default='{"title":"XSmall","width":"100","image_name_prefix":"xs"},{"title":"Small","width":"200","image_name_prefix":"s"},{"title":"Medium","width":"400","image_name_prefix":"m"},{"title":"Large","width":"600","image_name_prefix":"l"},{"title":"XLarge","width":"900","image_name_prefix":"xl"}'
+                        label="PLG_MEDIATYPE_IMAGE_SIZE_LABEL">
+                    <field type="text" name="title" table_required="true"
+                           field_required="true"
+                            label="PLG_MEDIATYPE_IMAGE_TITLE_LABEL"/>
+                    <field type="text" name="width" table_required="true"
+                           field_required="true"
+                           label="PLG_MEDIATYPE_IMAGE_WIDTH_LABEL"/>
+                    <field type="text" name="image_name_prefix" table_required="true"
+                           field_required="true" value_validate="o"
+                           label="PLG_MEDIATYPE_IMAGE_NAME_PREFIX"/>
+                    <!--<field type="number" name="image_watermark_fontsize" table_required="true"-->
+                           <!--min="0"-->
+                           <!--label="PLG_MEDIATYPE_IMAGE_WATERMARK_FONTSIZE"/>-->
+                    <!--<field type="number" name="image_watermark_imagesize" table_required="true"-->
+                           <!--min="0"-->
+                           <!--label="PLG_MEDIATYPE_IMAGE_WATERMARK_IMAGE_SIZE"/>-->
+                    <!--<field type="text" name="image_watermark_coordinates" table_required="true"-->
+                           <!--label="PLG_MEDIATYPE_IMAGE_WATERMARK_COORDINATES"-->
+                           <!--description="PLG_MEDIATYPE_IMAGE_COORDINATES_DESC"/>-->
+                </field>
+
+                <field type="radio" name="mt_image_watermark"
+                       default="0"
+                       class="switcher btn-group"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_MEDIATYPE_IMAGE_WATERMARK_LABEL">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field type="radio" name="mt_image_wtm_original_image"
+                       default="0"
+                       class="switcher btn-group"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_MEDIATYPE_IMAGE_ALLOW_IMAGE_ORIGINAL_LABEL"
+                       description="PLG_MEDIATYPE_IMAGE_ALLOW_IMAGE_ORIGINAL_DESC">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field type="radio" name="mt_image_watermark_img_detail"
+                       default="0"
+                       class="switcher btn-group"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_MEDIATYPE_IMAGE_ALLOW_IMAGE_DETAIL_LABEL">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field type="radio" name="mt_image_watermark_stype"
+                       default="text"
+                       class="switcher btn-group"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_MEDIATYPE_IMAGE_WATERMARK_SOURCE_TYPE_LABEL">
+                    <option value="text">COM_TZ_PORTFOLIO_PLUS_TEXT</option>
+                    <option value="image">COM_TZ_PORTFOLIO_PLUS_FORM_IMAGE</option>
+                </field>
+                <field type="text" name="mt_image_watermark_text"
+                       showon="mt_image_watermark_stype:text"
+                       label="COM_TZ_PORTFOLIO_PLUS_TEXT"/>
+                <field type="media" name="mt_image_watermark_image"
+                       showon="mt_image_watermark_stype:image"
+                       label="COM_TZ_PORTFOLIO_PLUS_FORM_IMAGE"/>
+                <field type="media" name="mt_image_watermark_fontpath"
+                       default="administrator/components/com_tz_portfolio_plus/fonts/arial.ttf"
+                       showon="mt_image_watermark_stype:text"
+                       label="PLG_MEDIATYPE_IMAGE_FONT_PATH"
+                       description="PLG_MEDIATYPE_IMAGE_FONT_PATH_DESC"/>
+                <field type="number" name="mt_image_watermark_fontsize"
+                       min="1" default="14"
+                       showon="mt_image_watermark_stype:text"
+                       label="PLG_MEDIATYPE_IMAGE_FONT_SIZE"/>
+                <field type="color" name="mt_image_watermark_color"
+                       default="#fff"
+                       showon="mt_image_watermark_stype:text"
+                       label="PLG_MEDIATYPE_IMAGE_COLOR"/>
+                <field type="color" name="mt_image_watermark_bgcolor"
+                       label="PLG_MEDIATYPE_IMAGE_BACKGROUND_COLOR"/>
+                <field type="number" name="mt_image_watermark_rotate"
+                       default="0"
+                       min="0" max="360"
+                       label="PLG_MEDIATYPE_IMAGE_ROTATE"/>
+                <field type="number" name="mt_image_watermark_opacity"
+                       min="0" max="100"
+                       label="PLG_MEDIATYPE_IMAGE_OPACITY"/>
+                <field type="list" name="mt_image_watermark_filter"
+                       default="-1"
+                       label="PLG_MEDIATYPE_IMAGE_FILTER">
+                    <option value="-1">JNONE</option>
+                    <option value="0">PLG_MEDIATYPE_IMAGE_NEGATE</option>
+                    <option value="1">PLG_MEDIATYPE_IMAGE_GRAYSCALE</option>
+                    <option value="2">PLG_MEDIATYPE_IMAGE_BRIGHTNESS</option>
+                    <option value="3">PLG_MEDIATYPE_IMAGE_CONTRAST</option>
+                    <option value="4">PLG_MEDIATYPE_IMAGE_COLORIZE</option>
+                    <option value="5">PLG_MEDIATYPE_IMAGE_EDGEDETECT</option>
+                    <option value="6">PLG_MEDIATYPE_IMAGE_EMBOSS</option>
+                    <option value="7">PLG_MEDIATYPE_IMAGE_GAUSSIAN_BLUR</option>
+                    <option value="8">PLG_MEDIATYPE_IMAGE_SELECTIVE_BLUR</option>
+                    <option value="9">PLG_MEDIATYPE_IMAGE_MEAN_REMOVAL</option>
+                    <option value="10">PLG_MEDIATYPE_IMAGE_SMOOTH</option>
+                    <option value="11">PLG_MEDIATYPE_IMAGE_MEAN_PIXELATE</option>
+                </field>
+                <field type="list" name="mt_image_watermark_flip"
+                       default="0"
+                       multiple="true"
+                       layout="joomla.form.field.list-fancy-select"
+                       hint="PLG_MEDIATYPE_IMAGE_OPTION_SELECT_FLIP"
+                       label="PLG_MEDIATYPE_IMAGE_FLIP">
+                    <option value="horizontal">PLG_MEDIATYPE_IMAGE_HORIZONTAL</option>
+                    <option value="vertical">PLG_MEDIATYPE_IMAGE_VERTICAL</option>
+                </field>
+                <field type="radio" name="mt_image_watermark_resize"
+                       default="1"
+                       class="switcher btn-group"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_MEDIATYPE_IMAGE_RESIZE"
+                       description="PLG_MEDIATYPE_IMAGE_RESIZE_DESC">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field type="numeric" name="mt_image_watermark_resize_wpercent"
+                       default="30" min="0"
+                       showon="mt_image_watermark_resize:1"
+                       label="PLG_MEDIATYPE_IMAGE_RESIZE_WIDTH_PERCENT"
+                       description="PLG_MEDIATYPE_IMAGE_RESIZE_WIDTH_PERCENT_DESC"/>
+                <field type="numeric" name="mt_image_watermark_resize_hpercent"
+                       min="0"
+                       showon="mt_image_watermark_resize:1"
+                       label="PLG_MEDIATYPE_IMAGE_RESIZE_HEIGHT_PERCENT"
+                       description="PLG_MEDIATYPE_IMAGE_RESIZE_HEIGHT_PERCENT_DESC"/>
+                <field type="list" name="mt_image_watermark_position"
+                       default="LT"
+                       label="PLG_MEDIATYPE_IMAGE_POSITION">
+                    <option value="LT">PLG_MEDIATYPE_LEFT_TOP</option>
+                    <option value="MT">PLG_MEDIATYPE_MIDDLE_TOP</option>
+                    <option value="RT">PLG_MEDIATYPE_RIGHT_TOP</option>
+                    <option value="LM">PLG_MEDIATYPE_LEFT</option>
+                    <option value="MM">PLG_MEDIATYPE_CENTER</option>
+                    <option value="RM">PLG_MEDIATYPE_RIGHT</option>
+                    <option value="LB">PLG_MEDIATYPE_LEFT_BOTTOM</option>
+                    <option value="MB">PLG_MEDIATYPE_MIDDLE_BOTTOM</option>
+                    <option value="RB">PLG_MEDIATYPE_RIGHT_BOTTOM</option>
+                </field>
+                <field type="text" name="mt_image_watermark_coordinates"
+                       default="10,10"
+                       label="PLG_MEDIATYPE_IMAGE_COORDINATES"
+                       description="PLG_MEDIATYPE_IMAGE_COORDINATES_DESC"/>
+            </fieldset>
+            <!-- End parameters for back-end -->
+
+            <!-- Front-end parameters -->
+            <fieldset name="front_end"
+                    label="PLG_MEDIATYPE_IMAGE_FRONT_END_FIELDSET_LABEL"
+                    description="PLG_MEDIATYPE_IMAGE_CONFIG_SETTINGS_DESC">
+
+                <field type="radio" name="mt_image_show_feed_image"
+                       class="switcher btn-group" default="1"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_MEDIATYPE_IMAGE_SHOW_FEED_IMAGE_LABEL">
+                    <option value="0">JHIDE</option>
+                    <option value="1">JSHOW</option>
+                </field>
+                <field type="tzimagesizelist" name="mt_image_feed_size"
+                       addon="image"
+                       addon_group="mediatype"
+                       param_name="image_size"
+                       param_text="title"
+                       param_value="image_name_prefix"
+                       label="PLG_MEDIATYPE_IMAGE_FEED_SIZE_LABEL">
+                    <option value="o">PLG_MEDIATYPE_IMAGE_ORIGINAL</option>
+                </field>
+                <field type="radio" name="mt_show_original_gif"
+                       default="1" class="switcher btn-group"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_MEDIATYPE_IMAGE_SHOW_ORIGINAL_GIF_LABEL">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field type="radio" name="mt_image_uikit"
+                       default="0" class="switcher btn-group"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_MEDIATYPE_IMAGE_UIKIT_LABEL"
+                       description="PLG_MEDIATYPE_IMAGE_UIKIT_DESC">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <!-- Start article options in category listings -->
+                <field type="spacer" name="spacer_image_article_category_listing_hr" hr="true"/>
+                <field type="spacer" name="spacer_image_article_category_listing_name"
+                       class="alert alert-warning btn-block"
+                       label="COM_TZ_PORTFOLIO_PLUS_SPACER_ARTICLE_OPTIONS_IN_CATEGORY_LISTINGS"/>
+                <field type="radio" name="mt_image_show_image_category"
+                       default="1" class="switcher btn-group"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_MEDIATYPE_IMAGE_SHOW_IMAGE_LABEL"
+                       description="PLG_MEDIATYPE_IMAGE_SHOW_IMAGE_DESC">
+                    <option value="0">JHIDE</option>
+                    <option value="1">JSHOW</option>
+                </field>
+                <field type="tzimagesizelist" addon="image"
+                       addon_group="mediatype"
+                       param_name="image_size"
+                       param_text="title"
+                       param_value="image_name_prefix"
+                       name="mt_cat_image_size"
+                       label="PLG_MEDIATYPE_IMAGE_SIZE_LABEL"
+                       description="PLG_MEDIATYPE_IMAGE_SIZE_DESC">
+                    <option value="o">PLG_MEDIATYPE_IMAGE_ORIGINAL</option>
+                </field>
+                <!-- End article options in category listings -->
+
+                <!-- Start article view options -->
+                <field type="spacer" name="spacer_image_article_hr" hr="true"/>
+                <field type="spacer" name="spacer_image_article_name"
+                       class="alert alert-warning btn-block"
+                       label="COM_TZ_PORTFOLIO_PLUS_ATTRIBS_FIELDSET_LABEL"/>
+                <field type="radio" name="mt_image_show_image_article"
+                       default="1" class="switcher btn-group"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_MEDIATYPE_IMAGE_SHOW_IMAGE_LABEL"
+                       description="PLG_MEDIATYPE_IMAGE_SHOW_IMAGE_DESC">
+                    <option value="0">JHIDE</option>
+                    <option value="1">JSHOW</option>
+                </field>
+                <field type="tzimagesizelist" name="mt_image_size"
+                       addon="image" addon_group="mediatype"
+                       param_name="image_size"
+                       param_text="title"
+                       param_value="image_name_prefix"
+                       label="PLG_MEDIATYPE_IMAGE_SIZE_LABEL"
+                       description="PLG_MEDIATYPE_IMAGE_SIZE_DESC">
+                    <option value="o">PLG_MEDIATYPE_IMAGE_ORIGINAL</option>
+                </field>
+                <field name="image_lightbox_enable" type="radio"
+                       class="switch btn-group" default="1"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_MEDIATYP_IMAGE_LIGHTBOX_ENABLE_LABEL">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="image_lightbox_option" type="List"
+                       label="PLG_MEDIATYPE_IMAGE_LIGHTBOX_LABEL"
+                       description="PLG_MEDIATYPE_GRID_GALLERY_LIGHTBOX_LABEL"
+                       multiple="true"
+                       showon="image_lightbox_enable:1"
+                       default="[&quot;zoom&quot;, &quot;slideShow&quot;, &quot;fullScreen&quot;, &quot;thumbs&quot;, &quot;close&quot;]">
+                    <option value="zoom">zoom</option>
+                    <option value="share">share</option>
+                    <option value="slideShow">slideShow</option>
+                    <option value="fullScreen">fullScreen</option>
+                    <option value="download">download</option>
+                    <option value="thumbs">thumbs</option>
+                    <option value="close">close</option>
+                </field>
+                <field name="image_lightbox_caption_enable" type="radio"
+                       class="switch btn-group" default="1"
+                       showon="image_lightbox_enable:1"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_MEDIATYP_IMAGE_LIGHTBOX_ENABLE_CAPTION_LABEL">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <!-- Start related options -->
+                <field type="radio" name="mt_image_related_show_image"
+                       class="switcher btn-group" default="1"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_MEDIATYPE_IMAGE_RELATED_SHOW_IMAGE_LABEL">
+                    <option value="0">JHIDE</option>
+                    <option value="1">JSHOW</option>
+                </field>
+                <field type="tzimagesizelist" name="mt_image_related_size"
+                       addon="image"
+                       addon_group="mediatype"
+                       param_name="image_size"
+                       param_text="title"
+                       param_value="image_name_prefix"
+                       label="PLG_MEDIATYPE_IMAGE_RELATED_SIZE_LABEL"
+                       description="PLG_MEDIATYPE_IMAGE_RELATED_SIZE_DESC">
+                    <option value="o">PLG_MEDIATYPE_IMAGE_ORIGINAL</option>
+                </field>
+                <!-- End related options -->
+                <!-- End article view options -->
+
+                <!-- Start article options in tag article listings -->
+                <field type="spacer" name="spacer_image_tag_article_listing_hr" hr="true"/>
+                <field type="spacer" name="spacer_image_tag_article_listing_name"
+                       class="alert alert-warning btn-block"
+                       label="COM_TZ_PORTFOLIO_PLUS_FIELDSET_TAG_LISTINGS_LABEL"/>
+                <field type="radio" name="mt_image_show_image_tag"
+                       class="switcher btn-group" default="1"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_MEDIATYPE_IMAGE_SHOW_IMAGE_LABEL"
+                       description="PLG_MEDIATYPE_IMAGE_SHOW_IMAGE_DESC">
+                    <option value="0">JHIDE</option>
+                    <option value="1">JSHOW</option>
+                </field>
+                <!-- End article options in tag article listings -->
+
+                <!-- Start article options in user article listings -->
+                <field type="spacer" name="spacer_image_user_article_listing_hr" hr="true"/>
+                <field type="spacer" name="spacer_image_user_article_listing_name"
+                       class="alert alert-warning btn-block"
+                       label="COM_TZ_PORTFOLIO_PLUS_FIELDSET_USER_LISTINGS_LABEL"/>
+                <field type="radio" name="mt_image_show_image_user"
+                       class="switcher btn-group" default="1"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_MEDIATYPE_IMAGE_SHOW_IMAGE_LABEL"
+                       description="PLG_MEDIATYPE_IMAGE_SHOW_IMAGE_DESC">
+                    <option value="0">JHIDE</option>
+                    <option value="1">JSHOW</option>
+                </field>
+                <!-- End article options in user article listings -->
+
+                <!-- Start article options in date article listings -->
+                <field type="spacer" name="spacer_image_date_article_listing_hr" hr="true"/>
+                <field type="spacer" name="spacer_image_date_article_listing_name"
+                       class="alert alert-warning btn-block"
+                       label="COM_TZ_PORTFOLIO_PLUS_FIELDSET_DATE_LISTINGS_LABEL"/>
+                <field type="radio" name="mt_image_show_image_date"
+                       class="switcher btn-group" default="1"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_MEDIATYPE_IMAGE_SHOW_IMAGE_LABEL"
+                       description="PLG_MEDIATYPE_IMAGE_SHOW_IMAGE_DESC">
+                    <option value="0">JHIDE</option>
+                    <option value="1">JSHOW</option>
+                </field>
+                <!-- End article options in date article listings -->
+            </fieldset>
+        </fields>
+    </config>
+</extension>

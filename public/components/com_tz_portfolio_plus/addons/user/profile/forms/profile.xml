@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+    <fields name="params">
+        <fieldset name="tz_portfolio_plus_user"
+                  label="PLG_USER_PROFILE_FIELDSET_LABEL">
+            <field type="text" name="tz_portfolio_plus_user_url"
+                    label="PLG_USER_PROFILE_YOUR_URL_LABEL"/>
+            <field type="radio" name="tz_portfolio_plus_user_gender"
+                   class="switcher btn-group" default="m"
+                   layout="joomla.form.field.radio.switcher"
+                   label="PLG_USER_PROFILE_GENDER_LABEL">
+                <option value="m">PLG_USER_PROFILE_MALE</option>
+                <option value="f">PLG_USER_PROFILE_FEMALE</option>
+            </field>
+            <field type="media" name="tz_portfolio_plus_user_avatar"
+                    label="PLG_USER_PROFILE_AVATAR_LABEL"/>
+            <field type="text" name="tz_portfolio_plus_user_twitter"
+                   label="PLG_USER_PROFILE_YOUR_TWITTER_LABEL"/>
+            <field type="text" name="tz_portfolio_plus_user_facebook"
+                   label="PLG_USER_PROFILE_YOUR_FACEBOOK_LABEL"/>
+            <field type="text" name="tz_portfolio_plus_user_instagram"
+                   label="PLG_USER_PROFILE_YOUR_INSTAGRAM_LABEL"/>
+            <!--<field type="text" name="tz_portfolio_plus_user_googleplus"-->
+                   <!--label="PLG_USER_PROFILE_YOUR_GOOGLEPLUS_LABEL"/>-->
+            <field type="editor" name="tz_portfolio_plus_user_description"
+                    label="JGLOBAL_DESCRIPTION"/>
+        </fieldset>
+    </fields>
+</form>

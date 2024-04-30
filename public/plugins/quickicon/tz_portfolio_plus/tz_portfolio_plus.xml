@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE extension>
+<extension version="2.5" type="plugin" group="quickicon" method="upgrade">
+    <name>plg_quickicon_tz_portfolio_plus</name>
+    <version>2.6.0</version>
+    <author>DuongTVTemPlaza</author>
+    <creationDate>July 26th 2019</creationDate>
+    <copyright>Copyright (C) 2011-2019 TZ Portfolio. All rights reserved.</copyright>
+    <license>GNU/GPL v2 or later http://www.gnu.org/licenses/gpl-2.0.html</license>
+    <authorEmail>support@templaza.com</authorEmail>
+    <authorUrl>www.templaza.com/</authorUrl>
+    <files>
+        <filename plugin="tz_portfolio_plus">tz_portfolio_plus.php</filename>
+    </files>
+    <languages folder="language">
+        <language tag="en-GB">en-GB/en-GB.plg_quickicon_tz_portfolio_plus.ini</language>
+        <language tag="en-GB">en-GB/en-GB.plg_quickicon_tz_portfolio_plus.sys.ini</language>
+    </languages>
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field type="text" name="context"
+                       default="mod_quickicon"
+                       label="PLG_QUICKICON_TZ_PORTFOLIO_PLUS_GROUP_LABEL"
+                       description="PLG_QUICKICON_TZ_PORTFOLIO_PLUS_GROUP_DESC"
+                />
+            </fieldset>
+        </fields>
+    </config>
+</extension>

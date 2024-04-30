@@ -1,0 +1,49 @@
+.TzVote-count {
+    display: inline-block;
+    font-size: 90%;
+    vertical-align: middle;
+}
+
+
+/* For Bootstrap style */
+.rating {
+    display: inline-block;
+    direction: rtl;
+    text-align: center;
+    cursor: pointer;
+}
+.rating > .rating-item {
+    display: inline-block;
+    position: relative;
+    width: auto;
+    text-decoration: none;
+    /*padding-right: 4px;*/
+    margin-right: 4px;
+}
+.rating-item > span{
+    display: inline-block;
+    margin: 0;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -ms-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
+.rating > .rating-item:hover span,
+.rating > .rating-item:hover ~ a span{
+    width: 100% !important;
+}
+.content_rating .loading{
+    display: inline-block;
+}
+[dir=rtl] .rating{
+    direction: ltr;
+}
+[dir=rtl] .rating-item > span{
+    right: 0;
+    left: auto;
+}

@@ -1,0 +1,1 @@
+!function(){"use strict";!function(t,n){t.iFrameHeight=function(t){var e="contentDocument"in t?t.contentDocument:t.contentWindow.document,i=parseInt(e.body.scrollHeight,10);n.all?n.all&&t.id&&(n.all[t.id].style.height=parseInt(i,10)+20+"px"):t.style.height=parseInt(i,10)+60+"px"}}(window,document)}();

@@ -1,5 +1,6 @@
-
 # aeSecure - QuickScan
+
+<!-- cspell:ignore aesecure,quickscan,joomla,uncompress -->
 
 ![php 8.0](https://img.shields.io/badge/php-8.0-brightgreen?style=flat)
 
@@ -126,6 +127,38 @@ In that mode, you'll be able to specify a path (like making a scan of a subfolde
 You'll have another option:
 
 ![Expert mode](images/expert.png)
+
+## Creating hashes
+
+You can create hashes by getting a copy of the `make_hashes.php` file from this repository.
+
+For Joomla!, simply download the desired version by surfing on [https://downloads.joomla.org/cms](https://downloads.joomla.org/cms) and get the desired archive. Proceed exactly the same for WordPress.
+
+If you need more than one version, just download all the required versions and save each archive in the `./cms/joomla` folder.
+
+It's important that the archive filename is updated and be, just, the version. For instance rename `Joomla_5.0.0-Stable-Full_Package.zip` to `5.0.0.zip`.
+
+In the example below, I've download Joomla 4.4.0 till 5.1.0. Zip files are in my `./cms/joomla` folder and I uncompress them by running the command below in my Linux console:
+
+```bash
+unzip 4.4.0.zip -d ./4.4.0 && rm -f 4.4.0.zip
+unzip 4.4.1.zip -d ./4.4.1 && rm -f 4.4.1.zip
+unzip 4.4.2.zip -d ./4.4.2 && rm -f 4.4.2.zip
+unzip 4.4.3.zip -d ./4.4.3 && rm -f 4.4.3.zip
+unzip 5.0.0.zip -d ./5.0.0 && rm -f 5.0.0.zip
+unzip 5.0.1.zip -d ./5.0.1 && rm -f 5.0.1.zip
+unzip 5.0.2.zip -d ./5.0.2 && rm -f 5.0.2.zip
+unzip 5.0.3.zip -d ./5.0.3 && rm -f 5.0.3.zip
+unzip 5.1.0.zip -d ./5.1.0 && rm -f 5.1.0.zip
+```
+
+This done, now I can start my browser and the `make_hashes.php` script.
+
+The script will immediately start the creation of the hashes; there is nothing to do; just wait.
+
+After a few seconds, you'll get one JSON file by versions in `./cms/joomla`.
+
+If you've write permissions to the [https://github.com/cavo789/aesecure_quickscan](https://github.com/cavo789/aesecure_quickscan) repository, just push new signatures to make them publicly available.
 
 ## License
 

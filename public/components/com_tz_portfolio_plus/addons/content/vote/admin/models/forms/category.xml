@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <!-- Parameters for article's create or edit view -->
+    <fields name="params">
+        <fieldset name="article_category_listing">
+            <field type="spacer" name="spacer_vote_hr" hr="true"/>
+            <field type="spacer" name="spacer_vote_name"
+                   class="alert alert-warning btn-block"
+                    label="PLG_CONTENT_VOTE_OPTIONS_LABEL"/>
+            <field type="list" name="show_cat_vote"
+                   label="JGLOBAL_SHOW_VOTE_LABEL"
+                   description="JGLOBAL_SHOW_VOTE_DESC">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+        </fieldset>
+        <fieldset name="article" label="COM_TZ_PORTFOLIO_PLUS_ATTRIBS_FIELDSET_LABEL">
+            <field type="spacer" name="spacer_vote_hr" hr="true"/>
+            <field type="spacer" name="spacer_vote_name-2"
+                   class="alert alert-warning btn-block"
+                    label="PLG_CONTENT_VOTE_OPTIONS_LABEL"/>
+            <field type="list" name="show_vote"
+                   label="JGLOBAL_SHOW_VOTE_LABEL"
+                   description="JGLOBAL_SHOW_VOTE_DESC">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+        </fieldset>
+    </fields>
+    <!-- End parameters for article's create or edit view -->
+</form>

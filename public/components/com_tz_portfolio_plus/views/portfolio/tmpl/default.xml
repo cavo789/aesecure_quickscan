@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+        <layout title="COM_TZ_PORTFOLIO_PLUS_ARTICLE_PORTFOLIO_VIEW_DEFAULT_TITLE"
+                option="COM_TZ_PORTFOLIO_PLUS_ARTICLE_PORTFOLIO_VIEW_DEFAULT_OPTION">
+            <help
+                url="http://wiki.templaza.com/TZ_Portfolio_Plus_v3:How_to_use#How_to_create_a_Portfolio_Page"
+            />
+            <message>
+                <![CDATA[COM_TZ_PORTFOLIO_PLUS_VIEW_DEFAULT_DESC]]>
+            </message>
+        </layout>
+
+    <fields name="params" addfieldpath="/administrator/components/com_tz_portfolio_plus/models/fields">
+        <!-- Add fields to the request variables for the layout. -->
+        <fieldset name="request">
+
+            <field name="catid" type="tzcategory"
+                description="JGLOBAL_CHOOSE_CATEGORY_DESC"
+                multiple="true"
+                default=""
+                label="JGLOBAL_CHOOSE_CATEGORY_LABEL">
+                <option value="">JOPTION_ALL_CATEGORIES</option>
+            </field>
+            <field type="tztemplates" name="tz_template_style_id"
+                   default="0"
+                   label="COM_TZ_PORTFOLIO_PLUS_TEMPLATE_STYLE_LABEL"
+                   description="COM_TZ_PORTFOLIO_PLUS_TEMPLATE_STYLE_DESC">
+                <option value="0">JOPTION_USE_DEFAULT</option>
+            </field>
+        </fieldset>
+
+
+        <!-- Start basic options -->
+        <fieldset name="basic" label="COM_TZ_PORTFOLIO_PLUS_FIELDSET_BASIC_OPTIONS_LABEL">
+            <field type="tzmediatypes" name="media_types"
+                   multiple="true"
+                   label="COM_TZ_PORTFOLIO_PLUS_MEDIA_TYPES_LABEL">
+                <option value="">COM_TZ_PORTFOLIO_PLUS_OPTIONS_ALL_MEDIA_TYPES</option>
+                <option value="none">COM_TZ_PORTFOLIO_PLUS_OPTION_NONE_MEDIA</option>
+            </field>
+            <field name="tz_article_limit"
+                   type="text"
+                   label="COM_TZ_PORTFOLIO_PLUS_TZ_ARTICLE_LIMIT"
+                   description="COM_TZ_PORTFOLIO_PLUS_TZ_ARTICLE_LIMIT_DESC"/>
+            <field name="tz_article_intro_limit"
+                   label="COM_TZ_PORTFOLIO_PLUS_ARTICLE_LIMIT"
+                   description="COM_TZ_PORTFOLIO_PLUS_ARTICLE_LIMIT_DESC"/>
+            <field name="use_filter_first_letter" type="list"
+                   label="COM_TZ_PORTFOLIO_PLUS_USE_FILTER_FIRST_LETTER"
+                   description="COM_TZ_PORTFOLIO_PLUS_USE_FILTER_FIRST_LETTER_DESC">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field name="tz_letters" type="text"
+                   label="COM_TZ_PORTFOLIO_PLUS_LETTERS"
+                   description="COM_TZ_PORTFOLIO_PLUS_LETTERS_DESC"/>
+
+            <field type="spacer" hr="true"/>
+            <field type="list"
+                   name="tz_show_filter"
+                   label="COM_TZ_PORTFOLIO_PLUS_SHOW_FILTER">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+            <field type="list" name="show_all_filter"
+                   label="COM_TZ_PORTFOLIO_PLUS_SHOW_ALL_FILTER"
+                   description="COM_TZ_PORTFOLIO_PLUS_SHOW_ALL_FILTER_DESC">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field name="tz_filter_type" type="list"
+                   label="COM_TZ_PORTFOLIO_PLUS_FILTER_TYPE">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="tags">COM_TZ_PORTFOLIO_PLUS_TAGS</option>
+                <option value="categories">COM_TZ_PORTFOLIO_PLUS_CATEGORIES</option>
+            </field>
+            <field type="list" name="filter_second_category"
+                   label="COM_TZ_PORTFOLIO_PLUS_FILTER_SECONDARY_CATEGORY_LABEL"
+                   description="COM_TZ_PORTFOLIO_PLUS_FILTER_SECONDARY_CATEGORY_DESC">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field name="filter_tags_categories_order" type="list"
+                   label="COM_TZ_PORTFOLIO_PLUS_TAGS_CATEGORIES_ORDER"
+                   description="COM_TZ_PORTFOLIO_PLUS_TAGS_CATEGORIES_ORDER_DESC">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="auto">COM_TZ_PORTFOLIO_PLUS_AUTO</option>
+                <option value="filter_asc">COM_TZ_PORTFOLIO_PLUS_ASCENDING</option>
+                <option value="filter_desc">COM_TZ_PORTFOLIO_PLUS_DESCENDING</option>
+            </field>
+            <field type="list"
+                   name="show_sort"
+                   label="COM_TZ_PORTFOLIO_PLUS_PORTFOLIO_SHOW_SORT">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+            <field type="list"
+                   name="show_layout"
+                   label="COM_TZ_PORTFOLIO_PLUS_PORTFOLIO_SHOW_LAYOUT">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+            <field type="list"
+                   multiple="true"
+                   name="layout_type"
+                   label="COM_TZ_PORTFOLIO_PLUS_PORTFOLIO_LAYOUT_TYPE">
+                <option value="masonry">COM_TZ_PORTFOLIO_PLUS_PORTFOLIO_MASONRY</option>
+                <option value="fitRows">COM_TZ_PORTFOLIO_PLUS_PORTFOLIO_FITROWS</option>
+                <option value="straightDown">COM_TZ_PORTFOLIO_PLUS_PORTFOLIO_STRAIGHTDOWN</option>
+            </field>
+            <field name="tz_column_width"
+                   type="text"
+                   label="COM_TZ_PORTFOLIO_PLUS_TZ_COLUMN_WIDTH"/>
+            <field name="enable_lazyload" type="list"
+                   label="COM_TZ_PORTFOLIO_PLUS_ENABLE_LAZYLOAD">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+
+            <!-- Start order options -->
+            <field type="spacer" hr="true"/>
+            <field type="spacer" name="spacer_ordering_name"
+                   class="alert alert-warning btn-block"
+                   label="COM_TZ_PORTFOLIO_PLUS_ORDERING_TITLE"/>
+
+            <field name="orderby_pri"
+                   type="list"
+                   label="JGLOBAL_CATEGORY_ORDER_LABEL"
+                   description="JGLOBAL_CATEGORY_ORDER_DESC">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="none">JGLOBAL_NO_ORDER</option>
+                <option value="alpha">JGLOBAL_TITLE_ALPHABETICAL</option>
+                <option value="ralpha">JGLOBAL_TITLE_REVERSE_ALPHABETICAL</option>
+                <option value="order">JGLOBAL_CATEGORY_MANAGER_ORDER</option>
+            </field>
+            <field name="orderby_sec"
+                   type="list"
+                   label="JGLOBAL_ARTICLE_ORDER_LABEL"
+                   description="JGLOBAL_ARTICLE_ORDER_DESC">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="rdate">JGLOBAL_MOST_RECENT_FIRST</option>
+                <option value="date">JGLOBAL_OLDEST_FIRST</option>
+                <option value="alpha">JGLOBAL_TITLE_ALPHABETICAL</option>
+                <option value="ralpha">JGLOBAL_TITLE_REVERSE_ALPHABETICAL</option>
+                <option value="author">JGLOBAL_AUTHOR_ALPHABETICAL</option>
+                <option value="rauthor">JGLOBAL_AUTHOR_REVERSE_ALPHABETICAL</option>
+                <option value="hits">JGLOBAL_MOST_HITS</option>
+                <option value="rhits">JGLOBAL_LEAST_HITS</option>
+                <option value="random">JGLOBAL_RANDOM_ORDER</option>
+                <option value="order">JGLOBAL_ORDERING</option>
+                <option	value="rorder">JGLOBAL_REVERSE_ORDERING</option>
+                <option value="priority">COM_TZ_PORTFOLIO_PLUS_PRIORITY_ORDER</option>
+                <option	value="rpriority">COM_TZ_PORTFOLIO_PLUS_PRIORITY_REVERSE_ORDER</option>
+            </field>
+            <field name="order_date" type="list"
+                   useglobal="true"
+                   validate="options"
+                   label="JGLOBAL_ORDERING_DATE_LABEL"
+                   description="JGLOBAL_ORDERING_DATE_DESC">
+                <option value="created">JGLOBAL_CREATED</option>
+                <option value="modified">JGLOBAL_MODIFIED</option>
+                <option value="published">JPUBLISHED</option>
+                <option value="unpublished">JUNPUBLISHED</option>
+            </field>
+            <!-- End order options -->
+
+            <!-- Start pagination options -->
+            <field type="spacer" hr="true"/>
+            <field type="spacer" name="spacer_pagination_name"
+                   class="alert alert-warning btn-block"
+                   label="COM_TZ_PORTFOLIO_PLUS_PAGINATION_TITLE"/>
+            <field type="list" name="tz_portfolio_plus_layout"
+                   label="COM_TZ_PORTFOLIO_PLUS_PORTFOLIO_PAGINATION_LAYOUT_LABEL"
+                   description="COM_TZ_PORTFOLIO_PLUS_PORTFOLIO_PAGINATION_LAYOUT_DESC">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="default">JDEFAULT</option>
+                <option value="ajaxButton">COM_TZ_PORTFOLIO_PLUS_AJAX_BUTTON</option>
+                <option value="ajaxInfiScroll">COM_TZ_PORTFOLIO_PLUS_AJAX_INFINITE_SCROLL</option>
+            </field>
+            <field name="show_limit_box"
+                   type="list"
+                   label="COM_TZ_PORTFOLIO_PLUS_SHOW_LIMIT_BOX"
+                   description="COM_TZ_PORTFOLIO_PLUS_SHOW_LIMIT_BOX_DESC">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+            <field name="show_pagination" type="list"
+                   label="JGLOBAL_Pagination_Label"
+                   description="JGLOBAL_Pagination_Desc">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+                <option value="2">JGLOBAL_AUTO</option>
+            </field>
+            <field name="show_pagination_results"
+                   type="list" class="btn-group"
+                   label="JGLOBAL_PAGINATION_RESULTS_LABEL"
+                   description="JGLOBAL_PAGINATION_RESULTS_DESC">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+            <!-- End pagination options -->
+
+            <!-- Start Feed options -->
+            <field type="spacer" name="spacer_feed_hr" hr="true"/>
+            <field type="spacer" name="spacer_feed_name"
+                   class="alert alert-warning btn-block"
+                    label="COM_TZ_PORTFOLIO_PLUS_FEED_TITLE"/>
+            <field name="show_feed_link" type="list"
+                   description="JGLOBAL_SHOW_FEED_LINK_DESC"
+                   label="JGLOBAL_SHOW_FEED_LINK_LABEL"
+                    >
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+
+            <field name="feed_summary" type="list"
+                   description="JGLOBAL_FEED_SUMMARY_DESC"
+                   label="JGLOBAL_FEED_SUMMARY_LABEL"
+                    >
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JGLOBAL_INTRO_TEXT</option>
+                <option value="1">JGLOBAL_FULL_TEXT</option>
+            </field>
+            <!-- End Feed options -->
+        </fieldset>
+        <!-- End basic options -->
+    </fields>
+</metadata>

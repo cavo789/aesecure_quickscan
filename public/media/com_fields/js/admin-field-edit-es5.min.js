@@ -1,0 +1,1 @@
+!function(){"use strict";document.addEventListener("DOMContentLoaded",(function(){var e=document.getElementById("jform_title");e.dpOldValue=e.value,e.addEventListener("change",(function(e){var t=e.currentTarget,n=document.getElementById("jform_label"),d=t;d.dpOldValue===n.value&&(n.value=d.value),d.dpOldValue=d.value}))}))}();

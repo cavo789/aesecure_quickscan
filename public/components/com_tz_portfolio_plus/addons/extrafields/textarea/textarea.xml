@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.1" type="tz_portfolio_plus-plugin" group="extrafields" method="upgrade">
+    <name>plg_extrafields_textarea</name>
+    <author>DuongTVTemPlaza</author>
+    <creationDate>October 20th 2015</creationDate>
+    <copyright>Copyright (C) 2015 TemPlaza. All rights reserved.</copyright>
+    <license>GNU/GPL v2 or later http://www.gnu.org/licenses/gpl-2.0.html</license>
+    <authorEmail>support@templaza.com</authorEmail>
+    <authorUrl>www.templaza.com/</authorUrl>
+    <version>2.6.0</version>
+    <description>PLG_EXTRAFIELDS_TEXTAREA_XML_DESCRIPTION</description>
+
+    <files>
+        <filename plugin="textarea">textarea.php</filename>
+        <filename>index.html</filename>
+        <folder>admin</folder>
+        <folder>language</folder>
+        <folder>tmpl</folder>
+    </files>
+
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field type="text" name="width"
+                       label="PLG_EXTRAFIELDS_TEXTAREA_WIDTH_LABEL"
+                       description="PLG_EXTRAFIELDS_TEXTAREA_WIDTH_DESC"/>
+                <field type="text" name="height"
+                       label="PLG_EXTRAFIELDS_TEXTAREA_HEIGHT_LABEL"
+                       description="PLG_EXTRAFIELDS_TEXTAREA_HEIGHT_DESC"/>
+                <field type="text" name="cols"
+                       default="50"
+                       label="PLG_EXTRAFIELDS_TEXTAREA_COLUMNS_LABEL"
+                       description="PLG_EXTRAFIELDS_TEXTAREA_COLUMNS_DESC"/>
+                <field type="text" name="rows"
+                       default="5"
+                       label="PLG_EXTRAFIELDS_TEXTAREA_ROWS_LABEL"
+                       description="PLG_EXTRAFIELDS_TEXTAREA_ROWS_DESC"/>
+                <field type="radio" name="use_editor_back_end"
+                       default="0" class="switcher btn-group"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_EXTRAFIELDS_TEXTAREA_USE_EDITOR_BACKEND_LABEL">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field type="plugins" name="backend_editor"
+                       folder="editors" filter="cmd"
+                       label="PLG_EXTRAFIELDS_TEXTAREA_BACKEND_EDITOR_LABEL"
+                       description="PLG_EXTRAFIELDS_TEXTAREA_BACKEND_EDITOR_DESC">
+                    <option value="">JGLOBAL_USE_GLOBAL</option>
+                </field>
+                <field type="radio" name="use_editor_front_end"
+                       default="0" class="switcher btn-group"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_EXTRAFIELDS_TEXTAREA_USE_EDITOR_FRONTEND_LABEL">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field type="plugins" name="frontend_editor"
+                       folder="editors" filter="cmd"
+                       label="PLG_EXTRAFIELDS_TEXTAREA_FRONTEND_EDITOR_LABEL"
+                       description="PLG_EXTRAFIELDS_TEXTAREA_FRONTEND_EDITOR_DESC">
+                    <option value="">JGLOBAL_USE_GLOBAL</option>
+                </field>
+                <field type="accesslevel" name="groups_can_use_frontend_editor"
+                       multiple="true" default="1"
+                       label="PLG_EXTRAFIELDS_TEXTAREA_USER_GROUPS_CAN_USE_FRONTEND_EDITOR_LABEL"
+                       description="PLG_EXTRAFIELDS_TEXTAREA_USER_GROUPS_CAN_USE_FRONTEND_EDITOR_DESC">
+                    <option value="none">JNONE</option>
+                </field>
+                <field type="list" name="filter"
+                       label="PLG_EXTRAFIELDS_TEXTAREA_FILTER_LABEL">
+                    <option value="none">JNONE</option>
+                    <option value="RAW">PLG_EXTRAFIELDS_TEXTAREA_RAW</option>
+                    <option value="SAFEHTML">PLG_EXTRAFIELDS_TEXTAREA_SAFE_HTML</option>
+                </field>
+                <field type="text" name="placeholder"
+                       label="PLG_EXTRAFIELDS_TEXTAREA_PLACEHOLDER_LABEL"/>
+            </fieldset>
+        </fields>
+    </config>
+</extension>

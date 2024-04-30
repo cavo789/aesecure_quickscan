@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+	<field name="cols" type="radio" label="Show and Hide Items for better Overview" default="0" >
+		<option value="0">JHIDE</option>
+		<option value="1">JSHOW</option>
+	</field>
+	<field name="overlay_style" type="list" label="Overlay Style" default="uk-grid" >
+		<option value="uk-transition-fade uk-position-cover uk-position-small uk-overlay uk-overlay-default uk-flex uk-flex-center uk-flex-middle text-black-50 ">Fade Center White</option>
+		<option value="uk-transition-fade uk-position-cover uk-position-small uk-overlay uk-overlay-primary uk-flex uk-flex-center uk-flex-middle text-white-50k">Fade Center Dark</option>
+		<option value="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-default">Bottom White</option>
+		<option value="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">Bottom Dark</option>
+	</field>
+
+    <field name="title" type="text" label="Title" class="input-xxlarge" showon="cols!:0"/>
+	<field name="tags"  type="text" label="JTAG" description="Tags must be Comma seperated Example: Design,Web,Print" class="input-xlarge" showon="cols!:0"/>
+
+    <field name="img" type="media" label="Preview Image" class="input-xxlarge" showon="cols!:0"/>
+    <field name="modal_typ" type="list" label="Modal Typ" showon="cols!:0">
+        <option value="0">Center Screen Modal</option>
+        <option value="1">Full Screen Modal</option>
+    </field>
+
+
+    <field name="modal_content" type="editor" label="Modalbox Content" filter="raw"  showon="cols!:0"/>
+	
+</form>

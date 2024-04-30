@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<extension type="module" version="3.*" method="upgrade" client="site">
+    <name>UIkit 3 IconNav</name>
+    <author>Joomlaplates</author>
+	<authorEmail>support@joomlaplates.de</authorEmail>
+    <authorUrl>https://joomlaplates.de</authorUrl>
+    <copyright>© 2022 Joomlaplates. All rights reserved.</copyright>
+    <license>GNU General Public License version 3 or later; see http://www.gnu.org/licenses/gpl-3.0.txt</license>
+    <version>1.2.1</version>
+    <creationDate>2023</creationDate>
+    <description><![CDATA[
+		<p class="btn btn-sm btn-info" p>Version 1.2.1</p>
+		<p><a class="btn btn-sm btn-success" href="https://www.joomlaplates.de/dokumentation.html" target="_blank">Dokumentation</a></p>
+    ]]></description>
+	<updateservers>
+		<server type="extension" priority="2" name="UIkit 3 IconNav">https://www.joomlaplates.de/updates/uikit/mod_uk_iconnav.xml</server>
+	</updateservers>	
+    <files>
+        <filename module="mod_uk_iconnav">mod_uk_iconnav.php</filename>
+        <folder>forms</folder>
+        <folder>tmpl</folder>
+		<filename>changelog.txt</filename>
+
+    </files>
+    <languages folder="languages">
+        <language tag="en-GB">en-GB/en-GB.mod_uk_iconnav.ini</language>
+        <language tag="en-GB">en-GB/en-GB.mod_uk_iconnav.sys.ini</language>
+    </languages>
+    <config>
+        <fields name="params">
+
+            <fieldset name="basic">
+                
+                <field name="iconnav_pos" type="list" label="IconNav Position" default="left" class="btn-group">
+                    <option value="left">Left</option>
+                    <option value="right">Right</option>
+                </field>
+				<field name="iconnav_bg" type="color" format="rgba" label="Background" default="#000"  />
+				<field name="iconnav_color" type="color" format="rgba" label="Font Color" default="#fff"  />
+				<field name="iconnav_bg_hover" type="color" format="rgba" label="Hover Background" default="#fff"  />
+				<field name="iconnav_color_hover" type="color" format="rgba" label="Hover Font Color" default="#000"  />
+
+				<field name="iconnav_pos_top" type="text" label="Space from Top" default="30%" class="input-small"  />
+				<field name="hide" type="list" label="Hide DotNav" default="uk-visible@s" class="btn-group" >
+				<option value="uk-visible@s">Phones</option>
+				<option value="uk-visible@m">Phones + Tablet</option>
+				<option value="uk-visible">Always on</option>
+			</field>
+            </fieldset>
+
+
+            <fieldset name="slides">
+                <field name="items" type="subform" label="COM_MODULES_SLIDES_FIELDSET_LABEL" formsource="/modules/mod_uk_iconnav/forms/form.xml" multiple="true" min="0" layout="joomla.form.field.subform.repeatable" />
+            </fieldset>
+
+            <fieldset name="advanced">
+                <field name="layout" type="modulelayout" label="JFIELD_ALT_LAYOUT_LABEL" description="JFIELD_ALT_MODULE_LAYOUT_DESC"/>
+                <field name="cache" type="list" label="COM_MODULES_FIELD_CACHING_LABEL" description="COM_MODULES_FIELD_CACHING_DESC" default="1">
+                    <option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+                    <option value="1">JGLOBAL_USE_GLOBAL</option>
+                </field>
+            </fieldset>
+
+        </fields>
+    </config>
+</extension>

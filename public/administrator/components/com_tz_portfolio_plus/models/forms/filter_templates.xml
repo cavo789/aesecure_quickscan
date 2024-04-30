@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields name="filter">
+		<field type="text" name="search"
+			   hint="JSEARCH_FILTER"
+			   label="JSEARCH_FILTER"
+			   description="JSEARCH_FILTER" />
+		<field type="list" name="status"
+			   onchange="this.form.submit();"
+			   label="JPUBLISHED"
+			   description="JFIELD_PUBLISHED_DESC">
+			<option value="">JOPTION_SELECT_PUBLISHED</option>
+			<option value="0">JDISABLED</option>
+			<option value="1">JENABLED</option>
+			<option value="2">JPROTECTED</option>
+			<option value="3">JUNPROTECTED</option>
+		</field>
+	</fields>
+	<fields name="list">
+		<field type="list" name="fullordering"
+			   default="id DESC" onchange="this.form.submit();"
+			   label="COM_TZ_PORTFOLIO_PLUS_LIST_FULL_ORDERING"
+			   description="COM_TZ_PORTFOLIO_PLUS_LIST_FULL_ORDERING_DESC">
+			<option value="">JGLOBAL_SORT_BY</option>
+			<option value="name ASC">COM_TEMPLATES_HEADING_TEMPLATE_ASC</option>
+			<option value="name DESC">COM_TEMPLATES_HEADING_TEMPLATE_DESC</option>
+			<option value="published ASC">JSTATUS_ASC</option>
+			<option value="published DESC">JSTATUS_DESC</option>
+			<option value="id ASC">JGRID_HEADING_ID_ASC</option>
+			<option value="id DESC">JGRID_HEADING_ID_DESC</option>
+		</field>
+		<field type="limitbox" name="limit"
+			   default="25" class="input-mini"
+			   onchange="this.form.submit();"
+			   label="JFIELD_PLG_SEARCH_SEARCHLIMIT_LABEL"
+			   description="JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC"/>
+	</fields>
+</form>

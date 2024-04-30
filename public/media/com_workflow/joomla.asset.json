@@ -1,0 +1,34 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "com_workflow",
+  "version": "4.0.0",
+  "description": "Joomla CMS",
+  "license": "GPL-2.0-or-later",
+  "assets": [
+    {
+      "name": "com_workflow.admin-items-workflow-buttons",
+      "type": "script",
+      "uri": "com_workflow/admin-items-workflow-buttons.min.js",
+      "dependencies": [
+        "com_workflow.admin-items-workflow-buttons.es5"
+      ],
+      "attributes": {
+        "type": "module"
+      },
+      "version": "61140040e13d2aeefee90934b8f37c65f692cadd"
+    },
+    {
+      "name": "com_workflow.admin-items-workflow-buttons.es5",
+      "type": "script",
+      "uri": "com_workflow/admin-items-workflow-buttons-es5.min.js",
+      "dependencies": [
+        "core"
+      ],
+      "attributes": {
+        "nomodule": true,
+        "defer": true
+      },
+      "version": "0d863ce2fdd2fc79c12315f5895f04f84d6cbc7f"
+    }
+  ]
+}

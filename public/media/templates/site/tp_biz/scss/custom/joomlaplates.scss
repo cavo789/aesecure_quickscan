@@ -1,0 +1,19 @@
+/* Special CSS for the Template
+ ========================================================================== */
+/* Template WIdth
+ ========================================================================== */
+.container, .container-sm, .container-md, .container-lg, .container-xl, .astroid-layout.astroid-layout-boxed .astroid-wrapper {
+    max-width: inherit;
+}
+
+/* Sidebat Menu Design
+ ========================================================================== */
+.astroid-nav .nav-link:active, .astroid-nav .nav-link.active, .astroid-sidebar-menu .nav-link:active, .astroid-sidebar-menu .nav-link.active{background-color: transparent;}
+
+
+ul.list-inline li.active a::after {font-family: "Font Awesome 5 Free"; font-weight: 700; content: "\f053"; padding-left:4px}
+a.icon-button {
+background:$primary}
+.astroid-layout.astroid-layout-boxed .astroid-wrapper {
+  box-shadow: none;
+}

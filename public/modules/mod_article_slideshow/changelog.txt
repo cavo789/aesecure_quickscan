@@ -1,0 +1,22 @@
+# Changelog
+	1.2.3
+	+ Add HTML Strip Option
+
+	1.2.2
+	# Fixed Pause on Hover Option
+	# Fixed Endless Sliding Option
+
+	1.2.1
+	# Fixed Deprecated $classes in PHP 8
+	
+	1.2.0
+	+ Initial Release
+
+
+	* -> Security Fix
+	# -> Bug Fix
+	$ -> Language fix or change
+	+ -> Addition
+	^ -> Change
+	- -> Removed
+	! -> Note

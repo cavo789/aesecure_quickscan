@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+        <layout title="COM_TZ_PORTFOLIO_PLUS_ARTICLE_SEARCH_VIEW_DEFAULT_TITLE"
+                option="COM_TZ_PORTFOLIO_PLUS_ARTICLE_SEARCH_VIEW_DEFAULT_OPTION">
+            <help
+                url="http://wiki.templaza.com/TZ_Portfolio_Plus_v3:How_to_use#How_to_create_a_Portfolio_Page"
+            />
+            <message>
+                <![CDATA[COM_TZ_PORTFOLIO_PLUS_VIEW_SEARCH_DEFAULT_DESC]]>
+            </message>
+        </layout>
+
+    <fields name="params" addfieldpath="/administrator/components/com_tz_portfolio_plus/models/fields">
+        <!-- Add fields to the request variables for the layout. -->
+        <fieldset name="request">
+            <field type="tztemplates" name="tz_template_style_id"
+                   default="0"
+                   label="COM_TZ_PORTFOLIO_PLUS_TEMPLATE_STYLE_LABEL"
+                   description="COM_TZ_PORTFOLIO_PLUS_TEMPLATE_STYLE_DESC">
+                <option value="0">JOPTION_USE_DEFAULT</option>
+            </field>
+        </fieldset>
+
+        <!-- Start basic options -->
+        <fieldset name="basic" label="COM_TZ_PORTFOLIO_PLUS_FIELDSET_BASIC_OPTIONS_LABEL">
+            <field name="tz_article_limit"
+                   type="text"
+                   label="COM_TZ_PORTFOLIO_PLUS_TZ_ARTICLE_LIMIT"
+                   description="COM_TZ_PORTFOLIO_PLUS_TZ_ARTICLE_LIMIT_DESC"/>
+            <field type="text" name="article_columns"
+                   label="COM_TZ_PORTFOLIO_PLUS_LISTING_ARTICLE_COLUMNS_LABEL"
+                   description="COM_TZ_PORTFOLIO_PLUS_LISTING_ARTICLE_COLUMNS_DESC"/>
+
+            <field type="spacer" hr="true"/>
+            <field type="list" name="show_search_category"
+                   label="JGLOBAL_SHOW_CATEGORY_LABEL">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+            <field type="tzcategory" name="search_parent_cat"
+                   show_root="true"
+                   label="COM_TZ_PORTFOLIO_PLUS_SEARCH_PARENT_CAT_LABEL"
+                   description="COM_TZ_PORTFOLIO_PLUS_SEARCH_PARENT_CAT_DESC">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+            </field>
+            <field type="list" name="show_s_parent_root"
+                   label="COM_TZ_PORTFOLIO_PLUS_SHOW_PARENT_ROOT_LABEL">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+            <field type="list" name="search_subcategory"
+                   label="COM_TZ_PORTFOLIO_PLUS_SEARCH_INCLUDE_SUBCATEGORIES_LABEL"
+                   description="COM_TZ_PORTFOLIO_PLUS_SEARCH_INCLUDE_SUBCATEGORIES_DESC">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+            <field type="fieldgroups" name="search_groupid"
+                   multiple="true" style="width: 220px;"
+                   label="COM_TZ_PORTFOLIO_PLUS_GROUP_FIELD">
+                <option value="">COM_TZ_PORTFOLIO_PLUS_OPTION_SELECT_FIELDS_GROUP</option>
+            </field>
+            <field type="list" name="show_s_gfield_title"
+                   label="COM_TZ_PORTFOLIO_PLUS_SEARCH_SHOW_GROUP_FIELD_TITLE_LABEL">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+            <field name="enable_lazyload" type="list"
+                   label="COM_TZ_PORTFOLIO_PLUS_ENABLE_LAZYLOAD">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+
+            <!-- Start order options -->
+            <field type="spacer" hr="true"/>
+            <field type="spacer" name="spacer_ordering_name"
+                   class="alert alert-warning btn-block"
+                   label="COM_TZ_PORTFOLIO_PLUS_ORDERING_TITLE"/>
+            <field name="orderby_pri"
+                   type="list"
+                   label="JGLOBAL_CATEGORY_ORDER_LABEL"
+                   description="JGLOBAL_CATEGORY_ORDER_DESC">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="none">JGLOBAL_NO_ORDER</option>
+                <option value="alpha">JGLOBAL_TITLE_ALPHABETICAL</option>
+                <option value="ralpha">JGLOBAL_TITLE_REVERSE_ALPHABETICAL</option>
+                <option value="order">JGLOBAL_CATEGORY_MANAGER_ORDER</option>
+            </field>
+            <field name="orderby_sec"
+                   type="list"
+                   label="JGLOBAL_ARTICLE_ORDER_LABEL"
+                   description="JGLOBAL_ARTICLE_ORDER_DESC">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="rdate">JGLOBAL_MOST_RECENT_FIRST</option>
+                <option value="date">JGLOBAL_OLDEST_FIRST</option>
+                <option value="alpha">JGLOBAL_TITLE_ALPHABETICAL</option>
+                <option value="ralpha">JGLOBAL_TITLE_REVERSE_ALPHABETICAL</option>
+                <option value="author">JGLOBAL_AUTHOR_ALPHABETICAL</option>
+                <option value="rauthor">JGLOBAL_AUTHOR_REVERSE_ALPHABETICAL</option>
+                <option value="hits">JGLOBAL_MOST_HITS</option>
+                <option value="rhits">JGLOBAL_LEAST_HITS</option>
+                <option value="random">JGLOBAL_RANDOM_ORDER</option>
+                <option value="order">JGLOBAL_ORDERING</option>
+                <option	value="rorder">JGLOBAL_REVERSE_ORDERING</option>
+                <option value="priority">COM_TZ_PORTFOLIO_PLUS_PRIORITY_ORDER</option>
+                <option	value="rpriority">COM_TZ_PORTFOLIO_PLUS_PRIORITY_REVERSE_ORDER</option>
+            </field>
+            <field name="order_date" type="list"
+                   useglobal="true"
+                   validate="options"
+                   label="JGLOBAL_ORDERING_DATE_LABEL"
+                   description="JGLOBAL_ORDERING_DATE_DESC">
+                <option value="created">JGLOBAL_CREATED</option>
+                <option value="modified">JGLOBAL_MODIFIED</option>
+                <option value="published">JPUBLISHED</option>
+                <option value="unpublished">JUNPUBLISHED</option>
+            </field>
+            <field type="list" name="order_fieldgroup"
+                   label="COM_TZ_PORTFOLIO_PLUS_FIELD_GROUP_ORDER_LABEL">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="rdate">JGLOBAL_MOST_RECENT_FIRST</option>
+                <option value="date">JGLOBAL_OLDEST_FIRST</option>
+                <option value="alpha">JGLOBAL_TITLE_ALPHABETICAL</option>
+                <option value="ralpha">JGLOBAL_TITLE_REVERSE_ALPHABETICAL</option>
+                <option value="order">JGLOBAL_ARTICLE_MANAGER_ORDER</option>
+            </field>
+            <!-- End order options -->
+
+        </fieldset>
+        <!-- End basic options -->
+    </fields>
+</metadata>

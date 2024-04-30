@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+	
+
+	<field name="iconnav_link" type="text" label="Url or Anchor" description="Add your Url or the anchor where you want to jump to." default="#main" class="input-small" />
+	<field name="iconnav_icon" description="Pick the icon code from Font Awesome, https://fontawesome.com/search?m=free" type="text" label="Icon Code" default="fa-solid fa-user" class="input-small"  />
+	<field name="iconnav_tooltip" type="text" label="Tooltip" default="" class="input-large"  />
+	
+	<field name="link_target" type="list" label="Link Target" default="_self" class="btn-group" >
+		<option value="_blank">Blank</option>
+		<option value="_self">Self</option>
+	</field>
+
+
+	
+</form>
+

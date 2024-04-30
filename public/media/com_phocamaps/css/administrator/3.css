@@ -1,0 +1,29 @@
+.com_phocamaps {
+	background: #f9f9f9;
+}
+.com_phocamaps.layout-edit {
+	background: #fff;
+}
+
+.ph-admin-box-content {
+	padding: 20px;
+	background: #F1F5F9;
+	background: #EDF0F5;
+	margin: 0px !important;
+	margin-top: 10px !important;
+}
+
+.com_phocamaps table {
+	background: #fff;
+	border-radius: 3px
+}
+
+.ph-extension-info-box {
+	background: #f0f0f0;
+	padding: 1em;
+}
+.ph-extension-links-box {
+	margin-top: 1em;
+	padding: 1em;
+	background: #f0f0f0;
+}

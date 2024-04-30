@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.1" type="tz_portfolio_plus-plugin" group="extrafields" method="upgrade">
+    <name>plg_extrafields_radio</name>
+    <author>DuongTVTemPlaza</author>
+    <creationDate>October 20th 2015</creationDate>
+    <copyright>Copyright (C) 2015 TemPlaza. All rights reserved.</copyright>
+    <license>GNU/GPL v2 or later http://www.gnu.org/licenses/gpl-2.0.html</license>
+    <authorEmail>support@templaza.com</authorEmail>
+    <authorUrl>www.templaza.com/</authorUrl>
+    <version>2.6.0</version>
+    <description>PLG_EXTRAFIELDS_RADIO_XML_DESCRIPTION</description>
+
+    <files>
+        <filename plugin="radio">radio.php</filename>
+        <filename>index.html</filename>
+        <folder>admin</folder>
+        <folder>language</folder>
+        <folder>tmpl</folder>
+    </files>
+
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field type="radio" name="bootstrap_style"
+                       default="1" class="switcher btn-group"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_EXTRAFIELDS_RADIO_BOOTSTRAP_STYLE_LABEL">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field type="radio" name="switcher"
+                       class="switcher" default="0"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_EXTRAFIELDS_RADIO_SWITCHER_LABEL"
+                       description="PLG_EXTRAFIELDS_RADIO_SWITCHER_DESC">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field type="list" name="number_columns"
+                       default="0"
+                       label="PLG_EXTRAFIELDS_RADIO_NUMBER_COLUMNS_LABEL">
+                    <option value="0">PLG_EXTRAFIELDS_RADIO_NO_COLUMN</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                </field>
+                <field type="list" name="search_type"
+                       default="dropdownlist"
+                       label="PLG_EXTRAFIELDS_RADIO_SEARCH_TYPE_LABEL">
+                    <option value="dropdownlist">PLG_EXTRAFIELDS_RADIO_DROPDOWN_LIST</option>
+                    <option value="multiselect">PLG_EXTRAFIELDS_RADIO_MULTIPLESELECT</option>
+                    <option value="radio">PLG_EXTRAFIELDS_RADIO_TITLE</option>
+                    <option value="checkbox">PLG_EXTRAFIELDS_RADIO_CHECKBOX</option>
+                </field>
+            </fieldset>
+        </fields>
+    </config>
+</extension>

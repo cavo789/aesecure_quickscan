@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<access component="com_tz_portfolio_plus">
+	<section name="component">
+		<action name="core.admin" title="JACTION_ADMIN" description="JACTION_ADMIN_COMPONENT_DESC" />
+		<action name="core.options" title="JACTION_OPTIONS" description="JACTION_OPTIONS_COMPONENT_DESC" />
+		<action name="core.manage" title="JACTION_MANAGE" description="JACTION_MANAGE_COMPONENT_DESC" />
+		<action name="core.create" title="JACTION_CREATE" description="JACTION_CREATE_COMPONENT_DESC" />
+		<action name="core.delete" title="JACTION_DELETE" description="JACTION_DELETE_COMPONENT_DESC" />
+		<action name="core.delete.own" title="COM_TZ_PORTFOLIO_PLUS_ACTION_DELETE_OWN"
+				description="COM_TZ_PORTFOLIO_PLUS_ACTION_DELETE_OWN_DESC" />
+		<action name="core.edit" title="JACTION_EDIT" description="JACTION_EDIT_COMPONENT_DESC" />
+		<action name="core.edit.own" title="JACTION_EDITOWN" description="JACTION_EDITOWN_COMPONENT_DESC" />
+		<action name="core.edit.state" title="JACTION_EDITSTATE" description="JACTION_EDITSTATE_COMPONENT_DESC" />
+		<action name="core.edit.state.own" title="COM_TZ_PORTFOLIO_PLUS_ACTION_EDIT_STATE_OWN"
+				description="COM_TZ_PORTFOLIO_PLUS_ACTION_EDIT_STATE_OWN_DESC" />
+		<action name="core.edit.value" title="JACTION_EDITVALUE"
+				description="JACTION_EDITVALUE_COMPONENT_DESC" />
+		<action name="core.edit.value.own" title="COM_TZ_PORTFOLIO_PLUS_ACTION_EDIT_VALUE_OWN"
+				description="COM_TZ_PORTFOLIO_PLUS_ACTION_EDIT_VALUE_OWN_DESC" />
+		<action name="core.approve" title="COM_TZ_PORTFOLIO_PLUS_ACTION_APPROVE_ARTICLE"
+				description="COM_TZ_PORTFOLIO_PLUS_ACTION_APPROVE_ARTICLE_DESC" />
+		<action name="core.manage.category" title="COM_TZ_PORTFOLIO_PLUS_ACTION_MANAGE_CATEGORY"
+				description="COM_TZ_PORTFOLIO_PLUS_ACTION_MANAGE_CATEGORY_DESC" />
+		<action name="core.manage.article" title="COM_TZ_PORTFOLIO_PLUS_ACTION_MANAGE_ARTICLE"
+				description="COM_TZ_PORTFOLIO_PLUS_ACTION_MANAGE_ARTICLE_DESC" />
+		<action name="core.manage.group" title="COM_TZ_PORTFOLIO_PLUS_ACTION_MANAGE_FIELD_GROUP"
+				description="COM_TZ_PORTFOLIO_PLUS_ACTION_MANAGE_FIELD_GROUP_DESC" />
+		<action name="core.manage.field" title="COM_TZ_PORTFOLIO_PLUS_ACTION_MANAGE_FIELD"
+				description="COM_TZ_PORTFOLIO_PLUS_ACTION_MANAGE_FIELD_DESC" />
+		<action name="core.manage.tag" title="COM_TZ_PORTFOLIO_PLUS_ACTION_MANAGE_TAG"
+				description="COM_TZ_PORTFOLIO_PLUS_ACTION_MANAGE_TAG_DESC" />
+		<action name="core.manage.addon" title="COM_TZ_PORTFOLIO_PLUS_ACTION_MANAGE_ADDON"
+				description="COM_TZ_PORTFOLIO_PLUS_ACTION_MANAGE_ADDON_DESC" />
+		<action name="core.manage.style" title="COM_TZ_PORTFOLIO_PLUS_ACTION_MANAGE_STYLE"
+				description="COM_TZ_PORTFOLIO_PLUS_ACTION_MANAGE_STYLE_DESC" />
+		<action name="core.manage.template" title="COM_TZ_PORTFOLIO_PLUS_ACTION_MANAGE_TEMPLATE"
+				description="COM_TZ_PORTFOLIO_PLUS_ACTION_MANAGE_TEMPLATE_DESC" />
+		<action name="core.manage.extension" title="COM_TZ_PORTFOLIO_PLUS_ACTION_MANAGE_EXTENSION"
+				description="COM_TZ_PORTFOLIO_PLUS_ACTION_MANAGE_EXTENSION_DESC" />
+		<action name="core.manage.acl" title="COM_TZ_PORTFOLIO_PLUS_ACTION_MANAGE_ACL"
+				description="COM_TZ_PORTFOLIO_PLUS_ACTION_MANAGE_ACL_DESC" />
+	</section>
+	<section name="category">
+		<action name="core.create" title="JACTION_CREATE" description="COM_CATEGORIES_ACCESS_CREATE_DESC" />
+		<action name="core.delete" title="JACTION_DELETE" description="COM_CATEGORIES_ACCESS_DELETE_DESC" />
+		<action name="core.delete.own" title="COM_TZ_PORTFOLIO_PLUS_ACTION_DELETE_OWN"
+				description="COM_TZ_PORTFOLIO_PLUS_ACTION_DELETE_OWN_DESC" />
+		<action name="core.edit" title="JACTION_EDIT" description="COM_CATEGORIES_ACCESS_EDIT_DESC" />
+		<action name="core.edit.own" title="JACTION_EDITOWN" description="JACTION_EDITOWN_COMPONENT_DESC" />
+		<action name="core.edit.state" title="JACTION_EDITSTATE" description="COM_CATEGORIES_ACCESS_EDITSTATE_DESC" />
+		<action name="core.edit.state.own" title="COM_TZ_PORTFOLIO_PLUS_ACTION_EDIT_STATE_OWN"
+				description="COM_TZ_PORTFOLIO_PLUS_ACTION_EDIT_STATE_OWN_DESC" />
+	</section>
+	<section name="article">
+		<action name="core.delete" title="JACTION_DELETE" description="JACTION_DELETE_COMPONENT_DESC" />
+		<action name="core.delete.own" title="COM_TZ_PORTFOLIO_PLUS_ACTION_DELETE_OWN"
+				description="COM_TZ_PORTFOLIO_PLUS_ACTION_DELETE_OWN_DESC" />
+		<action name="core.edit" title="JACTION_EDIT" description="COM_CONTENT_ACCESS_EDIT_DESC" />
+		<action name="core.edit.state" title="JACTION_EDITSTATE" description="COM_CONTENT_ACCESS_EDITSTATE_DESC" />
+		<action name="core.edit.state.own" title="COM_TZ_PORTFOLIO_PLUS_ACTION_EDIT_STATE_OWN"
+				description="COM_TZ_PORTFOLIO_PLUS_ACTION_EDIT_STATE_OWN_DESC" />
+	</section>
+	<section name="group">
+		<action name="core.create" title="JACTION_CREATE" description="JACTION_CREATE_COMPONENT_DESC" />
+		<action name="core.delete" title="JACTION_DELETE" description="JACTION_DELETE_COMPONENT_DESC" />
+		<action name="core.delete.own" title="COM_TZ_PORTFOLIO_PLUS_ACTION_DELETE_OWN"
+				description="COM_TZ_PORTFOLIO_PLUS_ACTION_DELETE_OWN_DESC" />
+		<action name="core.edit" title="JACTION_EDIT" description="JACTION_EDIT_COMPONENT_DESC" />
+		<action name="core.edit.own" title="JACTION_EDITOWN" description="JACTION_EDITOWN_COMPONENT_DESC" />
+		<action name="core.edit.state" title="JACTION_EDITSTATE" description="JACTION_EDITSTATE_COMPONENT_DESC" />
+		<action name="core.edit.state.own" title="COM_TZ_PORTFOLIO_PLUS_ACTION_EDIT_STATE_OWN"
+				description="COM_TZ_PORTFOLIO_PLUS_ACTION_EDIT_STATE_OWN_DESC" />
+		<action name="core.edit.value" title="JACTION_EDITVALUE"
+				description="JACTION_EDITVALUE_COMPONENT_DESC" />
+		<action name="core.edit.value.own" title="COM_TZ_PORTFOLIO_PLUS_ACTION_EDIT_VALUE_OWN"
+				description="COM_TZ_PORTFOLIO_PLUS_ACTION_EDIT_VALUE_OWN_DESC" />
+	</section>
+	<section name="field">
+		<action name="core.delete" title="JACTION_DELETE" description="JACTION_DELETE_COMPONENT_DESC" />
+		<action name="core.delete.own" title="COM_TZ_PORTFOLIO_PLUS_ACTION_DELETE_OWN"
+				description="COM_TZ_PORTFOLIO_PLUS_ACTION_DELETE_OWN_DESC" />
+		<action name="core.edit" title="JACTION_EDIT" description="JACTION_EDIT_COMPONENT_DESC" />
+		<action name="core.edit.own" title="JACTION_EDITOWN" description="JACTION_EDITOWN_COMPONENT_DESC" />
+		<action name="core.edit.state" title="JACTION_EDITSTATE" description="JACTION_EDITSTATE_COMPONENT_DESC" />
+		<action name="core.edit.state.own" title="COM_TZ_PORTFOLIO_PLUS_ACTION_EDIT_STATE_OWN"
+				description="COM_TZ_PORTFOLIO_PLUS_ACTION_EDIT_STATE_OWN_DESC" />
+		<action name="core.edit.value" title="JACTION_EDITVALUE"
+				description="JACTION_EDITVALUE_COMPONENT_DESC" />
+		<action name="core.edit.value.own" title="COM_TZ_PORTFOLIO_PLUS_ACTION_EDIT_VALUE_OWN"
+				description="COM_TZ_PORTFOLIO_PLUS_ACTION_EDIT_VALUE_OWN_DESC" />
+	</section>
+	<section name="tag">
+		<action name="core.create" title="JACTION_CREATE" description="JACTION_CREATE_COMPONENT_DESC" />
+		<action name="core.delete" title="JACTION_DELETE" description="JACTION_DELETE_COMPONENT_DESC" />
+		<action name="core.edit" title="JACTION_EDIT" description="JACTION_EDIT_COMPONENT_DESC" />
+		<action name="core.edit.state" title="JACTION_EDITSTATE" description="JACTION_EDITSTATE_COMPONENT_DESC" />
+	</section>
+	<section name="template">
+		<action name="core.create" title="COM_TZ_PORTFOLIO_PLUS_UPLOAD_AND_INSTALL"
+				description="COM_TZ_PORTFOLIO_PLUS_ACTION_UPLOAD_INSTALL_DESC" />
+		<action name="core.delete" title="JTOOLBAR_UNINSTALL" description="COM_TZ_PORTFOLIO_PLUS_ACTION_UNINSTALL_DESC" />
+		<action name="core.edit.state" title="JACTION_EDITSTATE" description="JACTION_EDITSTATE_COMPONENT_DESC" />
+	</section>
+	<section name="style">
+		<action name="core.create" title="JACTION_CREATE" description="JACTION_CREATE_COMPONENT_DESC" />
+		<action name="core.delete" title="JACTION_DELETE" description="JACTION_DELETE_COMPONENT_DESC" />
+		<action name="core.edit" title="JACTION_EDIT" description="JACTION_EDIT_COMPONENT_DESC" />
+		<action name="core.edit.state" title="JACTION_EDITSTATE" description="JACTION_EDITSTATE_COMPONENT_DESC" />
+	</section>
+	<section name="addon">
+		<action name="core.admin" title="JACTION_ADMIN" description="JACTION_ADMIN_COMPONENT_DESC" />
+		<action name="core.options" title="JACTION_OPTIONS" description="JACTION_OPTIONS_COMPONENT_DESC" />
+		<action name="core.create" title="COM_TZ_PORTFOLIO_PLUS_UPLOAD_AND_INSTALL" description="COM_TZ_PORTFOLIO_PLUS_ACTION_UPLOAD_INSTALL_DESC" />
+		<action name="core.delete" title="JTOOLBAR_UNINSTALL" description="COM_TZ_PORTFOLIO_PLUS_ACTION_UNINSTALL_DESC" />
+		<action name="core.edit" title="JACTION_EDIT" description="JACTION_EDIT_COMPONENT_DESC" />
+		<action name="core.edit.state" title="JACTION_EDITSTATE" description="JACTION_EDITSTATE_COMPONENT_DESC" />
+	</section>
+	<section name="extension">
+		<action name="core.create" title="JTOOLBAR_INSTALL"
+				description="COM_TZ_PORTFOLIO_PLUS_EXTENSION_ACTION_INSTALL_DESC" />
+	</section>
+</access>

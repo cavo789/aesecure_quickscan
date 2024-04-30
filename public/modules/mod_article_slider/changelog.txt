@@ -1,0 +1,47 @@
+# Changelog
+	1.2.12
+	# Replaced "&" for "?" for J4 Popup
+
+	1.2.11
+	# Fixed Pause on Hover Option
+	# Fixed Endless Slides Option
+
+	1.2.10
+	# Fixed read more link
+
+	1.2.9
+	+ Add Modalbox Link Option
+
+	1.2.8
+	# Select Option to Fixed HTML Strip Tag
+
+	1.2.7
+	# Fixed HTML Strip Tag
+
+	1.2.6
+	# Fixed Deprecated $classes in PHP 8
+	
+	1.2.5
+	- Removed the Popup
+	+ Add container Offset for shadow style
+
+	1.2.4
+	+ Add Language Tag > ALL
+
+	1.2.2
+	# Fixed Bug in Autoplay Interval
+
+	1.2.1
+	+ Add Readmore class and Text
+
+	1.2.0
+	+ Initial Release
+
+
+	* -> Security Fix
+	# -> Bug Fix
+	$ -> Language fix or change
+	+ -> Addition
+	^ -> Change
+	- -> Removed
+	! -> Note

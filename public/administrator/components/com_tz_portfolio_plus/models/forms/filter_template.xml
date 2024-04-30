@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields name="filter">
+		<field type="text" name="search"
+			   hint="JSEARCH_FILTER"
+			   label="JSEARCH_FILTER"
+			   description="JSEARCH_FILTER" />
+		<field type="list" name="type"
+			   label="COM_TZ_PORTFOLIO_PLUS_TYPE">
+			<option value="keyword">COM_TZ_PORTFOLIO_PLUS_KEYWORD</option>
+			<option value="author">COM_TZ_PORTFOLIO_PLUS_AUTHOR</option>
+			<option value="tag">COM_TZ_PORTFOLIO_PLUS_TAG</option>
+		</field>
+	</fields>
+	<fields name="list">
+		<field type="list" name="fullordering"
+			   default="rdate" onchange="this.form.submit();"
+			   label="COM_TZ_PORTFOLIO_PLUS_LIST_FULL_ORDERING"
+			   description="COM_TZ_PORTFOLIO_PLUS_LIST_FULL_ORDERING_DESC">
+			<option value="">JGLOBAL_SORT_BY</option>
+			<option value="rdate">JGLOBAL_MOST_RECENT_FIRST</option>
+			<option value="date">JGLOBAL_OLDEST_FIRST</option>
+			<option value="alpha">JGLOBAL_TITLE_ALPHABETICAL</option>
+			<option value="ralpha">JGLOBAL_TITLE_REVERSE_ALPHABETICAL</option>
+		</field>
+		<field type="hidden" name="form_submited" default="1"/>
+	</fields>
+</form>

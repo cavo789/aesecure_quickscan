@@ -1,0 +1,1 @@
+!function(){"use strict";var t=document.getElementById("multiLangModal");if(t){var o=bootstrap.Modal.getInstance(t);o&&o.dispose(),document.body.appendChild(t),Joomla.initialiseModal(t)}}();

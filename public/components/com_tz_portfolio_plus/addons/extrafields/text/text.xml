@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.1" type="tz_portfolio_plus-plugin" group="extrafields" method="upgrade">
+    <name>plg_extrafields_text</name>
+    <author>DuongTVTemPlaza</author>
+    <creationDate>October 20th 2015</creationDate>
+    <copyright>Copyright (C) 2015 TemPlaza. All rights reserved.</copyright>
+    <license>GNU/GPL v2 or later http://www.gnu.org/licenses/gpl-2.0.html</license>
+    <authorEmail>support@templaza.com</authorEmail>
+    <authorUrl>www.templaza.com/</authorUrl>
+    <version>2.6.0</version>
+    <description>PLG_EXTRAFIELDS_TEXT_XML_DESCRIPTION</description>
+
+    <files>
+        <filename plugin="text">text.php</filename>
+        <filename>index.html</filename>
+        <folder>admin</folder>
+        <folder>language</folder>
+        <folder>tmpl</folder>
+    </files>
+
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field type="list" name="regex"
+                        label="PLG_EXTRAFIELDS_TEXT_REGEX_LABEL"
+                        description="PLG_EXTRAFIELDS_TEXT_REGEX_DESC">
+                    <option value="none">JNONE</option>
+                    <option value="/^[a-zA-Z]$/">PLG_EXTRAFIELDS_TEXT_SINGLE_LETTER</option>
+                    <option value="/^[a-zA-Z]+$/">PLG_EXTRAFIELDS_TEXT_ALPHABETIC_STRING</option>
+                    <option value="/^[a-zA-Z0-9]+$/">PLG_EXTRAFIELDS_TEXT_ALPHA_NUMERIC_STRING</option>
+                    <option value="/^\w+$/">PLG_EXTRAFIELDS_TEXT_SINGLE_WORD</option>
+                    <option value="/^\d+$/">PLG_EXTRAFIELDS_TEXT_INTEGER</option>
+                    <option value="/^\d+(\.\d+)?$/">PLG_EXTRAFIELDS_TEXT_DECIMAL</option>
+                    <option value="/^[\w\.-]+@[\w\.-]+\.[\w\.-]{2,6}$/">PLG_EXTRAFIELDS_TEXT_EMAIL_ADDRESS</option>
+                    <option value="/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/">PLG_EXTRAFIELDS_TEXT_TELEPHONE_NUMBER</option>
+                    <option value="/^(https?:\/\/)?([\w\.-]+)\.([\w\.-]{2,6})([\/\w \.-]*)*\/?$/i">PLG_EXTRAFIELDS_TEXT_URL</option>
+                    <option value="/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/">
+                        PLG_EXTRAFIELDS_TEXT_IP_ADDRESS
+                    </option>
+                    <option value="custom">PLG_EXTRAFIELDS_TEXT_CUSTOM_REGEX</option>
+                </field>
+                <field type="text" name="custom_regex"
+                       label="PLG_EXTRAFIELDS_TEXT_CUSTOM_REGEX"
+                        description="PLG_EXTRAFIELDS_TEXT_CUSTOM_REGEX_DESC"/>
+                <field type="text" name="size"
+                       label="PLG_EXTRAFIELDS_TEXT_SIZE_LABEL"/>
+                <field type="text" name="placeholder"
+                       label="PLG_EXTRAFIELDS_TEXT_PLACEHOLDER_LABEL"/>
+                <field type="radio" name="suggestion"
+                       class="switcher btn-group" default="0"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_EXTRAFIELDS_TEXT_SUGGESTION_LABEL"
+                       description="PLG_EXTRAFIELDS_TEXT_SUGGESTION_DESC">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+            </fieldset>
+        </fields>
+    </config>
+</extension>

@@ -1,0 +1,55 @@
+/*!*
+ * ANGIE - The site restoration script for backup archives created by Akeeba Backup and Akeeba Solo
+ *
+ * @package   angie
+ * @copyright Copyright (c)2009-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @license   GNU General Public License version 3, or later
+ *//*!*
+ * ANGIE - The site restoration script for backup archives created by Akeeba Backup and Akeeba Solo
+ *
+ * @package   angie
+ * @copyright Copyright (c)2009-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @license   GNU General Public License version 3, or later
+ *//*!*
+ * ANGIE - The site restoration script for backup archives created by Akeeba Backup and Akeeba Solo
+ *
+ * @package   angie
+ * @copyright Copyright (c)2009-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @license   GNU General Public License version 3, or later
+ */#akeeba-footer{background-color:#efefef;padding:.6em 1em 0;margin-top:.5em;border-top:1px solid #bcbcbc}#akeeba-footer p{margin:0}#akeeba-footer p:last-child{margin-bottom:0}#akeeba-footer ol.bigger li{font-size:12pt !important;line-height:220%;margin-top:.3em}/*!*
+ * ANGIE - The site restoration script for backup archives created by Akeeba Backup and Akeeba Solo
+ *
+ * @package   angie
+ * @copyright Copyright (c)2009-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @license   GNU General Public License version 3, or later
+ */ul.breadcrumb{padding:.5em 1em;list-style:none;background-color:#efefef}ul.breadcrumb li{display:inline;font-size:11pt}ul.breadcrumb li.active{font-weight:bold;color:#40b5b8}ul.breadcrumb span.divider{color:#858183}/*!*
+ * ANGIE - The site restoration script for backup archives created by Akeeba Backup and Akeeba Solo
+ *
+ * @package   angie
+ * @copyright Copyright (c)2009-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @license   GNU General Public License version 3, or later
+ */#akeeba-modal-overlay{background:rgba(0,0,0,.9);filter:alpha(opacity=60);height:100%;left:0;-moz-opacity:.6;-webkit-opacity:.6;-ms-filter:alpha(opacity=60);opacity:.6;position:absolute;top:0;width:100%;z-index:998}#akeeba-modal-container{background:#fff;border:1px solid #efefef;box-shadow:0px 4px 16px #1d1d1d;height:auto;max-height:90%;overflow:auto;padding:10px;font-family:arial,sans-serif;font-size:14px;position:absolute;z-index:998;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;-o-border-radius:10px}#akeeba-modal-header{height:20px;overflow:hidden;clear:both}#akeeba-modal-close{border:thin solid #514f50;border-radius:10px;background:#fff url("../image/modal-close.png") no-repeat 4px 3px;cursor:pointer;display:block;filter:alpha(opacity=60);-moz-opacity:.6;-webkit-opacity:.6;-ms-filter:alpha(opacity=60);opacity:.6;float:right;height:20px;width:21px}#akeeba-modal-close:hover{filter:alpha(opacity=100);-moz-opacity:1;-webkit-opacity:1;-ms-filter:alpha(opacity=100);opacity:1}#akeeba-modal-content{display:block;padding:0 20px 10px 20px;z-index:999}#akeeba-modal-container.modal-loading{background:#fff url("../icons/loading.gif") no-repeat center center}/*!*
+ * ANGIE - The site restoration script for backup archives created by Akeeba Backup and Akeeba Solo
+ *
+ * @package   angie
+ * @copyright Copyright (c)2009-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @license   GNU General Public License version 3, or later
+ */.akeeba-popover{position:absolute;top:0;left:0;z-index:1060;display:block;max-width:276px;font-family:Arial,sans-serif;font-style:normal;font-weight:400;line-height:1.5;text-align:left;text-decoration:none;text-shadow:none;text-transform:none;letter-spacing:normal;word-break:normal;word-spacing:normal;white-space:normal;line-break:auto;font-size:.8rem;word-wrap:break-word;background-color:#fff;background-clip:padding-box;border:1px solid #d6d6d6;border-radius:.5rem;padding:0}.akeeba-popover-title{margin:0 !important;padding:.5em !important;background:#efefef;font-size:.9rem;color:#514f50;border-bottom:thin solid #d6d6d6}.akeeba-popover-content{padding:1em 1em 2em;color:#514f50}.akeeba-hasTooltip{position:relative}.akeeba-hasTooltip .akeeba-tooltip-text{visibility:hidden;width:180px;background-color:#373637;color:#fff;text-align:center;padding:5px 0;border-radius:6px;position:absolute;z-index:100}.akeeba-hasTooltip .akeeba-tooltip-text:after{content:" ";position:absolute;border-width:5px;border-style:solid}.akeeba-hasTooltip:hover .akeeba-tooltip-text{visibility:visible}.akeeba-hasTooltip .akeeba-tooltip-text-left{top:-5px;right:105%}.akeeba-hasTooltip .akeeba-tooltip-text-left:after{top:50%;left:100%;margin-top:-5px;border-color:rgba(0,0,0,0) rgba(0,0,0,0) rgba(0,0,0,0) #373637}.akeeba-hasTooltip .akeeba-tooltip-text-right{top:-5px;left:105%}.akeeba-hasTooltip .akeeba-tooltip-text-right:after{top:50%;right:100%;margin-top:-5px;border-color:rgba(0,0,0,0) #373637 rgba(0,0,0,0) rgba(0,0,0,0)}.akeeba-hasTooltip .akeeba-tooltip-text-top{width:180px;bottom:100%;left:50%;margin-left:-90px}.akeeba-hasTooltip .akeeba-tooltip-text-top:after{top:100%;left:50%;margin-left:-5px;border-color:#373637 rgba(0,0,0,0) rgba(0,0,0,0) rgba(0,0,0,0)}.akeeba-hasTooltip .akeeba-tooltip-text-bottom{width:180px;top:100%;left:50%;margin-left:-90px}.akeeba-hasTooltip .akeeba-tooltip-text-bottom:after{bottom:100%;left:50%;margin-left:-5px;border-color:rgba(0,0,0,0) rgba(0,0,0,0) #373637 rgba(0,0,0,0)}h4.dbrestore-hideable{display:flex;flex-direction:row;border-bottom:none}h4.dbrestore-hideable span{flex-grow:1}/*!*
+ * ANGIE - The site restoration script for backup archives created by Akeeba Backup and Akeeba Solo
+ *
+ * @package   angie
+ * @copyright Copyright (c)2009-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @license   GNU General Public License version 3, or later
+ */input.input-100{width:100%}div.keyValueLine{margin-bottom:.5em}div#blinkenlights{margin-top:.5em}.akeeba-renderer-fef--dark{/*!*
+ * ANGIE - The site restoration script for backup archives created by Akeeba Backup and Akeeba Solo
+ *
+ * @package   angie
+ * @copyright Copyright (c)2009-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @license   GNU General Public License version 3, or later
+ */}.akeeba-renderer-fef--dark :root{color-scheme:dark}.akeeba-renderer-fef--dark #akeeba-footer{background-color:#858183;border-top:1px solid #6b686a}.akeeba-renderer-fef--dark ul.breadcrumb{background-color:#858183}.akeeba-renderer-fef--dark ul.breadcrumb li.active{color:#40b5b8}.akeeba-renderer-fef--dark #akeeba-modal-container{background-color:#514f50;border:1px solid #858183;box-shadow:0px 4px 16px #1d1d1d}.akeeba-renderer-fef--dark #akeeba-modal-container.modal-loading{background-color:#514f50}.akeeba-renderer-fef--dark .akeeba-popover{background-color:#514f50;color:#efefef}.akeeba-renderer-fef--dark .akeeba-popover-title{background-color:#636062;color:#efefef}.akeeba-renderer-fef--dark .akeeba-popover-content{color:#efefef}@media(prefers-color-scheme: dark){/*!*
+ * ANGIE - The site restoration script for backup archives created by Akeeba Backup and Akeeba Solo
+ *
+ * @package   angie
+ * @copyright Copyright (c)2009-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @license   GNU General Public License version 3, or later
+ */#akeeba-footer{background-color:#858183;border-top:1px solid #6b686a}ul.breadcrumb{background-color:#858183}ul.breadcrumb li.active{color:#40b5b8}#akeeba-modal-container{background-color:#514f50;border:1px solid #858183;box-shadow:0px 4px 16px #1d1d1d}#akeeba-modal-container.modal-loading{background-color:#514f50}.akeeba-popover{background-color:#514f50;color:#efefef}.akeeba-popover-title{background-color:#636062;color:#efefef}.akeeba-popover-content{color:#efefef}}/*# sourceMappingURL=theme.min.css.map */

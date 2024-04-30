@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields name="filter">
+		<field type="text" name="search"
+			   hint="COM_TZ_PORTFOLIO_PLUS_SEARCH_IN_TITLE"
+			   label="JSEARCH_FILTER"
+			   description="JSEARCH_FILTER" />
+		<field type="status" name="published"
+			   onchange="this.form.submit();"
+			   filter="0,1,*"
+			   label="JPUBLISHED"
+			   description="JFIELD_PUBLISHED_DESC">
+			<option value="">JOPTION_SELECT_PUBLISHED</option>
+		</field>
+		<field type="tzextrafieldtypes" name="type"
+			   multiple="true"
+			   class="multipleFieldTypes"
+			   onchange="this.form.submit();"
+			   label="COM_TZ_PORTFOLIO_PLUS_TYPE"
+			   description="COM_TZ_PORTFOLIO_PLUS_TYPE"/>
+		<field type="fieldgroups" name="group"
+			   onchange="this.form.submit();"
+			   label="COM_TZ_PORTFOLIO_PLUS_GROUP"
+			   description="COM_TZ_PORTFOLIO_PLUS_GROUP">
+			<option value="">COM_TZ_PORTFOLIO_PLUS_OPTION_SELECT_GROUP</option>
+		</field>
+		<field type="accesslevel" name="access"
+			   onchange="this.form.submit();"
+			   label="JOPTION_FILTER_ACCESS"
+			   description="JOPTION_FILTER_ACCESS_DESC">
+			<option value="">JOPTION_SELECT_ACCESS</option>
+		</field>
+		<input type="hidden" name="form_submited" value="1"/>
+	</fields>
+	<fields name="list">
+		<field type="list" name="fullordering"
+			   default="f.id DESC" onchange="this.form.submit();"
+			   label="COM_TZ_PORTFOLIO_PLUS_LIST_FULL_ORDERING"
+			   description="COM_TZ_PORTFOLIO_PLUS_LIST_FULL_ORDERING_DESC">
+			<option value="">JGLOBAL_SORT_BY</option>
+			<option value="f.ordering ASC">JGRID_HEADING_ORDERING_ASC</option>
+			<option value="f.ordering DESC">JGRID_HEADING_ORDERING_DESC</option>
+			<option value="f.published ASC">JSTATUS_ASC</option>
+			<option value="f.published DESC">JSTATUS_DESC</option>
+			<option value="f.title ASC">JGLOBAL_TITLE_ASC</option>
+			<option value="f.title DESC">JGLOBAL_TITLE_DESC</option>
+			<option value="f.access ASC">JGRID_HEADING_ACCESS_ASC</option>
+			<option value="f.access DESC">JGRID_HEADING_ACCESS_DESC</option>
+			<option value="groupname ASC">COM_TZ_PORTFOLIO_PLUS_HEADING_GROUP_ASC</option>
+			<option value="groupname DESC">COM_TZ_PORTFOLIO_PLUS_HEADING_GROUP_DESC</option>
+			<option value="f.type ASC">COM_TZ_PORTFOLIO_PLUS_HEADING_TYPE_ASC</option>
+			<option value="f.type DESC">COM_TZ_PORTFOLIO_PLUS_HEADING_TYPE_DESC</option>
+			<option value="f.list_view ASC">COM_TZ_PORTFOLIO_PLUS_HEADING_LIST_VIEW_ASC</option>
+			<option value="f.list_view DESC">COM_TZ_PORTFOLIO_PLUS_HEADING_LIST_VIEW_DESC</option>
+			<option value="f.detail_view ASC">COM_TZ_PORTFOLIO_PLUS_HEADING_DETAILS_VIEW_ASC</option>
+			<option value="f.detail_view DESC">COM_TZ_PORTFOLIO_PLUS_HEADING_DETAILS_VIEW_DESC</option>
+			<option value="f.advanced_search ASC">COM_TZ_PORTFOLIO_PLUS_HEADING_ADVANCED_SEARCH_ASC</option>
+			<option value="f.advanced_search DESC">COM_TZ_PORTFOLIO_PLUS_HEADING_ADVANCED_SEARCH_DESC</option>
+			<option value="f.id ASC">JGRID_HEADING_ID_ASC</option>
+			<option value="f.id DESC">JGRID_HEADING_ID_DESC</option>
+		</field>
+		<field type="limitbox" name="limit"
+			   default="25" class="input-mini"
+			   onchange="this.form.submit();"
+			   label="JFIELD_PLG_SEARCH_SEARCHLIMIT_LABEL"
+			   description="JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC"/>
+	</fields>
+</form>

@@ -1,0 +1,152 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "com_finder",
+  "version": "4.0.0",
+  "description": "Joomla CMS",
+  "license": "GPL-2.0-or-later",
+  "assets": [
+    {
+      "name": "com_finder.dates",
+      "type": "style",
+      "uri": "com_finder/dates.min.css",
+      "version": "229ab888450c27ab52a44882abe084a5155620b6"
+    },
+    {
+      "name": "com_finder.filters.es5",
+      "type": "script",
+      "uri": "com_finder/filters-es5.min.js",
+      "dependencies": [
+        "core"
+      ],
+      "attributes": {
+        "nomodule": true,
+        "defer": true
+      },
+      "version": "306fd844307e82e0ff07cd95c7c7f608b6aa7462"
+    },
+    {
+      "name": "com_finder.filters",
+      "type": "script",
+      "uri": "com_finder/filters.min.js",
+      "dependencies": [
+        "com_finder.filters.es5"
+      ],
+      "attributes": {
+        "type": "module"
+      },
+      "version": "db387bd9ba17068d590c9475b667efbec597c6ef"
+    },
+    {
+      "name": "com_finder.finder",
+      "type": "style",
+      "uri": "com_finder/finder.min.css",
+      "version": "0cfab6c5b1b1dfdb57201f4ae49d5bc8afdc5223"
+    },
+    {
+      "name": "com_finder.finder",
+      "type": "script",
+      "uri": "com_finder/finder.min.js",
+      "dependencies": [
+        "com_finder.finder.es5"
+      ],
+      "attributes": {
+        "type": "module"
+      },
+      "version": "c8b55661ed62db937b8d6856090adf9258c4a0fc"
+    },
+    {
+      "name": "com_finder.finder.es5",
+      "type": "script",
+      "uri": "com_finder/finder-es5.min.js",
+      "dependencies": [
+        "core"
+      ],
+      "attributes": {
+        "nomodule": true,
+        "defer": true
+      },
+      "version": "14e4c7fdce4ca11c6d12b74bad128529a294b183"
+    },
+    {
+      "name": "com_finder.finder-edit.es5",
+      "type": "script",
+      "uri": "com_finder/finder-edit-es5.min.js",
+      "dependencies": [
+        "core"
+      ],
+      "attributes": {
+        "nomodule": true,
+        "defer": true
+      },
+      "version": "2ad312f3f022664abf2d79c2270704ba4941c412"
+    },
+    {
+      "name": "com_finder.finder-edit",
+      "type": "script",
+      "uri": "com_finder/finder-edit.min.js",
+      "dependencies": [
+        "com_finder.finder-edit.es5"
+      ],
+      "attributes": {
+        "type": "module"
+      },
+      "version": "8136efad79e2e979f422e821abbbddc2486a0a90"
+    },
+    {
+      "name": "com_finder.indexer.es5",
+      "type": "script",
+      "uri": "com_finder/indexer-es5.min.js",
+      "dependencies": [
+        "core"
+      ],
+      "attributes": {
+        "nomodule": true,
+        "defer": true
+      },
+      "version": "b92c2f809492e12e3526fa70bc120a504f85d48f"
+    },
+    {
+      "name": "com_finder.indexer",
+      "type": "script",
+      "uri": "com_finder/indexer.min.js",
+      "dependencies": [
+        "com_finder.indexer.es5"
+      ],
+      "attributes": {
+        "type": "module"
+      },
+      "version": "bf613c5984500d1cfa88ffddb9be8bfd6073e7dd"
+    },
+    {
+      "name": "com_finder.maps.es5",
+      "type": "script",
+      "uri": "com_finder/maps-es5.min.js",
+      "dependencies": [
+        "core"
+      ],
+      "attributes": {
+        "nomodule": true,
+        "defer": true
+      },
+      "version": "9e2e80806f92fcb24918eebf6211bcc55e104c2e"
+    },
+    {
+      "name": "com_finder.maps",
+      "type": "script",
+      "uri": "com_finder/maps.min.js",
+      "dependencies": [
+        "com_finder.maps.es5"
+      ],
+      "attributes": {
+        "type": "module"
+      },
+      "version": "ff16598c533e0a598992c5ad8386c4715d82723d"
+    },
+    {
+      "name": "com_finder.indexer",
+      "type": "style",
+      "uri": "com_finder/indexer.min.css",
+      "version": "ba73d85fa3f70dcee5085a1c8ae477bd42d03b33"
+    }
+  ]
+}

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="3.1" client="site" method="upgrade">
+	<name>Article Slideshow</name>
+    <author>Joomlaplates</author>
+    <copyright>© 2022 Joomlaplates. All rights reserved.</copyright>
+    <license>GNU General Public License version 3 or later; see http://www.gnu.org/licenses/gpl-3.0.txt</license>
+    <version>1.2.3</version>
+    <creationDate>2023</creationDate>
+	
+    <description><![CDATA[
+		<p class="btn btn-sm btn-info" p>Version 1.2.2</p>
+		<p><a class="btn btn-sm btn-success" href="https://www.joomlaplates.de/dokumentation.html" target="_blank">Dokumentation</a></p>
+    ]]></description>	
+	<updateservers>
+		<server type="extension" priority="1" name="Article Slideshow">https://www.joomlaplates.de/updates/uikit/mod_article_slideshow.xml</server>
+	</updateservers>	
+	<files>
+		<filename module="mod_article_slideshow">mod_article_slideshow.php</filename>
+		<folder>tmpl</folder>
+		<filename>helper.php</filename>
+		<filename>changelog.txt</filename>
+	</files>
+	<languages >
+		<language tag="en-GB">en-GB.mod_article_slideshow.ini</language>
+		<language tag="en-GB">en-GB.mod_article_slideshow.sys.ini</language>
+	</languages>
+	<help key="JHELP_EXTENSIONS_MODULE_MANAGER_ARTICLES_NEWSFLASH"/>
+	<config>
+	<fields name="params">
+	  <fieldset name="basic">
+		<field name="catid" type="category" label="JCATEGORY" description="MOD_ARTICLES_NEWS_FIELD_CATEGORY_DESC" extension="com_content" multiple="true" filter="int_array" class="multipleCategories" />
+		<field name="tag" type="tag" label="JTAG"  mode="nested" multiple="true" filter="int_array" class="multipleTags" />
+
+		<field name="img_intro_full" type="list" label="MOD_ARTICLES_NEWS_FIELD_IMAGES_ARTICLE_LABEL" description="MOD_ARTICLES_NEWS_FIELD_IMAGES_ARTICLE_DESC" default="none">
+		  <option value="intro">MOD_ARTICLES_NEWS_OPTION_INTROIMAGE</option>
+		  <option value="full">MOD_ARTICLES_NEWS_OPTION_FULLIMAGE</option>
+		  <option value="none">JNO</option>
+		</field>
+		
+		<field name="item_title" type="radio" label="MOD_ARTICLES_NEWS_FIELD_TITLE_LABEL" description="MOD_ARTICLES_NEWS_FIELD_TITLE_DESC" class="btn-group btn-group-yesno" default="0" filter="integer">
+		  <option value="1">JYES</option>
+		  <option value="0">JNO</option>
+		</field>
+		<field name="link_titles" type="list" label="MOD_ARTICLES_NEWS_FIELD_LINKTITLE_LABEL" description="MOD_ARTICLES_NEWS_FIELD_LINKTITLE_DESC" default="" filter="integer" class="chzn-color" showon="item_title:1">
+		  <option value="">JGLOBAL_USE_GLOBAL</option>
+		  <option value="0">JNO</option>
+		  <option value="1">JYES</option>
+		</field>
+		<field name="item_heading" type="list" label="MOD_ARTICLES_NEWS_TITLE_HEADING" description="MOD_ARTICLES_NEWS_TITLE_HEADING_DESCRIPTION" default="h4" showon="item_title:1" validate="options">
+		  <option value="h1">JH1</option>
+		  <option value="h2">JH2</option>
+		  <option value="h3">JH3</option>
+		  <option value="h4">JH4</option>
+		  <option value="h5">JH5</option>
+		</field>
+		<field name="triggerevents" type="radio" label="MOD_ARTICLES_NEWS_FIELD_TRIGGEREVENTS_LABEL"  class="btn-group btn-group-yesno" default="1" filter="integer">
+		  <option value="1">JYES</option>
+		  <option value="0">JNO</option>
+		</field>
+		<field name="show_tags" type="radio" label="Show Tag"  description="Show Tag" default="0" filter="integer" class="btn-group btn-group-yesno">
+		  <option value="1">JYES</option>
+		  <option value="0">JNO</option>
+		</field>
+		<field	name="displayDate"	type="radio" label="Show Date Created" description="Show Date" default="0"	filter="integer" class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field name="show_introtext" type="radio" label="MOD_ARTICLES_CATEGORY_FIELD_SHOWINTROTEXT_LABEL" description="MOD_ARTICLES_CATEGORY_FIELD_SHOWINTROTEXT_DESC" default="0" filter="integer" class="btn-group btn-group-yesno">
+		  <option value="1">JSHOW</option>
+		  <option value="0">JHIDE</option>
+		</field>
+		<field name="introtext_limit" type="number" label="MOD_ARTICLES_CATEGORY_FIELD_INTROTEXTLIMIT_LABEL" description="MOD_ARTICLES_CATEGORY_FIELD_INTROTEXTLIMIT_DESC" default="100" filter="integer" showon="show_introtext:1" />
+		<field name="strip_tags" type="radio" label="Strip Html tags from Content" description="" default="1" filter="integer" class="btn-group btn-group-yesno">
+		  <option value="1">JYES</option>
+		  <option value="2">JNO</option>
+		</field>
+		
+		<field name="readmore" type="radio" label="MOD_ARTICLES_NEWS_FIELD_READMORE_LABEL" description="MOD_ARTICLES_NEWS_FIELD_READMORE_DESC" class="btn-group btn-group-yesno" default="0" filter="integer">
+		  <option value="1">JSHOW</option>
+		  <option value="0">JHIDE</option>
+		</field>
+		<field name="readmoretext" type="text" label="Read More Text" default="Read more" class="input-large" />
+		<field name="readmore_class" type="text" label="Read More CSS Class" default="btn btn-sm btn-primary text-white" class="input-large" />
+
+		
+		
+		<field name="count" type="number" label="MOD_ARTICLES_NEWS_FIELD_ITEMS_LABEL" description="MOD_ARTICLES_NEWS_FIELD_ITEMS_DESC" default="5" filter="integer" />
+		<field name="show_featured" type="list" label="MOD_ARTICLES_NEWS_FIELD_FEATURED_LABEL" description="MOD_ARTICLES_NEWS_FIELD_FEATURED_DESC" default="" filter="integer">
+		  <option value="">JSHOW</option>
+		  <option value="0">JHIDE</option>
+		  <option value="1">MOD_ARTICLES_NEWS_VALUE_ONLY_SHOW_FEATURED</option>
+		</field>
+		<field name="ordering" type="list" label="MOD_ARTICLES_NEWS_FIELD_ORDERING_LABEL" description="MOD_ARTICLES_NEWS_FIELD_ORDERING_DESC" default="a.publish_up" validate="options">
+		  <option value="a.publish_up">MOD_ARTICLES_NEWS_FIELD_ORDERING_PUBLISHED_DATE</option>
+		  <option value="a.created">MOD_ARTICLES_NEWS_FIELD_ORDERING_CREATED_DATE</option>
+		  <option value="a.modified">MOD_ARTICLES_NEWS_FIELD_ORDERING_MODIFIED_DATE</option>
+		  <option value="a.ordering">MOD_ARTICLES_NEWS_FIELD_ORDERING_ORDERING</option>
+		  <option value="a.hits">JGLOBAL_HITS</option>
+		  <option value="rand()">MOD_ARTICLES_NEWS_FIELD_ORDERING_RANDOM</option>
+		</field>
+		<field name="direction" type="list" label="JGLOBAL_ORDER_DIRECTION_LABEL" description="JGLOBAL_ORDER_DIRECTION_DESC" default="1" filter="integer" showon="ordering:a.publish_up,a.created,a.modified,a.ordering,a.hits">
+		  <option value="0">JGLOBAL_ORDER_ASCENDING</option>
+		  <option value="1">JGLOBAL_ORDER_DESCENDING</option>
+		</field>
+
+	  </fieldset>
+	  
+	  <fieldset name="els" label="Slideshow Setup">
+                <field name="ratio" type="text" label="MOD_UK_SLIDESHOW_RATIO" default="16:9" class="input-small" />
+                
+                <field name="dotnav" type="list" label="MOD_UK_SLIDESHOW_DOTNAV" default="1" class="btn-group">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="dotnav_pos" type="list" label="DotNav Position" default="1" class="btn-group">
+                    <option value="1">Inside</option>
+                    <option value="0">Outside</option>
+                </field>
+				
+                <field name="slidenav" type="list" label="MOD_UK_SLIDESHOW_SLIDENAV" default="1" class="btn-group">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="animation" type="list" label="MOD_UK_SLIDESHOW_ANIMATION" default="slide">
+                    <option value="slide">MOD_UK_SLIDESHOW_ANIMATION_SLIDE</option>
+                    <option value="fade">MOD_UK_SLIDESHOW_ANIMATION_FADE</option>
+                    <option value="scale">MOD_UK_SLIDESHOW_ANIMATION_SCALE</option>
+                    <option value="pull">MOD_UK_SLIDESHOW_ANIMATION_PULL</option>
+                    <option value="push">MOD_UK_SLIDESHOW_ANIMATION_PUSH</option>
+                </field>
+				
+                <field name="velocity" type="text" label="MOD_UK_SLIDESHOW_VELOCITY" default="1" class="input-small" />
+                <field name="autoplay" type="list" label="MOD_UK_SLIDESHOW_AUTOPLAY" default="0" class="btn-group">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="autoplay_interval" type="text" label="MOD_UK_SLIDESHOW_AUTOPLAY_INTERVAL" default="7000" class="input-small" />
+                <field name="finite" type="list" label="Endless Sliding" default="0" class="btn-group">
+                    <option value="false">JYES</option>
+                    <option value="true">JNO</option>
+                </field>
+                <field name="pause_on_hover" type="list" label="MOD_UK_SLIDESHOW_PAUSE_ON_HOVER" default="0" class="btn-group">
+                    <option value="true">JYES</option>
+                    <option value="false">JNO</option>
+                </field>
+
+	  </fieldset>
+	  <fieldset name="els1" label="Content Setup">
+		<field name="content_pos" type="list" label="Content Position" default="uk-position-center">
+			<option value="uk-position-top-center">Top Center</option>
+			<option value="uk-position-top-left">Top Left</option>
+			<option value="uk-position-top-right">Top Right</option>
+			<option value="uk-position-center">Center Center</option>
+			<option value="uk-position-center-left">Center Left</option>
+			<option value="uk-position-center-right">Center Right</option>
+			<option value="uk-position-bottom-center">Bottom Center</option>
+			<option value="uk-position-bottom-left">Bottom Left</option>
+			<option value="uk-position-bottom-right">Bottom Right</option>
+		</field>
+	  
+		<field name="content_bg" type="color" label="Content Background" format="rgba" />
+		<field name="content_color" type="color" label="Content Color" format="rgba" />
+		<field name="content_width" type="text" label="Content Width" default="50%" class="input-large" />
+		<field name="content_margin" type="text" description="Top Right Bottom Left in PX or %" label="Content Margin" default="20px 20px 20px 20px" class="input-large" />
+		<field name="content_text_align" type="list" label="Text Alignment" default="text-left" >
+			<option value="text-left">Left</option>
+			<option value="text-right">Right</option>
+			<option value="text-center">Center</option>
+		</field>
+
+
+
+	  </fieldset>
+	  
+	  <fieldset name="advanced">
+		<field name="moduleclass_sfx" type="textarea" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"  rows="1" />
+		<field name="cache" type="list" label="COM_MODULES_FIELD_CACHING_LABEL"  default="1" filter="integer">
+		  <option value="1">JGLOBAL_USE_GLOBAL</option>
+		  <option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+		</field>
+		<field name="cache_time" type="number" label="COM_MODULES_FIELD_CACHE_TIME_LABEL"  default="900" filter="integer" />
+		<field name="cachemode" type="hidden" default="itemid">
+		  <option value="itemid" />
+		</field>
+	  </fieldset>
+	</fields>
+
+	</config>
+</extension>

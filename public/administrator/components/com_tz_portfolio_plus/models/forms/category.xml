@@ -1,0 +1,739 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<field
+		name="id"
+		type="text"
+		default="0"
+		label="JGLOBAL_FIELD_ID_LABEL"
+		description ="JGLOBAL_FIELD_ID_DESC"
+		class="readonly"
+		readonly="true"/>
+
+	<field
+		name="asset_id"
+		type="hidden"
+		filter="unset"/>
+
+	<field
+		name="parent_id"
+		type="categoryedit"
+		parent="true"
+		label="COM_CATEGORIES_FIELD_PARENT_LABEL"
+		description="COM_TZ_PORTFOLIO_PLUS_FIELD_PARENT_DESC"
+		class="inputbox"/>
+
+	<field
+		name="lft"
+		type="hidden"
+		filter="unset"/>
+
+	<field
+		name="rgt"
+		type="hidden"
+		filter="unset"/>
+
+	<field
+		name="level"
+		type="hidden"
+		filter="unset"/>
+
+	<field
+		name="path"
+		type="text"
+		label="CATEGORIES_PATH_LABEL"
+		description="CATEGORIES_PATH_DESC"
+		class="readonly"
+		size="40"
+		readonly="true"/>
+
+	<field
+		name="extension"
+		type="hidden"/>
+
+	<field
+		name="title"
+		type="text"
+		label="JGLOBAL_TITLE"
+		description="JFIELD_TITLE_DESC"
+		class="inputbox"
+		size="40"
+		required="true"/>
+
+	<field
+		name="alias"
+		type="text"
+		label="JFIELD_ALIAS_LABEL"
+		description="JFIELD_ALIAS_DESC"
+		class="inputbox"
+		size="40"/>
+
+	<field
+		name="note"
+		type="text"
+		label="JFIELD_NOTE_LABEL"
+		description="JFIELD_NOTE_DESC"
+		class="inputbox"
+		size="40"/>
+
+	<field type="fieldgroups" name="groupid"
+			label="COM_TZ_PORTFOLIO_PLUS_GROUP_FIELD">
+		<option value="">COM_TZ_PORTFOLIO_PLUS_OPTION_SELECT_FIELDS_GROUP</option>
+	</field>
+	<field type="media" name="images" label="COM_TZ_PORTFOLIO_PLUS_FORM_IMAGE"/>
+	<field type="text" name="tz_image_url" label="COM_TZ_PORTFOLIO_PLUS_FORM_URL_IMAGE"/>
+
+    <field type="tztemplates" name="template_id"
+           label="COM_TZ_PORTFOLIO_PLUS_TEMPLATE_LABEL">
+        <option value="0">JOPTION_USE_DEFAULT</option>
+    </field>
+
+	<field
+		name="description"
+		type="editor"
+		label="JGLOBAL_DESCRIPTION"
+		description="COM_TZ_PORTFOLIO_PLUS_CATEGORY_DESCRIPTION_DESC"
+		class="inputbox"
+		filter="JComponentHelper::filterText"
+		buttons="true"
+		hide="readmore,pagebreak"/>
+
+	<field
+		name="published"
+		type="list"
+		class="inputbox"
+		default="1"
+		size="1"
+		label="JSTATUS"
+		description="JFIELD_PUBLISHED_DESC">
+		<option
+			value="1">
+			JPUBLISHED</option>
+		<option
+			value="0">
+			JUNPUBLISHED</option>
+		<option
+			value="2">
+			JARCHIVED</option>
+		<option
+			value="-2">
+			JTRASHED</option>
+	</field>
+	<field
+		name="buttonspacer"
+		label="JGLOBAL_ACTION_PERMISSIONS_LABEL"
+		description="JGLOBAL_ACTION_PERMISSIONS_DESCRIPTION"
+		type="spacer" />
+	<field
+		name="checked_out"
+		type="hidden"
+		filter="unset"/>
+
+	<field
+		name="checked_out_time"
+		type="hidden"
+		filter="unset"/>
+
+	<field
+		name="access"
+		type="accesslevel"
+		label="JFIELD_ACCESS_LABEL"
+		description="JFIELD_ACCESS_DESC"
+		class="inputbox"/>
+
+	<field
+		name="metadesc"
+		type="textarea"
+		label="JFIELD_META_DESCRIPTION_LABEL"
+		description="JFIELD_META_DESCRIPTION_DESC"
+		rows="3"
+		cols="40"/>
+
+	<field
+		name="metakey"
+		type="textarea"
+		label="JFIELD_META_KEYWORDS_LABEL"
+		description="JFIELD_META_KEYWORDS_DESC"
+		rows="3"
+		cols="40"/>
+
+	<field
+		name="created_user_id"
+		type="user"
+		label="JGLOBAL_FIELD_CREATED_BY_LABEL"
+		desc="JGLOBAL_FIELD_CREATED_BY_DESC"
+		/>
+
+	<field
+		name="created_time"
+		type="text"
+		label="JGLOBAL_CREATED_DATE"
+		class="readonly"
+		filter="unset"
+		readonly="true" />
+
+	<field
+		name="modified_user_id"
+		type="user"
+		label="JGLOBAL_FIELD_MODIFIED_BY_LABEL"
+		class="readonly"
+		readonly="true"
+		filter="unset"/>
+
+	<field
+		name="modified_time"
+		type="text"
+		label="JGLOBAL_FIELD_MODIFIED_LABEL"
+		class="readonly"
+		filter="unset"
+		readonly="true" />
+
+	<field
+		name="language"
+		type="contentlanguage"
+		label="JFIELD_LANGUAGE_LABEL"
+		description="COM_TZ_PORTFOLIO_PLUS_CATEGORY_FIELD_LANGUAGE_DESC"
+		class="inputbox">
+		<option value="*">JALL</option>
+	</field>
+
+	<field
+		id="rules"
+		name="rules"
+		type="rules"
+		label="JFIELD_RULES_LABEL"
+		translate_label="false"
+		filter="rules"
+		validate="rules"
+		class="inputbox"
+		component="com_tz_portfolio_plus"
+		section="category"/>
+
+	<fields name="params">
+		<fieldset name="basic">
+			<field type="tzcategory" name="inheritFrom"
+				   parent="true"
+				   extension="com_tz_portfolio_plus"
+				   label="COM_TZ_PORTFOLIO_PLUS_INHERIT_PARAMETER_CATEGORY_LABEL"
+				   description="COM_TZ_PORTFOLIO_PLUS_INHERIT_PARAMETER_CATEGORY_DESC"
+				   class="inputbox">
+				<option value="0">COM_TZ_PORTFOLIO_PLUS_OPTION_NONE</option>
+			</field>
+		</fieldset>
+
+		<!-- Start article options in category listings -->
+		<fieldset name="article_category_listing"
+				  label="COM_TZ_PORTFOLIO_PLUS_SPACER_ARTICLE_OPTIONS_IN_CATEGORY_LISTINGS">
+			<field name="show_cat_title" type="radio"
+				   class="switcher btn-group"
+				   default="1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="JGLOBAL_SHOW_TITLE_LABEL"
+				   description="JGLOBAL_SHOW_TITLE_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="cat_link_titles"
+				   type="radio" class="switcher btn-group"
+				   default="1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="JGLOBAL_LINKED_TITLES_LABEL"
+				   description="JGLOBAL_LINKED_TITLES_DESC">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field name="show_cat_intro" type="radio"
+				   class="switcher btn-group"
+				   default="1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="JGLOBAL_SHOW_INTRO_LABEL"
+				   description="JGLOBAL_SHOW_INTRO_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="show_cat_category" type="radio"
+				   class="switcher btn-group"
+				   default="0"
+				   layout="joomla.form.field.radio.switcher"
+				   label="JGLOBAL_SHOW_CATEGORY_LABEL"
+				   description="JGLOBAL_SHOW_CATEGORY_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="cat_link_category" type="radio"
+				   class="switcher btn-group"
+				   showon="show_cat_category:1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="JGLOBAL_LINK_CATEGORY_LABEL"
+				   description="JGLOBAL_LINK_CATEGORY_DESC"
+				   default="1">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field name="show_cat_parent_category"
+				   type="radio" class="switcher btn-group"
+				   default="0"
+				   layout="joomla.form.field.radio.switcher"
+				   label="JGLOBAL_SHOW_PARENT_CATEGORY_LABEL"
+				   description="JGLOBAL_SHOW_PARENT_CATEGORY_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="cat_link_parent_category"
+				   type="radio" class="switcher btn-group"
+				   default="1"
+				   showon="show_cat_parent_category:1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="JGLOBAL_LINK_PARENT_CATEGORY_LABEL"
+				   description="JGLOBAL_LINK_PARENT_CATEGORY_DESC">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field name="spacer_hr-1" type="spacer" hr="true"/>
+
+			<field name="show_cat_author" type="radio"
+				   class="switcher btn-group"
+				   default="0"
+				   layout="joomla.form.field.radio.switcher"
+				   label="JGLOBAL_SHOW_AUTHOR_LABEL"
+				   description="JGLOBAL_SHOW_AUTHOR_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="cat_link_author"
+				   type="radio" class="switcher btn-group"
+				   default="1"
+				   showon="show_cat_author:1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="JGLOBAL_LINK_AUTHOR_LABEL"
+				   description="COM_TZ_PORTFOLIO_PLUS_LINK_AUTHOR_DESC">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field name="show_cat_create_date"
+				   type="radio" class="switcher btn-group"
+				   default="0"
+				   layout="joomla.form.field.radio.switcher"
+				   label="JGLOBAL_SHOW_CREATE_DATE_LABEL"
+				   description="JGLOBAL_SHOW_CREATE_DATE_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="show_cat_modify_date"
+				   type="radio" class="switcher btn-group"
+				   default="0"
+				   layout="joomla.form.field.radio.switcher"
+				   label="JGLOBAL_SHOW_MODIFY_DATE_LABEL"
+				   description="JGLOBAL_SHOW_MODIFY_DATE_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="show_cat_publish_date"
+				   type="radio" class="switcher btn-group"
+				   default="0"
+				   layout="joomla.form.field.radio.switcher"
+				   label="JGLOBAL_SHOW_PUBLISH_DATE_LABEL"
+				   description="JGLOBAL_SHOW_PUBLISH_DATE_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="show_cat_readmore"
+				   type="radio" class="switcher btn-group"
+				   default="1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="JGLOBAL_SHOW_READMORE_LABEL"
+				   description="JGLOBAL_SHOW_READMORE_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="show_cat_hits"
+				   type="radio" class="switcher btn-group"
+				   default="0"
+				   layout="joomla.form.field.radio.switcher"
+				   label="JGLOBAL_SHOW_HITS_LABEL"
+				   description="JGLOBAL_SHOW_HITS_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="show_cat_tags"
+				   type="radio"
+				   class="switcher btn-group"
+				   default="0"
+				   layout="joomla.form.field.radio.switcher"
+				   label="COM_TZ_PORTFOLIO_PLUS_SHOW_TAGS"
+				   description="COM_TZ_PORTFOLIO_PLUS_SHOW_TAGS_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="cat_link_tag" type="radio"
+				   class="switcher btn-group"
+				   showon="show_cat_tags:1"
+				   default="1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="COM_TZ_PORTFOLIO_PLUS_LINK_TAG_LABEL"
+				   description="COM_TZ_PORTFOLIO_PLUS_LINK_TAG_DESC">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field name="spacer_hr-2" type="spacer" hr="true" />
+			<field name="show_cat_icons"
+				   type="radio" class="switcher btn-group"
+				   default="1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="COM_TZ_PORTFOLIO_PLUS_SHOW_ICONS_LABEL"
+				   description="COM_TZ_PORTFOLIO_PLUS_SHOW_ICONS_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="show_cat_print_icon"
+				   type="radio" class="switcher btn-group"
+				   default="0"
+				   layout="joomla.form.field.radio.switcher"
+				   label="COM_TZ_PORTFOLIO_PLUS_SHOW_PRINT_LABEL"
+				   description="COM_TZ_PORTFOLIO_PLUS_SHOW_PRINT_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="show_cat_email_icon"
+				   type="radio" class="switcher btn-group"
+				   default="0"
+				   layout="joomla.form.field.radio.switcher"
+				   label="COM_TZ_PORTFOLIO_PLUS_SHOW_EMAIL_LABEL"
+				   description="COM_TZ_PORTFOLIO_PLUS_SHOW_EMAIL_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="show_cat_field_image"
+				   type="list"
+				   label="COM_TZ_PORTFOLIO_PLUS_SHOW_FIELD_IMAGE_LABEL"
+				   description="COM_TZ_PORTFOLIO_PLUS_SHOW_FIELD_IMAGE_DESC">
+				<option value="">COM_TZ_PORTFOLIO_PLUS_OPTION_INHERIT_FROM_FIELD</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+		</fieldset>
+		<!-- End article options in category listings -->
+
+		<!-- Start article options -->
+		<fieldset name="article" label="COM_TZ_PORTFOLIO_PLUS_ATTRIBS_FIELDSET_LABEL">
+
+			<!-- Start article options-->
+			<field name="spacer_article_basic_name" type="spacer"
+				   class="alert alert-warning btn-block"
+				   label="COM_TZ_PORTFOLIO_PLUS_BASIC_TITLE"/>
+			<field name="show_title" type="radio"
+				   class="switcher btn-group"
+				   default="1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="JGLOBAL_SHOW_TITLE_LABEL"
+				   description="JGLOBAL_SHOW_TITLE_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="show_intro" type="radio"
+				   class="switcher btn-group"
+				   default="1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="JGLOBAL_SHOW_INTRO_LABEL"
+				   description="JGLOBAL_SHOW_INTRO_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="show_category" type="radio"
+				   default="1" class="switcher btn-group"
+				   layout="joomla.form.field.radio.switcher"
+				   label="JGLOBAL_SHOW_CATEGORY_LABEL"
+				   description="JGLOBAL_SHOW_CATEGORY_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="link_category" type="radio"
+				   default="1" class="switcher btn-group"
+				   showon="show_category:1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="JGLOBAL_LINK_CATEGORY_LABEL"
+				   description="JGLOBAL_LINK_CATEGORY_DESC">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field name="show_parent_category"
+				   type="radio" class="switcher btn-group"
+				   default="1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="JGLOBAL_SHOW_PARENT_CATEGORY_LABEL"
+				   description="JGLOBAL_SHOW_PARENT_CATEGORY_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="link_parent_category"
+				   type="radio" class="switcher btn-group"
+				   default="1"
+				   showon="show_parent_category:1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="JGLOBAL_LINK_PARENT_CATEGORY_LABEL"
+				   description="JGLOBAL_LINK_PARENT_CATEGORY_DESC">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field type="spacer" name="spacer_hr-3" hr="true"/>
+
+			<field name="show_author" type="radio"
+				   class="switcher btn-group"
+				   default="1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="JGLOBAL_SHOW_AUTHOR_LABEL"
+				   description="JGLOBAL_SHOW_AUTHOR_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="link_author"
+				   type="radio" class="switcher btn-group"
+				   default="1"
+				   showon="show_author:1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="JGLOBAL_LINK_AUTHOR_LABEL"
+				   description="JGLOBAL_LINK_AUTHOR_DESC">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field name="show_create_date"
+				   type="radio" class="switcher btn-group"
+				   default="1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="JGLOBAL_SHOW_CREATE_DATE_LABEL"
+				   description="JGLOBAL_SHOW_CREATE_DATE_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="show_modify_date"
+				   type="radio" class="switcher btn-group"
+				   default="1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="JGLOBAL_SHOW_MODIFY_DATE_LABEL"
+				   description="JGLOBAL_SHOW_MODIFY_DATE_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="show_publish_date"
+				   type="radio" class="switcher btn-group"
+				   default="1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="JGLOBAL_SHOW_PUBLISH_DATE_LABEL"
+				   description="JGLOBAL_SHOW_PUBLISH_DATE_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="show_hits"
+				   type="radio" class="switcher btn-group"
+				   default="1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="COM_TZ_PORTFOLIO_PLUS_SHOW_HITS_LABEL"
+				   description="COM_TZ_PORTFOLIO_PLUS_SHOW_HITS_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="show_tags"
+				   type="radio"
+				   class="switcher btn-group"
+				   default="1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="COM_TZ_PORTFOLIO_PLUS_SHOW_TAGS"
+				   description="COM_TZ_PORTFOLIO_PLUS_SHOW_TAGS_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="link_tag" type="radio"
+				   class="switcher btn-group"
+				   showon="show_tags:1"
+				   default="1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="COM_TZ_PORTFOLIO_PLUS_LINK_TAG_LABEL"
+				   description="COM_TZ_PORTFOLIO_PLUS_LINK_TAG_DESC">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+			<field type="spacer" name="spacer_hr-4" hr="true" />
+			<field name="show_icons"
+				   type="radio" class="switcher btn-group"
+				   default="1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="COM_TZ_PORTFOLIO_PLUS_SHOW_ICONS_LABEL"
+				   description="COM_TZ_PORTFOLIO_PLUS_SHOW_ICONS_DESC">
+				<option	value="0">JHIDE</option>
+				<option	value="1">JSHOW</option>
+			</field>
+			<field name="show_print_icon"
+				   type="radio" class="switcher btn-group"
+				   default="1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="COM_TZ_PORTFOLIO_PLUS_SHOW_PRINT_LABEL"
+				   description="COM_TZ_PORTFOLIO_PLUS_SHOW_PRINT_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="show_email_icon"
+				   type="radio" class="switcher btn-group"
+				   default="1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="COM_TZ_PORTFOLIO_PLUS_SHOW_EMAIL_LABEL"
+				   description="COM_TZ_PORTFOLIO_PLUS_SHOW_EMAIL_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="show_noauth"
+				   type="radio" class="switcher btn-group"
+				   default="0"
+				   layout="joomla.form.field.radio.switcher"
+				   label="JGLOBAL_SHOW_UNAUTH_LINKS_LABEL"
+				   description="JGLOBAL_SHOW_UNAUTH_LINKS_DESC">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			<field name="show_field_image"
+				   type="list"
+				   label="COM_TZ_PORTFOLIO_PLUS_SHOW_FIELD_IMAGE_LABEL"
+				   description="COM_TZ_PORTFOLIO_PLUS_SHOW_FIELD_IMAGE_DESC">
+				<option value="">COM_TZ_PORTFOLIO_PLUS_OPTION_INHERIT_FROM_FIELD</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<!-- End article options-->
+
+			<!-- Start about author options -->
+			<field type="spacer" name="spacer_author_hr" hr="true"/>
+			<field type="spacer" name="spacer_author_name"
+				   class="alert alert-warning btn-block"
+				   label="COM_TZ_PORTFOLIO_SPACER_ABOUT_AUTHOR_OPTIONS"/>
+			<field type="radio" name="show_about_author"
+				   default="1" class="switcher btn-group"
+				   layout="joomla.form.field.radio.switcher"
+				   label="COM_TZ_PORTFOLIO_PLUS_SHOW_ABOUT_AUTHOR_LABEL"
+				   description="COM_TZ_PORTFOLIO_PLUS_SHOW_ABOUT_AUTHOR_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="show_gender_user"
+				   type="radio"
+				   class="switcher btn-group"
+				   default="1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="COM_TZ_PORTFOLIO_PLUS_SHOW_AUTHOR_GENDER_LABEL"
+				   description="COM_TZ_PORTFOLIO_PLUS_SHOW_AUTHOR_GENDER_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="show_email_user"
+				   type="radio"
+				   class="switcher btn-group"
+				   default="1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="COM_TZ_PORTFOLIO_PLUS_SHOW_AUTHOR_EMAIL_LABEL"
+				   description="COM_TZ_PORTFOLIO_PLUS_SHOW_AUTHOR_EMAIL_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="show_url_user"
+				   type="radio"
+				   class="switcher btn-group"
+				   default="1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="COM_TZ_PORTFOLIO_PLUS_SHOW_AUTHOR_URL_LABEL"
+				   description="COM_TZ_PORTFOLIO_PLUS_SHOW_AUTHOR_URL_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="show_description_user"
+				   type="radio"
+				   class="switcher btn-group"
+				   default="1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="COM_TZ_PORTFOLIO_PLUS_SHOW_AUTHOR_DESCRIPTION_LABEL"
+				   description="COM_TZ_PORTFOLIO_PLUS_SHOW_AUTHOR_DESCRIPTION_DESC">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<!-- End about author options -->
+
+			<!-- Start Related Options -->
+			<field type="spacer" name="spacer_global_related_hr" hr="true"/>
+			<field type="spacer" name="spacer_global_related"
+				   class="alert alert-warning btn-block"
+				   label="COM_TZ_PORTFOLIO_PLUS_RELATED_ARTICLE"/>
+			<field name="show_related_article" type="radio"
+				   class="switcher btn-group"
+				   default="1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="COM_TZ_PORTFOLIO_PLUS_SHOW_RELATED_ARTICLE">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field type="list" name="related_article_by"
+				   default="tag"
+				   showon="show_related_article:1"
+				   label="COM_TZ_PORTFOLIO_PLUS_RELATED_ARTICLE_BY"
+				   description="COM_TZ_PORTFOLIO_PLUS_RELATED_ARTICLE_BY_DESC">
+				<option value="category">JCATEGORY</option>
+				<option value="tag">COM_TZ_PORTFOLIO_PLUS_TAG</option>
+			</field>
+			<field name="related_limit" type="text" default="5"
+				   showon="show_related_article:1"
+				   label="COM_TZ_PORTFOLIO_PLUS_LIMIT_RELATED"/>
+			<field name="show_related_heading" type="radio"
+				   class="switcher btn-group"
+				   default="1"
+				   layout="joomla.form.field.radio.switcher"
+				   showon="show_related_article:1"
+				   label="COM_TZ_PORTFOLIO_PLUS_SHOW_RELATED_HEADING">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="related_heading" type="text"
+				   showon="show_related_article:1"
+				   label="COM_TZ_PORTFOLIO_PLUS_RELATED_HEADING"/>
+			<field type="radio" name="show_related_title"
+				   class="switcher btn-group" default="1"
+				   showon="show_related_article:1"
+				   layout="joomla.form.field.radio.switcher"
+				   label="COM_TZ_PORTFOLIO_PLUS_SHOW_RELATED_TITLE_LABEL">
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="show_related_featured" type="list"
+				   default="1"
+				   showon="show_related_article:1"
+				   label="COM_TZ_PORTFOLIO_PLUS_SHOW_RELATED_FEATURED">
+				<option value="1">JSHOW</option>
+				<option value="0">JHIDE</option>
+				<option value="2">COM_TZ_PORTFOLIO_PLUS_RELATED_ONLY_SHOW_FEATURED</option>
+			</field>
+			<field name="related_orderby" type="list"
+				   default="rdate"
+				   showon="show_related_article:1"
+				   label="COM_TZ_PORTFOLIO_PLUS_RELATED_ORDERBY">
+				<option value="o">COM_TZ_PORTFOLIO_PLUS_ORIGINAL</option>
+				<option value="rdate">COM_TZ_PORTFOLIO_PLUS_MOST_RECENT</option>
+				<option value="date">COM_TZ_PORTFOLIO_PLUS_MOST_OLDEST</option>
+				<option value="hits">JGLOBAL_MOST_HITS</option>
+				<option value="rhits">JGLOBAL_LEAST_HITS</option>
+			</field>
+			<!-- End Related Options -->
+		</fieldset>
+		<!-- End article view options -->
+	</fields>
+
+	<fields name="metadata">
+		<field type="text" name="author"
+			   size="30"
+			   label="JAUTHOR"
+			   description="JFIELD_METADATA_AUTHOR_DESC"/>
+		<field type="list" name="robots"
+			label="JFIELD_METADATA_ROBOTS_LABEL"
+			description="JFIELD_METADATA_ROBOTS_DESC">
+			<option value="">JGLOBAL_USE_GLOBAL</option>
+			<option value="index, follow">JGLOBAL_INDEX_FOLLOW</option>
+			<option value="noindex, follow">JGLOBAL_NOINDEX_FOLLOW</option>
+			<option value="index, nofollow">JGLOBAL_INDEX_NOFOLLOW</option>
+			<option value="noindex, nofollow">JGLOBAL_NOINDEX_NOFOLLOW</option>
+		</field>
+	</fields>
+</form>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_PHOCAMAPS_MAPS_LAYOUT">
+		<message>
+			<![CDATA[COM_PHOCAMAPS_MAPS_LAYOUT_DESC]]>
+		</message>
+	</layout>
+	
+	<name>COM_PHOCAMAPS_MAPS_LAYOUT</name>
+		<description>COM_PHOCAMAPS_MAPS_LAYOUT_DESC</description>
+	<fields name="request">
+		<fieldset name="request" addfieldpath="/administrator/components/com_phocamaps/models/fields">
+
+			<field name="id" class="form-select" type="phocamapsmap"  default="0" label="COM_PHOCAMAPS_SELECT_MAP" description="COM_PHOCAMAPS_SELECT_MAP" required="true" />
+		</fieldset>
+	</fields>
+
+</metadata>

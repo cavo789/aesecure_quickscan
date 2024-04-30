@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <!-- Start parameters for field's create or edit view -->
+    <fields name="params">
+        <fieldset name="basic">
+            <field type="list" name="number_columns"
+                   default="0"
+                   label="PLG_EXTRAFIELDS_CHECKBOXES_NUMBER_COLUMNS_LABEL">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">PLG_EXTRAFIELDS_CHECKBOXES_NO_COLUMN</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </field>
+        </fieldset>
+    </fields>
+    <!-- End parameters for field's create or edit view -->
+</form>

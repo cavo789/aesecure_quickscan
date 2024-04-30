@@ -1,0 +1,73 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "com_installer",
+  "version": "4.0.0",
+  "description": "Joomla CMS",
+  "license": "GPL-2.0-or-later",
+  "assets": [
+    {
+      "name": "com_installer.installer",
+      "type": "preset",
+      "dependencies": [
+        "com_installer.installer#style",
+        "com_installer.installer#script"
+      ]
+    },
+    {
+      "name": "com_installer.changelog.es5",
+      "type": "script",
+      "uri": "com_installer/changelog-es5.min.js",
+      "dependencies": [
+        "core"
+      ],
+      "attributes": {
+        "nomodule": true,
+        "defer": true
+      },
+      "version": "3b526417369556ca05748085e8f55140258f7ff5"
+    },
+    {
+      "name": "com_installer.changelog",
+      "type": "script",
+      "uri": "com_installer/changelog.min.js",
+      "dependencies": [
+        "com_installer.changelog.es5"
+      ],
+      "attributes": {
+        "type": "module"
+      },
+      "version": "ebc518f8a9967cca025c3b616be88b68b15706d5"
+    },
+    {
+      "name": "com_installer.installer",
+      "type": "script",
+      "uri": "com_installer/installer.min.js",
+      "dependencies": [
+        "com_installer.installer.es5"
+      ],
+      "attributes": {
+        "type": "module"
+      },
+      "version": "dee1dafd74cd01813ff8a5d76abd5bb3f345a6fd"
+    },
+    {
+      "name": "com_installer.installer.es5",
+      "type": "script",
+      "uri": "com_installer/installer-es5.min.js",
+      "dependencies": [
+        "core"
+      ],
+      "attributes": {
+        "nomodule": true,
+        "defer": true
+      },
+      "version": "3b1a6ae274527b143b293bd3f3d869179599a5e9"
+    },
+    {
+      "name": "com_installer.installer",
+      "type": "style",
+      "uri": "com_installer/installer.min.css",
+      "version": "2d4501f37951ac86ba859f1d2f752309dd172850"
+    }
+  ]
+}

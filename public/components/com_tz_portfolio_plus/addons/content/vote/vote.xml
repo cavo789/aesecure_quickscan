@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.1" type="tz_portfolio_plus-plugin" group="content" method="upgrade">
+	<name>plg_content_vote</name>
+	<author>DuongTVTemPlaza</author>
+	<creationDate>Aug, 09th 2012</creationDate>
+	<copyright>Copyright (C) 2015 Open Source Matters. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>support@templaza.com</authorEmail>
+	<authorUrl>www.templaza.com</authorUrl>
+	<version>2.6.0</version>
+	<description>PLG_CONTENT_VOTE_XML_DESCRIPTION</description>
+
+	<files>
+		<filename plugin="vote">vote.php</filename>
+		<folder>admin</folder>
+		<folder>assets</folder>
+		<folder>controllers</folder>
+		<folder>css</folder>
+		<folder>helpers</folder>
+		<folder>images</folder>
+		<folder>js</folder>
+		<folder>language</folder>
+		<folder>models</folder>
+		<folder>modules</folder>
+		<folder>views</folder>
+		<filename>index.html</filename>
+		<filename>controller.php</filename>
+	</files>
+
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field type="spacer" name="spacer_notification_name"
+					   class="alert alert-warning btn-block"
+					   label="PLG_CONTENT_VOTE_SPACER_NOTIFICATION"/>
+				<field type="list" name="ct_vote_notice_layout"
+					   default="growl"
+					   label="JFIELD_ALT_LAYOUT_LABEL"
+					   description="PLG_CONTENT_VOTE_NOTIFICATION_LAYOUT_DESC">
+					<option value="growl">PLG_CONTENT_VOTE_NOTIFICATION_GROWL</option>
+					<option value="attached">PLG_CONTENT_VOTE_NOTIFICATION_ATTACHED</option>
+					<option value="bar">PLG_CONTENT_VOTE_NOTIFICATION_BAR</option>
+					<option value="other">PLG_CONTENT_VOTE_NOTIFICATION_OTHER</option>
+				</field>
+				<field type="groupedlist" name="ct_vote_notice_effect"
+					   default="scale"
+					   label="PLG_CONTENT_VOTE_NOTIFICATION_EFFECT_LABEL">
+					<group label="PLG_CONTENT_VOTE_NOTIFICATION_GROWL">
+						<option value="scale"></option>
+						<option value="slide"></option>
+						<option value="genie"></option>
+						<option value="jelly"></option>
+					</group>
+					<group label="PLG_CONTENT_VOTE_NOTIFICATION_BAR">
+						<option value="flip"></option>
+						<option value="bouncyflip"></option>
+					</group>
+					<group label="PLG_CONTENT_VOTE_NOTIFICATION_OTHER">
+						<option value="boxspinner"></option>
+						<option value="cornerexpand"></option>
+						<option value="loadingcircle"></option>
+						<option value="thumbslider"></option>
+					</group>
+				</field>
+				<field type="number" name="ct_vote_notice_ttl"
+					   min="0" default="3000"
+					   label="PLG_CONTENT_VOTE_TIME_DISMISS_LABEL"
+					   description="PLG_CONTENT_VOTE_TIME_DISMISS_DESC"/>
+				<!-- Start article options in category listings -->
+				<field type="spacer" name="spacer_article_category_listing_hr" hr="true"/>
+				<field type="spacer" name="spacer_article_category_listing_name"
+					   class="alert alert-warning btn-block"
+					   label="COM_TZ_PORTFOLIO_PLUS_SPACER_ARTICLE_OPTIONS_IN_CATEGORY_LISTINGS"/>
+				<field type="radio" name="show_cat_vote"
+					   default="0" class="switcher btn-group"
+					   layout="joomla.form.field.radio.switcher"
+					   label="JGLOBAL_SHOW_VOTE_LABEL"
+					   description="JGLOBAL_SHOW_VOTE_DESC">
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+				</field>
+				<field name="show_cat_counter" type="radio"
+					   default="1" class="switcher btn-group"
+					   layout="joomla.form.field.radio.switcher"
+					   label="PLG_CONTENT_VOTE_SHOW_COUNTER_LABEL"
+					   description="PLG_CONTENT_VOTE_SHOW_COUNTER_DESC">
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+				</field>
+				<field name="cat_unrated" type="radio"
+					   class="switcher btn-group" default="1"
+					   layout="joomla.form.field.radio.switcher"
+					   label="PLG_CONTENT_VOTE_UNRATED_LABEL"
+					   description="PLG_CONTENT_VOTE_UNRATED_DESC">
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+				</field>
+				<!-- End article options in category listings -->
+
+				<!-- Start article options -->
+				<field type="spacer" name="spacer_article_hr" hr="true"/>
+				<field type="spacer" name="spacer_article_name"
+					   class="alert alert-warning btn-block"
+					   label="COM_TZ_PORTFOLIO_PLUS_ATTRIBS_FIELDSET_LABEL"/>
+				<field type="radio" name="show_vote"
+					   default="1" class="switcher btn-group"
+					   layout="joomla.form.field.radio.switcher"
+					   label="JGLOBAL_SHOW_VOTE_LABEL"
+					   description="JGLOBAL_SHOW_VOTE_DESC">
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+				</field>
+				<field name="show_counter" type="radio"
+					   default="1" class="switcher btn-group"
+					   layout="joomla.form.field.radio.switcher"
+					   label="PLG_CONTENT_VOTE_SHOW_COUNTER_LABEL"
+					   description="PLG_CONTENT_VOTE_SHOW_COUNTER_DESC">
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+				</field>
+				<field name="unrated" type="radio"
+					   class="switcher btn-group" default="1"
+					   layout="joomla.form.field.radio.switcher"
+					   label="PLG_CONTENT_VOTE_UNRATED_LABEL"
+					   description="PLG_CONTENT_VOTE_UNRATED_DESC">
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+				</field>
+				<!-- End article options -->
+			</fieldset>
+		</fields>
+	</config>
+</extension>

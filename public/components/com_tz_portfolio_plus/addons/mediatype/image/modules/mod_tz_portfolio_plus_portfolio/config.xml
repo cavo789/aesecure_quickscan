@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fields name="params">
+        <fieldset name="mediatype_image"
+                  addfieldpath="/components/com_tz_portfolio_plus/addons/mediatype/image/models/fields"
+                  label="PLG_MEDIATYPE_IMAGE_FIELDSET_LABEL">
+            <field type="radio" name="mt_show_image"
+                   class="switcher btn-group" default="1"
+                   layout="joomla.form.field.radio.switcher"
+                   label="PLG_MEDIATYPE_IMAGE_SHOW_IMAGE_LABEL"
+                   description="PLG_MEDIATYPE_IMAGE_SHOW_IMAGE_DESC">
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+            <field type="tzimagesizelist" addon="image"
+                   addon_group="mediatype"
+                   param_name="image_size"
+                   param_text="title"
+                   param_value="image_name_prefix"
+                   name="mt_image_size"
+                   label="PLG_MEDIATYPE_IMAGE_SIZE_LABEL"
+                   description="PLG_MEDIATYPE_IMAGE_SIZE_DESC">
+                <option value="o">PLG_MEDIATYPE_IMAGE_ORIGINAL</option>
+            </field>
+        </fieldset>
+    </fields>
+</form>

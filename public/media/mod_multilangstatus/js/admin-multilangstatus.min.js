@@ -1,0 +1,1 @@
+const multilangueModal=document.getElementById("multiLangModal");if(multilangueModal){const l=bootstrap.Modal.getInstance(multilangueModal);l&&l.dispose(),document.body.appendChild(multilangueModal),Joomla.initialiseModal(multilangueModal)}

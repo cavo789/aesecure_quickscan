@@ -1,0 +1,34 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "com_admin",
+  "version": "4.0.0",
+  "description": "Joomla CMS",
+  "license": "GPL-2.0-or-later",
+  "assets": [
+    {
+      "name": "com_admin.admin-help.es5",
+      "type": "script",
+      "uri": "com_admin/admin-help-es5.min.js",
+      "dependencies": [
+        "core"
+      ],
+      "attributes": {
+        "nomodule": true,
+        "defer": true
+      },
+      "version": "89e6f7f8139889120a9550e67617162215582396"
+    },
+    {
+      "name": "com_admin.admin-help",
+      "type": "script",
+      "uri": "com_admin/admin-help.min.js",
+      "dependencies": [
+        "com_admin.admin-help.es5"
+      ],
+      "attributes": {
+        "type": "module"
+      },
+      "version": "d8191540d0e914610f59897704ca9b35146e05b4"
+    }
+  ]
+}

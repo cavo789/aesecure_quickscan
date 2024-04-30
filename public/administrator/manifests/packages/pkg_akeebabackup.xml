@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--~
+  ~ @package   akeebabackup
+  ~ @copyright Copyright (c)2006-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+  ~ @license   GNU General Public License version 3, or later
+  -->
+
+<extension type="package" method="upgrade">
+    <name>pkg_akeebabackup</name>
+    <author>Nicholas K. Dionysopoulos</author>
+    <creationDate>2023-06-30</creationDate>
+    <packagename>akeebabackup</packagename>
+    <version>9.6.2</version>
+    <url>https://www.akeeba.com</url>
+    <packager>Akeeba Ltd</packager>
+    <packagerurl>https://www.akeeba.com</packagerurl>
+    <copyright>Copyright (c)2006-2023 Akeeba Ltd / Nicholas K. Dionysopoulos</copyright>
+    <license>GNU GPL v3 or later</license>
+    <description>PKG_AKEEBABACKUP_XML_DESCRIPTION</description>
+    <blockChildUninstall>true</blockChildUninstall>
+
+    <files>
+        <file type="component" id="com_akeebabackup">com_akeebabackup-core.zip</file>
+
+        <file type="plugin" group="quickicon" id="akeebabackup">plg_quickicon_akeebabackup.zip</file>
+    </files>
+
+    <languages folder="language">
+        <language tag="en-GB">en-GB/pkg_akeebabackup.sys.ini</language>
+    </languages>
+
+    <scriptfile>script.akeebabackup.php</scriptfile>
+
+    <updateservers>
+        <server type="extension" priority="1" name="Akeeba Backup Core for Joomla!">https://cdn.akeeba.com/updates/pkgakeebabackupcore.xml</server>
+    </updateservers>
+</extension>

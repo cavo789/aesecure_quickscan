@@ -1,0 +1,38 @@
+/**
+ * @version      4.2
+ * @package      Simple Image Gallery (plugin)
+ * @author       JoomlaWorks - https://www.joomlaworks.net
+ * @copyright    Copyright (c) 2006 - 2022 JoomlaWorks Ltd. All rights reserved.
+ * @license      GNU/GPL license: https://www.gnu.org/licenses/gpl.html
+ */
+
+/* --- Generic Styling --- */
+a:active,
+a:focus {outline:0;}
+table.contentpaneopen {width:100%;}
+li.sigFreeClear {clear:both;float:none!important;height:0!important;line-height:0!important;border:none!important;background:none!important;width:auto;margin:0!important;padding:0!important;}
+
+/* Container */
+ul.sigFreeClassic {margin:8px auto!important;padding:8px 0!important;list-style:none;clear:both;overflow:hidden;}
+    ul.sigFreeClassic.singleThumbGallery {margin:0!important;padding:8px 0!important;list-style:none!important;float:left;}
+
+/* Thumbnails */
+ul.sigFreeClassic li.sigFreeThumb {float:left;background:#fff!important;margin:0 1px 1px 0;padding:0;list-style:none!important;}
+ul.sigFreeClassic li.sigFreeThumb a.sigFreeLink,
+ul.sigFreeClassic li.sigFreeThumb a.sigFreeLink:hover {display:block;float:left;padding:0;margin:0;border:0;background-color:#000;position:relative;}
+ul.sigFreeClassic li.sigFreeThumb a.sigFreeLink {}
+ul.sigFreeClassic li.sigFreeThumb a.sigFreeLink:hover {}
+ul.sigFreeClassic li.sigFreeThumb a.sigFreeLink img.sigFreeImg,
+ul.sigFreeClassic li.sigFreeThumb a.sigFreeLink:hover img.sigFreeImg {display:block;width:100%;height:100%;padding:0;margin:0;border:none;background-repeat:no-repeat;background-position:50% 50%;}
+ul.sigFreeClassic li.sigFreeThumb a.sigFreeLink:hover img.sigFreeImg {opacity:0.7;}
+ul.sigFreeClassic li.sigFreeThumb a.sigFreeLink:hover:after {position:absolute;top:50%;left:50%;margin:-24px 0 0 -24px;display:block;content:"";width:48px;height:48px;background:transparent url(../images/magnify_48x48_24.png) no-repeat;}
+
+/* Print message shown on ?tmpl=component&print=1 */
+.sigFreePrintOutput {display:none;}
+
+/* Print CSS rules used to hide galleries on page print outs and display URL */
+@media print {
+    .sigFreeContainer {display:none;}
+    .sigFreePrintOutput {display:block;color:#999;font-size:14px;padding:8px 0;}
+        .sigFreePrintOutput img {width:33%;height:auto;vertical-align:top;}
+}

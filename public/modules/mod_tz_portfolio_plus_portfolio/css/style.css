@@ -1,0 +1,31 @@
+.tz_portfolio_plus_portfolio .element {
+    background: none;
+}
+/*.tz_portfolio_plus_portfolio:not(.tpp-bootstrap) .TzInner {*/
+    /*!*margin: 10px;*!*/
+    /*!*padding: 10px;*!*/
+    /*overflow: hidden;*/
+    /*border-color: 1px solid #ebebeb;*/
+/*}*/
+.tz_portfolio_plus_portfolio:not(.tpp-bootstrap) .option-combo .selected{
+    background: #e6e6e6;
+}
+.tz_portfolio_plus_portfolio:not(.tpp-bootstrap) .information{
+    padding: 9px;
+}
+.tz_portfolio_plus_portfolio .element img{
+    max-width: 100%;
+    position: relative;
+}
+.tz_portfolio_plus_portfolio .element .tzpp_media{
+    overflow: hidden;
+}
+/*.tz_portfolio_plus_portfolio:not(.tpp-bootstrap) .element .information{*/
+    /*padding: 9px 0;*/
+/*}*/
+.tz_portfolio_plus_portfolio:not(.tpp-bootstrap) .btn-view-all{
+    padding: 6px 20px;
+}
+.tz_portfolio_plus_portfolio:not(.tpp-bootstrap) .tpp-portfolio__action{
+    margin-top: 10px;
+}

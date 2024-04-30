@@ -1,0 +1,1 @@
+!function(){"use strict";Joomla.submitbutton=function(o){if("associations.purge"===o){if(!confirm(Joomla.Text._("COM_ASSOCIATIONS_PURGE_CONFIRM_PROMPT")))return!1;Joomla.submitform(o)}else Joomla.submitform(o);return!0}}();

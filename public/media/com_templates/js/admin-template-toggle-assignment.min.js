@@ -1,0 +1,1 @@
+Joomla=window.Joomla||{},(e=>{e.toggleAll=()=>{[].slice.call(document.querySelectorAll(".chk-menulink")).forEach((e=>{e.checked=!e.checked}))},e.toggleMenutype=e=>{[].slice.call(document.getElementsByClassName(`menutype-${e}`)).forEach((e=>{e.checked=!e.checked}))}})(Joomla);

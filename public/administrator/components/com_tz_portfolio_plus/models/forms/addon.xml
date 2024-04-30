@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fieldset>
+        <field name="install_package" type="file"
+               label="COM_TZ_PORTFOLIO_PLUS_UPLOAD_PACKAGE_FILE"/>
+
+        <field type="text" name="id"
+               default="0" readonly="true"
+               class="readonly"
+               label="JGLOBAL_FIELD_ID_LABEL"
+               description ="JGLOBAL_FIELD_ID_DESC"/>
+
+        <field type="hidden" name="name"
+                label="COM_PLUGINS_FIELD_NAME_LABEL"
+                description="COM_PLUGINS_FIELD_NAME_DESC" />
+
+        <field type="list" name="published"
+                class="chzn-color-state"
+               size="1" default="1"
+                label="JSTATUS"
+                description="COM_PLUGINS_FIELD_ENABLED_DESC">
+            <option value="1">JENABLED</option>
+            <option value="0">JDISABLED</option>
+        </field>
+
+        <field type="accesslevel" name="access"
+               size="1"
+               label="JFIELD_ACCESS_LABEL"
+                description="JFIELD_ACCESS_DESC"/>
+
+        <field type="Pluginordering" name="ordering"
+                label="JFIELD_ORDERING_LABEL"
+                description="JFIELD_ORDERING_DESC" />
+
+        <field type="text" name="folder"
+                class="readonly" size="20"
+               readonly="true"
+               label="COM_TZ_PORTFOLIO_PLUS_ADDONS_FIELD_FOLDER_LABEL"
+                description="COM_TZ_PORTFOLIO_PLUS_ADDONS_FIELD_FOLDER_DESC"/>
+
+        <field type="text" name="element"
+                class="readonly" size="20"
+               readonly="true"
+                label="COM_TZ_PORTFOLIO_PLUS_ADDONS_FIELD_ELEMENT_LABEL"
+                description="COM_TZ_PORTFOLIO_PLUS_ADDONS_FIELD_ELEMENT_DESC"/>
+
+        <field name="asset_id" type="hidden" filter="unset" />
+        <field name="title" type="hidden" />
+        <!--<field name="comp" type="hidden" value="com_tz_portfolio_plus.addon"/>-->
+    </fieldset>
+</form>

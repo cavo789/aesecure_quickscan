@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fieldset>
+        <field type="hidden" name="asset_id"/>
+        <field type="hidden" name="title"/>
+        <field name="section" type="hidden" class="readonly"
+               label="JGLOBAL_FIELD_ID_LABEL"
+               description ="JGLOBAL_FIELD_ID_DESC"
+               readonly="true"/>
+        <field name="rules" type="rules"
+               translate_label="false" class="inputbox" filter="rules"
+               component="com_tz_portfolio_plus" section="component"
+               label="JFIELD_RULES_LABEL"/>
+    </fieldset>
+</form>

@@ -1,0 +1,34 @@
+# Changelog
+	1.2.7
+	# Fixed Pause on Hover Option
+	# Fixed Endless Slides Option
+
+	1.2.6
+	# Fixed Deprecated $classes in PHP 8
+	
+	1.2.5
+	# Remove special chars from modalbox > äüÖÜ_:;!"§$%&/()=?
+
+	1.2.4
+	+ Content before
+
+	1.2.3
+	- Removed Tooltp For J4 with Bootsrap 5
+
+	1.2.2
+	# Fixed Bug in Autoplay Interval
+
+	1.2.1
+	+ Add Modalbox Typ > Center and Fullscreen
+
+	1.2.0
+	+ Initial Release
+
+
+	* -> Security Fix
+	# -> Bug Fix
+	$ -> Language fix or change
+	+ -> Addition
+	^ -> Change
+	- -> Removed
+	! -> Note

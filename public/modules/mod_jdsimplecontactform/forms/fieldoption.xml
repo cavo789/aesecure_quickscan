@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+   <fieldset name="fieldoption">
+      <field name="text"
+             label="Text"
+             type="text" />
+      <field name="value"
+             label="Value"
+             type="text" />
+   </fieldset>
+</form>

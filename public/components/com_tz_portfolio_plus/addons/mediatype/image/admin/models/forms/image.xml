@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <!-- Form's field for article's create or edit view -->
+    <fields name="media">
+        <fields name="image">
+            <fieldset addfieldpath="/administrator/components/com_tz_portfolio_plus/models/fields">
+                <!-- FIELDS FOR IMAGES -->
+                <field type="tzmedia" name="url"
+                       img_max-width="200px"
+                       img_prefix="o"
+                       label="PLG_MEDIATYPE_IMAGE_TITLE"/>
+                <field type="tzcheckbox" name="url_remove"
+                       merge="true"
+                       label="PLG_MEDIATYPE_IMAGE_REMOVE_LABEL"/>
+                <field type="tzmedia" name="url_detail"
+                       img_max-width="200px"
+                       img_prefix="o"
+                       label="PLG_MEDIATYPE_IMAGE_DETAIL_LABEL"/>
+                <field type="tzcheckbox" name="url_detail_remove"
+                       merge="true"
+                       label="PLG_MEDIATYPE_IMAGE_REMOVE_LABEL"/>
+                <field type="text" name="caption"
+                       label="PLG_MEDIATYPE_IMAGE_CAPTION_LABEL"/>
+            </fieldset>
+        </fields>
+    </fields>
+    <!-- End form's field for article's create or edit view -->
+</form>

@@ -1,0 +1,43 @@
+.column ul.category-menu li {
+    background: none;
+    margin: 0;
+    padding: 10px 0;
+}
+
+.category-menu .item {
+    margin: 0;
+    width: auto;
+    padding: 0 0 5px;
+}
+.category-menu .sub-menu-category > .item {
+    margin-left: 15px;
+}
+
+.sub-menu-category.in {
+    padding-left: 30px;
+    padding-top: 5px;
+}
+.category-menu .tz_button:before{
+    min-width: 8px;
+}
+
+.tz_button.plus:before {
+    content: "+";
+    display: inline-block;
+}
+
+.tz_button.minus:before {
+    content: "-";
+    display: inline-block;
+}
+
+.category-menu a:hover,
+.category-menu a:focus{
+    outline: none;
+    text-decoration: none;
+}
+
+.sub-menu-category > div.haschild,
+.sub-menu-category > div:last-child {
+    padding-bottom: 0;
+}

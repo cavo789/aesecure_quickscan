@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="file" version="3" method="upgrade" client="site">
+    <name>Phoca Maps</name>
+    <author>AlainR</author>
+    <authorurl>https://www.artisan-du-web.ch/</authorurl>
+	<copyright>If you copy, copy right !</copyright>
+	<license>GPL</license>
+    <version></version>
+    <creationDate>07/11/2022</creationDate>
+    <description><![CDATA[Langue française pour Phoca Maps ]]></description>
+	<fileset>
+		<files folder="phocamaps" target="administrator/language/fr-FR">
+			<filename>fr-FR.com_phocamaps.ini</filename>
+			<filename>fr-FR.com_phocamaps.sys.ini</filename>
+		</files>
+		<files folder="phocamaps" target="language/fr-FR">
+			<filename>fr-FR.com_phocamaps.ini</filename>
+			<filename>fr-FR.com_phocamaps.sys.ini</filename>
+		</files>
+	</fileset>
+</extension>

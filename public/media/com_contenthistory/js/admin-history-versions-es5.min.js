@@ -1,0 +1,1 @@
+!function(){"use strict";window.addEventListener("DOMContentLoaded",(function(){var n=document.getElementById("versionsModal");n&&document.body.appendChild(n)}))}();

@@ -1,0 +1,25 @@
+/* Phoca Maps Plugin CSS */
+
+/* Bootstrap */
+#phocamaps img {
+  max-width: none;
+}
+#phocamaps.phocamaps img {
+   border: 0px;
+   box-shadow: 0px;
+   margin: 0px;
+   max-width: none !important;
+}
+#phocamaps-box img {
+   max-width:none !important;
+}
+
+/* Modals */
+#pmPlgModal .modal-dialog {
+	height: 70%;
+    max-width: 70%;
+}
+
+#pmPlgModal .modal-content {
+    height: 100%;
+}

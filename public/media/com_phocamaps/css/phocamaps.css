@@ -1,0 +1,228 @@
+/*grey wb*/
+.phocamaps-box-border-greywb .phocamaps-map{
+	border: 3px solid #fff;
+	box-shadow: 0px 0px 3px 3px rgba(0,0,0,0.35);
+}
+/*
+#phocamaps-box div.pmbox-greywb {
+	float: 			left;
+	clear: 			both;
+	text-align:		left;
+	background: 	url(../images/box-grey-br.png) no-repeat bottom right;
+}
+
+#phocamaps-box div.pmbox-greywb div {
+	background: url(../images/box-grey-bl.png) no-repeat bottom left;
+}
+
+#phocamaps-box div.pmbox-greywb div div {
+	background: url(../images/box-grey-tr.png) no-repeat top right;
+}
+
+#phocamaps-box div.pmbox-greywb div div div {
+	padding:12px;
+	background: url(../images/box-grey-tl.png) no-repeat top left;
+}
+
+#phocamaps-box div.pmbox-greywb div div div div {
+	margin: 	0;
+	padding: 	0;
+	float: 		none;
+	/* width: 99% *//*
+	background: none;
+}*/
+
+/*grey*/
+.phocamaps-box-border-grey .phocamaps-map{
+	box-shadow: 0px 0px 3px 3px rgba(0,0,0,0.35);
+}
+/*
+#phocamaps-box div.pmbox-grey {
+	float: 			left;
+	clear: 			both;
+	text-align:		left;
+	background: 	url(../images/box-grey-br.png) no-repeat bottom right;
+}
+
+#phocamaps-box div.pmbox-grey div {
+	background: url(../images/box-grey-bl.png) no-repeat bottom left;
+}
+
+#phocamaps-box div.pmbox-grey div div {
+	background: url(../images/box-grey-tr.png) no-repeat top right;
+}
+
+#phocamaps-box div.pmbox-grey div div div {
+	padding:10px;
+	background: url(../images/box-grey-tl.png) no-repeat top left;
+}
+
+#phocamaps-box div.pmbox-grey div div div div {
+	margin: 	0;
+	padding: 	0;
+	float: 		none;
+	/*width: 		99%;*//*
+	background: none;
+}*/
+
+/*grey rc*/
+.phocamaps-box-border-greyrc .phocamaps-map{
+	border: 3px solid #fff;
+	box-shadow: 0px 0px 3px 3px rgba(0,0,0,0.35);
+	border-radius: 5px;
+}/*
+#phocamaps-box div.pmbox-greyrc {
+	float: 			left;
+	clear: 			both;
+	text-align:		left;
+	background: 	url(../images/box-greyrc-br.png) no-repeat bottom right;
+}
+
+#phocamaps-box div.pmbox-greyrc div {
+	background: url(../images/box-greyrc-bl.png) no-repeat bottom left;
+}
+
+#phocamaps-box div.pmbox-greyrc div div {
+	background: url(../images/box-greyrc-tr.png) no-repeat top right;
+}
+
+#phocamaps-box div.pmbox-greyrc div div div {
+	padding:12px;
+	background: url(../images/box-greyrc-tl.png) no-repeat top left;
+}
+
+#phocamaps-box div.pmbox-greyrc div div div div {
+	margin: 	0;
+	padding: 	0;
+	float: 		none;
+	/* width: 99% *//*
+	background: none;
+}
+*/
+/*black*/
+.phocamaps-box-border-black .phocamaps-map{
+	border: 3px solid #fff;
+	box-shadow: 0px 0px 3px 3px rgba(0,0,0,1);
+}
+/*
+#phocamaps-box div.pmbox-black {
+	float: 			left;
+	clear: 			both;
+	text-align:		left;
+	background: 	url(../images/box-black-br.png) no-repeat bottom right;
+}
+
+#phocamaps-box div.pmbox-black div {
+	background: url(../images/box-black-bl.png) no-repeat bottom left;
+}
+
+#phocamaps-box div.pmbox-black div div {
+	background: url(../images/box-black-tr.png) no-repeat top right;
+}
+
+#phocamaps-box div.pmbox-black div div div {
+	padding:12px;
+	background: url(../images/box-black-tl.png) no-repeat top left;
+}
+
+#phocamaps-box div.pmbox-black div div div div {
+	margin: 	0;
+	padding: 	0;
+	float: 		none;
+	/* width: 99% *//*
+	background: none;
+}
+*/
+
+
+
+
+#phocamaps .pmroute,
+.pmroute {
+	margin-top:		15px;
+	margin-left:	15px;
+	clear:			both;
+}
+#phocamaps .pmgps,
+.pmgps {
+	margin-top:5px;
+	border-top:1px solid #ccc;
+	margin-bottom:5px;
+}
+
+.p-noscript {
+	text-align:	center;
+	background:	#ffcc00;
+	padding:	10px;
+}
+
+#phocamaps .pmprintroutelink,
+.pmprintroutelink {
+	position:		relative;
+	float:			right;
+	background: 	url(../images/icon-printlink.png) center left no-repeat;
+	padding:		10px;
+	padding-left:	20px;
+	
+}
+
+/* Print Window */
+#phocamapsprintroute {
+	padding:		10px;
+	background:		#ffffff;
+	text-align:		left;
+}
+#phocamapsprintroute .pmprintscreen {
+	position:		relative;
+	float:			right;
+	padding:		10px;
+
+}
+#phocamapsprintroute .pmprintscreena{
+	text-decoration:underline;	
+}
+
+#phocamaps .error {
+	background:#FFC2C2;
+	border:1px solid #bf3030;
+	color: #a60000;
+	padding:10px;
+	margin-top:5px;
+	margin-bottom:5px;
+}
+
+/* Temp code - needs to be tested */
+#phocamaps.phocamaps img {
+	border: 0px;
+	box-shadow: 0px;
+	margin: 0px;
+	max-width: none !important;
+}
+
+#phocamaps .directions {
+    clear: left;
+}
+#phocampas .pm-input-route {
+}
+#phocampas .pm-input-route-btn {
+}
+/* Temp code - needs to be tested */
+
+/* Bootstrap */
+#phocamaps img {
+  max-width: none;
+}
+#phocamaps.phocamaps img {
+   border: 0px;
+   box-shadow: 0px;
+   margin: 0px;
+   max-width: none !important;
+}
+#phocamaps-box img {
+   max-width:none !important;
+}
+
+.pmMarkerTitle {
+    font-weight: bold;
+    font-size: 110%;
+}

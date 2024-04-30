@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",(()=>{const e=document.getElementById("batch-group-id"),d=document.getElementById("batch-copy-move");d.classList.add("hidden"),e.addEventListener("change",(()=>{"nogroup"===e.value||""!==e.value?d.classList.remove("hidden"):d.classList.add("hidden")}),!1)}));

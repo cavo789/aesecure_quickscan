@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="file" version="2.6" method="upgrade">
+	<name>TZ PortFolio+fr-FR</name>
+	<version>2.6.6.1.00.0</version>
+	<creationDate>15/08/2023</creationDate>
+	<author></author>
+	<authorEmail></authorEmail>
+	<authorUrl></authorUrl>
+	<copyright></copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<packager></packager>
+	<packagerurl></packagerurl>
+	<description><![CDATA[]]></description>
+	<fileset>
+		<files folder="site/fr-FR" target="language/fr-FR">
+			<filename>com_tz_portfolio_plus.ini</filename>
+			<filename>mod_tz_portfolio_plus_articles_archive.ini</filename>
+			<filename>mod_tz_portfolio_plus_articles_archive.sys.ini</filename>
+			<filename>mod_tz_portfolio_plus_categories.ini</filename>
+			<filename>mod_tz_portfolio_plus_categories.sys.ini</filename>
+			<filename>mod_tz_portfolio_plus_filter.ini</filename>
+			<filename>mod_tz_portfolio_plus_filter.sys.ini</filename>
+			<filename>mod_tz_portfolio_plus_portfolio.ini</filename>
+			<filename>mod_tz_portfolio_plus_portfolio.sys.ini</filename>
+			<filename>mod_tz_portfolio_plus_tags.ini</filename>
+			<filename>mod_tz_portfolio_plus_tags.sys.ini</filename>
+		</files>
+		<files folder="admin/fr-FR" target="administrator/language/fr-FR">
+			<filename>com_tz_portfolio_plus.ini</filename>
+			<filename>com_tz_portfolio_plus.sys.ini</filename>
+			<filename>plg_system_tz_portfolio_plus.ini</filename>
+			<filename>plg_system_tz_portfolio_plus.sys.ini</filename>
+		</files>
+	</fileset>
+</extension>

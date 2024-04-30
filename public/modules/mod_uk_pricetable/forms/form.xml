@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+	<field name="cols" type="radio" label="Show and Hide Items for better Overview" default="0" >
+		<option value="0">JHIDE</option>
+		<option value="1">JSHOW</option>
+	</field>
+
+    <field name="img" type="media" default="" label="MOD_UK_SLIDER_FORM_ING" class="input-large" showon="cols!:0" />
+
+    <field name="price" type="text" label="Price Titel" class="span2" showon="cols!:0" />
+
+		<field name="background" type="list" label="Price Background" default="0" class="btn-group" showon="cols!:0">
+		<option value="bg-primary text-white">Primary</option>
+		<option value="bg-danger text-white">Secondary</option>
+		<option value="bg-success text-white">Success</option>
+		<option value="bg-dark text-white">Dark</option>
+		<option value="bg-light text-dark">Light</option>
+	</field>
+<field type="spacer" name="spacer2" hr="true" />
+    <field name="title1" type="text" label="Title 1" class="span2"  showon="cols!:0"/>
+    <field name="title2" type="text" label="Title 2" class="span2"  showon="cols!:0"/>
+    <field name="title3" type="text" label="Title 3" class="span2"  showon="cols!:0"/>
+    <field name="content" type="textarea" label="Content" rows="1" filter="raw" class="span5" showon="cols!:0" />
+	
+    <field name="link" type="text" label="MOD_UK_SLIDER_FORM_LINK" class="span5"  showon="cols!:0"/>
+	<field name="link_target" type="list" label="Link Target" default="_self" class="btn-group" showon="cols!:0">
+		<option value="_blank">Blank</option>
+		<option value="_self">Self</option>
+	</field>
+    <field name="link_text" type="text" label="MOD_UK_SLIDER_FORM_LINK_TEXT" default="Read more" class="span2"  showon="cols!:0"/>
+</form>

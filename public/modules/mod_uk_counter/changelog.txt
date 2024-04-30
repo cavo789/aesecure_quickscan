@@ -1,0 +1,24 @@
+# Changelog
+
+	1.2.4
+	+ Loading jquery Scripts local
+	
+	1.2.3
+	# Removed double module before content
+
+	1.2.2
+	+ Loading Scripts local
+	+ Colors now in RGBA
+	+ Add Counter Delay and Time
+
+	1.2.0
+	+ Initial Release
+
+
+	* -> Security Fix
+	# -> Bug Fix
+	$ -> Language fix or change
+	+ -> Addition
+	^ -> Change
+	- -> Removed
+	! -> Note

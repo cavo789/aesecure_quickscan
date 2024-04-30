@@ -1,0 +1,26 @@
+# Changelog
+
+	1.2.4
+	# Fixed Deprecated $classes in PHP 8
+	
+	1.2.3
+	+ Add unique Modalbox ID Parameter
+	+ Full Screen with or without image and different image
+
+	1.2.2
+	# Change the Modalbox to remove all special characters
+
+	1.2.1
+	$ Missing closing DIV add
+
+	1.2.0
+	+ Initial Release
+
+
+	* -> Security Fix
+	# -> Bug Fix
+	$ -> Language fix or change
+	+ -> Addition
+	^ -> Change
+	- -> Removed
+	! -> Note

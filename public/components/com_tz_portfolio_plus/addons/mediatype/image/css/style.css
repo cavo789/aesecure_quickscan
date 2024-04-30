@@ -1,0 +1,21 @@
+.tz_portfolio_plus_image{
+    z-index: 1;
+    position: relative;
+}
+.TzIcon{
+    z-index: 2;
+    position: relative;
+}
+.tz_image_hover{
+    top:0;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    transition: opacity 0.35s ease-in-out;
+    -moz-transition: opacity 0.35s ease-in-out;
+    -webkit-transition: opacity 0.35s ease-in-out;
+}
+.tz_portfolio_plus_image:hover .tz_image_hover{
+    opacity: 1;
+    margin: 0;
+}

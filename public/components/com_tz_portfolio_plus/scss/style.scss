@@ -1,0 +1,24 @@
+/*
+ * Main scss file.
+ * The scss file of your style will be compile to css by path 'com_tz_portfolio_plus/css/style/your-style-name/style.css'
+*/
+
+/*
+ * Bootstrap's functions and variables imported automatic
+ * Bootstrap will import automatic by bootstrap option in global config
+ * You could override bootstrap's variables in variable_override.scss file
+*/
+
+/*
+ * Fontawesome Free v5.10.2
+ * Changed prefix fa to tp
+ * Changed font-family with prefix "Font Awesome" to "tpFontAwesome"
+*/
+@import "variables";
+@import 'vendor/fontawesome/all';
+
+/***/
+@import 'mixins';
+@import 'icon';
+
+@import 'basic';

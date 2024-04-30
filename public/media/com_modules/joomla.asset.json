@@ -1,0 +1,134 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "com_modules",
+  "version": "4.0.0",
+  "description": "Joomla CMS",
+  "license": "GPL-2.0-or-later",
+  "assets": [
+    {
+      "name": "com_modules.admin-module-edit",
+      "type": "script",
+      "uri": "com_modules/admin-module-edit.min.js",
+      "dependencies": [
+        "com_modules.admin-module-edit.es5"
+      ],
+      "attributes": {
+        "type": "module"
+      },
+      "version": "24a1d698f07cb48fbc6156d4b37f9dc66ecca639"
+    },
+    {
+      "name": "com_modules.admin-module-edit.es5",
+      "type": "script",
+      "uri": "com_modules/admin-module-edit-es5.min.js",
+      "dependencies": [
+        "core"
+      ],
+      "attributes": {
+        "nomodule": true,
+        "defer": true
+      },
+      "version": "fafc6e45dbc139683cecb2d5e473bafe85b64ee0"
+    },
+    {
+      "name": "com_modules.admin-module-edit-assignment",
+      "type": "script",
+      "uri": "com_modules/admin-module-edit_assignment.min.js",
+      "dependencies": [
+        "com_modules.admin-module-edit-assignment.es5"
+      ],
+      "attributes": {
+        "type": "module"
+      },
+      "version": "bed88beff75743fba929e5acd60335263679dcf4"
+    },
+    {
+      "name": "com_modules.admin-module-search.es5",
+      "type": "script",
+      "uri": "com_modules/admin-module-search-es5.min.js",
+      "dependencies": [
+        "core"
+      ],
+      "attributes": {
+        "nomodule": true,
+        "defer": true
+      },
+      "version": "15edfa5fe0c26f4a96b1802fbb18e34683a1fb0e"
+    },
+    {
+      "name": "com_modules.admin-module-search",
+      "type": "script",
+      "uri": "com_modules/admin-module-search.min.js",
+      "dependencies": [
+        "com_modules.admin-module-search.es5"
+      ],
+      "attributes": {
+        "type": "module"
+      },
+      "version": "719b36bb72c15b9dbfe9157e9bb2392f6239803d"
+    },
+    {
+      "name": "com_modules.admin-module-edit-assignment.es5",
+      "type": "script",
+      "uri": "com_modules/admin-module-edit_assignment-es5.min.js",
+      "dependencies": [
+        "core"
+      ],
+      "attributes": {
+        "nomodule": true,
+        "defer": true
+      },
+      "version": "8e1c4eca2354b006fffc5d00eaa44bba9738bac0"
+    },
+    {
+      "name": "com_modules.admin-modules-modal",
+      "type": "script",
+      "uri": "com_modules/admin-modules-modal.min.js",
+      "dependencies": [
+        "com_modules.admin-modules-modal.es5"
+      ],
+      "attributes": {
+        "type": "module"
+      },
+      "version": "d29c6b38afd2845dad5c4ddbea2d8168c9fdaf28"
+    },
+    {
+      "name": "com_modules.admin-select-modal.es5",
+      "type": "script",
+      "uri": "com_modules/admin-select-modal-es5.min.js",
+      "dependencies": [
+        "core"
+      ],
+      "attributes": {
+        "nomodule": true,
+        "defer": true
+      },
+      "version": "d53258fa53d0368c9a15a379df8b63ffc5ed2d17"
+    },
+    {
+      "name": "com_modules.admin-modules-modal.es5",
+      "type": "script",
+      "uri": "com_modules/admin-modules-modal-es5.min.js",
+      "dependencies": [
+        "core"
+      ],
+      "attributes": {
+        "nomodule": true,
+        "defer": true
+      },
+      "version": "9ed4ce60b58280dc69d6787bcf4808e743a53864"
+    },
+    {
+      "name": "com_modules.admin-select-modal",
+      "type": "script",
+      "uri": "com_modules/admin-select-modal.min.js",
+      "dependencies": [
+        "com_modules.admin-select-modal.es5"
+      ],
+      "attributes": {
+        "type": "module"
+      },
+      "version": "aa3711c040878f12cf91bdfcd25952eab423b6d6"
+    }
+  ]
+}

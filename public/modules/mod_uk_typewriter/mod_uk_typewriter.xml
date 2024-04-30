@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<extension type="module" version="3.*" method="upgrade" client="site">
+    <name>UIkit 3 Typewriter</name>
+    <author>Joomlaplates</author>
+	<authorEmail>support@joomlaplates.de</authorEmail>
+    <authorUrl>https://joomlaplates.de</authorUrl>
+    <copyright>© 2022 Joomlaplates. All rights reserved.</copyright>
+    <license>GNU General Public License version 3 or later; see http://www.gnu.org/licenses/gpl-3.0.txt</license>
+    <version>1.0.0</version>
+    <creationDate>2022</creationDate>
+    <description><![CDATA[
+		<p class="btn btn-sm btn-info" p>Version 1.0.0</p>
+		<p><a class="btn btn-sm btn-success" href="https://www.joomlaplates.de/dokumentation.html" target="_blank">Dokumentation</a></p>
+    ]]></description>
+	<updateservers>
+		<server type="extension" priority="2" name="UIkit 3 Typewriter">https://www.joomlaplates.de/updates/uikit/mod_uk_typewriter.xml</server>
+	</updateservers>	
+
+    <files>
+        <filename module="mod_uk_typewriter">mod_uk_typewriter.php</filename>
+        <folder>tmpl</folder>
+        <folder>js</folder>
+		<filename>changelog.txt</filename>
+
+    </files>
+
+    <config>
+        <fields name="params">
+
+            <fieldset name="basic">
+            
+				<field name="content_before_class" type="text" label="Content CSS Class" class="input-large"/>
+				<field name="content_before" type="editor" label="Content Before Text" rows="2" filter="raw" /> 
+			
+				<field name="type_text" type="textarea" label="Typewriter Text" rows="3" filter="raw" class="input-large"/> 
+				<field name="type_speed" type="text" label="Typewriter Speed" default="2" class="input-small"/>
+
+
+				<field name="type_font" type="list" label="Type Font" default="h1" >
+                    <option value="h1">H1</option>
+                    <option value="h2">H2</option>
+                    <option value="h3">H3</option>
+                    <option value="h4">H4</option>
+                    <option value="h5">H5</option>
+                    <option value="p">Paragraph</option>
+                </field>
+				
+            </fieldset>
+
+
+
+
+            <fieldset name="advanced">
+                <field name="layout" type="modulelayout" label="JFIELD_ALT_LAYOUT_LABEL" description="JFIELD_ALT_MODULE_LAYOUT_DESC"/>
+                <field name="cache" type="list" label="COM_MODULES_FIELD_CACHING_LABEL" description="COM_MODULES_FIELD_CACHING_DESC" default="1">
+                    <option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+                    <option value="1">JGLOBAL_USE_GLOBAL</option>
+                </field>
+            </fieldset>
+
+        </fields>
+    </config>
+</extension>

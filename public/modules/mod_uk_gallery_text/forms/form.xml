@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+	<field name="cols" type="radio" label="Show and Hide Items for better Overview" default="0" >
+		<option value="0">JHIDE</option>
+		<option value="1">JSHOW</option>
+	</field>
+
+    <field name="img" type="media" default="" label="MOD_UK_GALLERY_FORM_ING" class="input-xxlarge" showon="cols!:0" />
+    <field name="title" type="text" label="Image Title" class="input-xlarge" showon="cols!:0"/>
+    <field name="content" type="editor" label="Content" filter="raw"  showon="cols!:0"/>
+    <field name="content_class" type="text" label="Content CSS" class="input-small" showon="cols!:0"/>
+	
+	<field name="tags"  type="text" label="JTAG" description="Tags must be Comma seperated Example: Design,Web,Print" class="input-xlarge" showon="cols!:0"/>
+</form>

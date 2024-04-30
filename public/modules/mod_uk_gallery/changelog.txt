@@ -1,0 +1,24 @@
+# Changelog
+	1.2.4
+	# Fixed Mansonry Option
+
+	1.2.3
+	# Fixed Image Caption in LIghtbox
+
+	1.2.2
+	# Fixed Deprecated $classes in PHP 8
+	
+	1.2.1
+	# Transition load now when Scrollspy
+
+	1.2.0
+	+ Initial Release
+
+
+	* -> Security Fix
+	# -> Bug Fix
+	$ -> Language fix or change
+	+ -> Addition
+	^ -> Change
+	- -> Removed
+	! -> Note

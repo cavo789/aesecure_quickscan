@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+	<field name="cols" type="radio" label="Show Settings" default="0" >
+		<option value="0">JHIDE</option>
+		<option value="1">JSHOW</option>
+	</field>
+	<field name="imgorvideo" type="list" label="Image or Video" default="1" >
+		<option value="0">Video</option>
+		<option value="1">Image</option>
+	</field>
+
+    <field name="img_bg" type="media" default="" label="MOD_UK_SLIDESHOW_FORM_IMG_BG" description="MOD_UK_SLIDESHOW_FORM_IMG_BG_DESC" class="input-xxlarge" showon="cols!:0[AND]imgorvideo!:0"/>
+    <field name="imgalttag" type="text" label="Image ALT Tag" default="" showon="cols!:0[AND]imgorvideo!:0"/>
+	
+	<fieldset name="local_video" addfieldpath="/modules/mod_uk_video_slideshow/models/fields" showon="cols!:0[AND]imgorvideo!:1">
+		<field type="filelist" name="local_video" label="Video" directory="images" description="Upload your videos to the Joomla folder /images\ and then you can select them from here" filter="\.mov$|\.mpg$|\.mp4$|\.ogv$|\.webm$|\.mts$|\.avi$|\.wmv$" showon="cols!:0[AND]imgorvideo!:1"/>
+	</fieldset>
+	<field name="video_control" type="list" label="Controls" default="0" class="btn-group" showon="cols!:0[AND]imgorvideo!:1">
+		<option value="1">Yes</option>
+		<option value="0">No</option>
+	</field> 
+		<field name="video_mute" type="list" label="Mute" default="0" class="btn-group" showon="cols!:0[AND]imgorvideo!:1">
+		<option value="1">Yes</option>
+		<option value="0">No</option>
+	</field> 
+	<field name="video_loop" type="list" label="Loop" default="0" class="btn-group" showon="cols!:0[AND]imgorvideo!:1">
+		<option value="1">Yes</option>
+		<option value="0">No</option>
+	</field> 
+
+	<field name="animation_delay" type="text" label="Animation Delay" class="large" default="500" showon="cols!:0"/>
+
+    <field name="content" type="editor" label="MOD_UK_SLIDESHOW_FORM_CONTENT" width="300" filter="raw"  showon="cols!:0"/>
+    <field name="content_bg" type="color" label="Content Background" format="rgba" showon="cols!:0"/>
+    <field name="content_color" type="color" label="Content Color" format="rgba" showon="cols!:0"/>
+	
+
+    <field name="content_width" type="text" label="Content Width" default="50%" class="input-large" showon="cols!:0"/>
+    <field name="content_margin" type="text" description="Top Right Bottom Left in PX or %" label="Content Margin" default="" class="input-large" showon="cols!:0"/>
+	<field name="content_text_align" type="list" label="Text Alignment" default="text-left" showon="cols!:0">
+		<option value="text-left">Left</option>
+		<option value="text-right">Right</option>
+		<option value="text-center">Center</option>
+	</field>
+
+	<field name="content_pos" type="list" label="Content Position" default="uk-position-center uk-position-small uk-text-center" showon="cols!:0">
+		<option value="uk-position-top-center">Top Center</option>
+		<option value="uk-position-top-left">Top Left</option>
+		<option value="uk-position-top-right">Top Right</option>
+		<option value="uk-position-center">Center Center</option>
+		<option value="uk-position-center-left">Center Left</option>
+		<option value="uk-position-center-right">Center Right</option>
+		<option value="uk-position-bottom-center">Bottom Center</option>
+		<option value="uk-position-bottom-left">Bottom Left</option>
+		<option value="uk-position-bottom-right">Bottom Right</option>
+	</field>
+
+	<field name="hide" type="list" label="Hide Content" default="uk-visible@s" class="btn-group" showon="cols!:0">
+		<option value="uk-visible@s">Phones</option>
+		<option value="uk-visible@m">Phones + Tablet</option>
+		<option value="uk-visible">No</option>
+	</field>
+
+    <field name="link" type="text" label="MOD_UK_SLIDESHOW_FORM_LINK" class="input-xxlarge" showon="cols!:0"/>
+    <field name="link_text" type="text" label="MOD_UK_SLIDESHOW_FORM_LINK_TEXT" default="Read more" showon="cols!:0"/>
+</form>

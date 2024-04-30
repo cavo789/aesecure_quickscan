@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="tz_portfolio_plus-plugin" version="3.1" group="user" method="upgrade">
+    <name>plg_user_profile</name>
+    <author>DuongTVTemPlaza</author>
+    <creationDate>December 13th 2015</creationDate>
+    <copyright>Copyright (C) 2015 TemPlaza. All rights reserved.</copyright>
+    <license>GNU/GPL v2 or later http://www.gnu.org/licenses/gpl-2.0.html</license>
+    <authorEmail>support@templaza.com</authorEmail>
+    <authorUrl>www.templaza.com/</authorUrl>
+    <version>2.6.0</version>
+    <description>PLG_USER_PROFILE_XML_DESCRIPTION</description>
+
+    <files>
+        <filename plugin="profile">profile.php</filename>
+        <filename>index.html</filename>
+        <filename>controller.php</filename>
+        <folder>css</folder>
+        <folder>forms</folder>
+        <folder>helpers</folder>
+        <folder>language</folder>
+        <folder>models</folder>
+        <folder>views</folder>
+    </files>
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+
+                <field type="spacer" name="spacer_article_name"
+                       class="alert alert-warning btn-block"
+                       label="COM_TZ_PORTFOLIO_PLUS_ATTRIBS_FIELDSET_LABEL"/>
+                <field name="show_about_author"
+                       type="radio"
+                       class="switcher btn-group"
+                       default="1"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_USER_PROFILE_SHOW_USER"
+                       description="PLG_USER_PROFILE_SHOW_USER_DESC">
+                    <option value="0">JHIDE</option>
+                    <option value="1">JSHOW</option>
+                </field>
+                <field name="show_gender_user"
+                       type="radio"
+                       class="switcher btn-group"
+                       default="1"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_USER_PROFILE_SHOW_GENDER_USER"
+                       description="PLG_USER_PROFILE_SHOW_GENDER_USER_DESC">
+                    <option value="0">JHIDE</option>
+                    <option value="1">JSHOW</option>
+                </field>
+                <field name="show_email_user"
+                       type="radio"
+                       class="switcher btn-group"
+                       default="1"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_USER_PROFILE_SHOW_EMAIL_USER"
+                       description="PLG_USER_PROFILE_SHOW_EMAIL_USER_DESC">
+                    <option value="0">JHIDE</option>
+                    <option value="1">JSHOW</option>
+                </field>
+                <field name="show_url_user"
+                       type="radio"
+                       class="switcher btn-group"
+                       default="1"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_USER_PROFILE_SHOW_URL_USER"
+                       description="PLG_USER_PROFILE_SHOW_URL_USER_DESC">
+                    <option value="0">JHIDE</option>
+                    <option value="1">JSHOW</option>
+                </field>
+                <field name="show_description_user"
+                       type="radio"
+                       class="switcher btn-group"
+                       default="1"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_USER_PROFILE_SHOW_DESCRIPTION_USER"
+                       description="PLG_USER_PROFILE_SHOW_DESCRIPTION_USER_DESC">
+                    <option value="0">JHIDE</option>
+                    <option value="1">JSHOW</option>
+                </field>
+
+                <field type="spacer" name="spacer_article_detail" hr="true"/>
+                <field type="spacer" name="spacer_article_detail_name"
+                       class="alert alert-warning btn-block"
+                       label="COM_TZ_PORTFOLIO_PLUS_SPACER_ARTICLE_OPTIONS_IN_CATEGORY_LISTINGS"/>
+                <field name="show_cat_about_author"
+                       type="radio"
+                       class="switcher btn-group"
+                       default="1"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_USER_PROFILE_SHOW_USER"
+                       description="PLG_USER_PROFILE_SHOW_USER_DESC">
+                    <option value="0">JHIDE</option>
+                    <option value="1">JSHOW</option>
+                </field>
+                <field name="show_cat_gender_user"
+                       type="radio"
+                       class="switcher btn-group"
+                       default="1"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_USER_PROFILE_SHOW_GENDER_USER"
+                       description="PLG_USER_PROFILE_SHOW_GENDER_USER_DESC">
+                    <option value="0">JHIDE</option>
+                    <option value="1">JSHOW</option>
+                </field>
+                <field name="show_cat_email_user"
+                       type="radio"
+                       class="switcher btn-group"
+                       default="1"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_USER_PROFILE_SHOW_EMAIL_USER"
+                       description="PLG_USER_PROFILE_SHOW_EMAIL_USER_DESC">
+                    <option value="0">JHIDE</option>
+                    <option value="1">JSHOW</option>
+                </field>
+                <field name="show_cat_url_user"
+                       type="radio"
+                       class="switcher btn-group"
+                       default="1"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_USER_PROFILE_SHOW_URL_USER"
+                       description="PLG_USER_PROFILE_SHOW_URL_USER_DESC">
+                    <option value="0">JHIDE</option>
+                    <option value="1">JSHOW</option>
+                </field>
+                <field name="show_cat_description_user"
+                       type="radio"
+                       class="switcher btn-group"
+                       default="1"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_USER_PROFILE_SHOW_DESCRIPTION_USER"
+                       description="PLG_USER_PROFILE_SHOW_DESCRIPTION_USER_DESC">
+                    <option value="0">JHIDE</option>
+                    <option value="1">JSHOW</option>
+                </field>
+                <field name="show_cat_social_link_user"
+                       type="radio"
+                       class="switcher btn-group"
+                       default="1"
+                       layout="joomla.form.field.radio.switcher"
+                       label="PLG_USER_PROFILE_SHOW_SOCIAL_LINKS_USER_LABEL"
+                       description="PLG_USER_PROFILE_SHOW_SOCIAL_LINKS_USER_DESC">
+                    <option value="0">JHIDE</option>
+                    <option value="1">JSHOW</option>
+                </field>
+            </fieldset>
+        </fields>
+    </config>
+</extension>

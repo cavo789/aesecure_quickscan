@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+    <fields name="params">
+        <fieldset name="basic">
+            <field type="spacer" name="spacer_vote_addon_hr" hr="true"/>
+            <field type="radio" name="show_cat_vote"
+                   default="1" class="switcher btn-group"
+                   layout="joomla.form.field.radio.switcher"
+                   label="JGLOBAL_SHOW_VOTE_LABEL"
+                   description="JGLOBAL_SHOW_VOTE_DESC">
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+            <field name="show_counter" type="radio"
+                   default="1" class="switcher btn-group"
+                   layout="joomla.form.field.radio.switcher"
+                   label="PLG_CONTENT_VOTE_SHOW_COUNTER_LABEL"
+                   description="PLG_CONTENT_VOTE_SHOW_COUNTER_DESC">
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+            <field name="unrated" type="radio"
+                   class="switcher btn-group" default="1"
+                   layout="joomla.form.field.radio.switcher"
+                   label="PLG_CONTENT_VOTE_UNRATED_LABEL"
+                   description="PLG_CONTENT_VOTE_UNRATED_DESC">
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+
+            <!-- Parameters of notification -->
+            <field type="spacer" name="spacer_notification_name"
+                   class="alert alert-warning btn-block"
+                   label="PLG_CONTENT_VOTE_SPACER_NOTIFICATION"/>
+            <field type="list" name="ct_vote_notice_layout"
+                   default="growl"
+                   label="JFIELD_ALT_LAYOUT_LABEL"
+                   description="PLG_CONTENT_VOTE_NOTIFICATION_LAYOUT_DESC">
+                <option value="growl">PLG_CONTENT_VOTE_NOTIFICATION_GROWL</option>
+                <option value="attached">PLG_CONTENT_VOTE_NOTIFICATION_ATTACHED</option>
+                <option value="bar">PLG_CONTENT_VOTE_NOTIFICATION_BAR</option>
+                <option value="other">PLG_CONTENT_VOTE_NOTIFICATION_OTHER</option>
+            </field>
+            <field type="groupedlist" name="ct_vote_notice_effect"
+                   default="scale"
+                   label="PLG_CONTENT_VOTE_NOTIFICATION_EFFECT_LABEL">
+                <group label="PLG_CONTENT_VOTE_NOTIFICATION_GROWL">
+                    <option value="scale"></option>
+                    <option value="slide"></option>
+                    <option value="genie"></option>
+                    <option value="jelly"></option>
+                </group>
+                <group label="PLG_CONTENT_VOTE_NOTIFICATION_BAR">
+                    <option value="flip"></option>
+                    <option value="bouncyflip"></option>
+                </group>
+                <group label="PLG_CONTENT_VOTE_NOTIFICATION_OTHER">
+                    <option value="boxspinner"></option>
+                    <option value="cornerexpand"></option>
+                    <option value="loadingcircle"></option>
+                    <option value="thumbslider"></option>
+                </group>
+            </field>
+            <field type="number" name="ct_vote_notice_ttl"
+                   min="0" default="3000"
+                   label="PLG_CONTENT_VOTE_TIME_DISMISS_LABEL"
+                   description="PLG_CONTENT_VOTE_TIME_DISMISS_DESC"/>
+            <!-- End parameters of notification -->    ​
+        </fieldset>        ​
+    </fields>
+</form>

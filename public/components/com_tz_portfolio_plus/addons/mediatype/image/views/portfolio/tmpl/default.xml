@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fields name="params">
+        <fieldset name="basic"
+                  addfieldpath="/components/com_tz_portfolio_plus/addons/mediatype/image/models/fields">
+            <field type="spacer" name="spacer_image_feed_hr" hr="true"/>
+            <field type="spacer" name="spacer_image_feed_name"
+                   class="alert alert-warning btn-block"
+                   label="PLG_MEDIATYPE_IMAGE_FEED_OPTIONS_LABEL"/>
+            <field type="list" name="mt_image_show_feed_image"
+                   label="PLG_MEDIATYPE_IMAGE_SHOW_FEED_IMAGE_LABEL">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+            <field type="tzimagesizelist" name="mt_image_feed_size"
+                   addon="image"
+                   addon_group="mediatype"
+                   param_name="image_size"
+                   param_text="title"
+                   param_value="image_name_prefix"
+                   label="PLG_MEDIATYPE_IMAGE_FEED_SIZE_LABEL">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="o">PLG_MEDIATYPE_IMAGE_ORIGINAL</option>
+            </field>
+        </fieldset>
+    </fields>
+</form>

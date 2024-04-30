@@ -1,0 +1,48 @@
+.tzfont-container [class*="col-"] {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+[id*="tztabsaddonsplg_"] .control-label .spacer hr {
+    width: 100% !important;
+}
+[id*="tztabsaddonsplg_"] .field-spacer>.control-label {
+    width: 100% !important;
+}
+.tzportfolio-device-tab .active{
+    color: royalblue;
+}
+.tzportfolio-device-tab {
+    float: right;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.tzportfolio-device-tab li {
+    display: inline-block;
+}
+.tzportfolio-device-tab li+li {
+    margin-left: 3px;
+}
+.tzportfolio-tabcontent-container .tzportfolio-box-item {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.tzportfolio-box {
+    display: none;
+}
+.tzportfolio-box.active {
+    display: flex;
+}
+.tzportfolio-lock span {
+    display: none;
+    margin-left: 5px;
+}
+.tzportfolio-lock .active {
+    display: inline;
+}
+.tzportfolio-box-item input {
+    width: 80px;
+}
+.tzportfolio-box-label {
+    text-transform: capitalize;
+}

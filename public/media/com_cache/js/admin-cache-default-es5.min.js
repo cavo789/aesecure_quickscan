@@ -1,0 +1,1 @@
+!function(){"use strict";Joomla=window.Joomla||{},function(e,n){e.addEventListener("DOMContentLoaded",(function(){[].slice.call(e.querySelectorAll(".cache-entry")).forEach((function(e){e.addEventListener("click",(function(e){var c=e.currentTarget;n.isChecked(c.checked)}))}))}))}(document,Joomla)}();

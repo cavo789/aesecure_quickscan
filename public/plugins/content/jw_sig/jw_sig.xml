@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="plugin" group="content" method="upgrade">
+    <name>Simple Image Gallery (by JoomlaWorks)</name>
+    <author>JoomlaWorks</author>
+    <authorEmail>please-use-the-contact-form@joomlaworks.net</authorEmail>
+    <authorUrl>https://www.joomlaworks.net</authorUrl>
+    <copyright>Copyright (c) 2006 - 2022 JoomlaWorks Ltd. All rights reserved.</copyright>
+    <creationDate>January 7th, 2022</creationDate>
+    <license>https://www.gnu.org/licenses/gpl.html GNU/GPL</license>
+    <version>4.2</version>
+    <description>JW_PLG_SIG_XML_DESC</description>
+    <!-- Parameters -->
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field name="galleries_rootfolder" type="text" default="images" label="JW_PLG_SIG_ROOTFOLDER" description="JW_PLG_SIG_ROOTFOLDER_DESC" />
+                <field name="thb_width" type="text" default="360" size="3" label="JW_PLG_SIG_TW" description="JW_PLG_SIG_TW_DESC" />
+                <field name="thb_height" type="text" default="240" size="3" label="JW_PLG_SIG_TH" description="JW_PLG_SIG_TH_DESC" />
+                <field name="jpg_quality" type="text" default="90" size="3" label="JW_PLG_SIG_TQ" description="JW_PLG_SIG_TQ_DESC" />
+                <field name="cache_expire_time" type="text" default="86400" size="3" label="JW_PLG_SIG_TCEXP" description="JW_PLG_SIG_TCEXP_DESC" />
+                <field name="memoryLimit" type="text" default="" size="3" label="JW_PLG_SIG_ML" description="JW_PLG_SIG_ML_DESC" />
+            </fieldset>
+        </fields>
+    </config>
+    <!-- Files -->
+    <files folder="plugin" destination="jw_sig">
+        <filename plugin="jw_sig">jw_sig.php</filename>
+        <filename plugin="jw_sig">jw_sig.xml</filename>
+        <folder>jw_sig</folder>
+    </files>
+    <languages folder="plugin">
+        <language tag="en-GB">language/en-GB/en-GB.plg_content_jw_sig.ini</language>
+        <language tag="en-GB">language/en-GB/en-GB.plg_content_jw_sig.sys.ini</language>
+    </languages>
+    <updateservers>
+        <server type="extension" priority="1" name="Simple Image Gallery">https://cdn.joomlaworks.org/updates/sig.xml</server>
+    </updateservers>
+</extension>

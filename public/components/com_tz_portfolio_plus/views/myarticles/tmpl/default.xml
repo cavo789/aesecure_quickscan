@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+        <layout title="COM_TZ_PORTFOLIO_PLUS_MY_ARTICLES_VIEW_DEFAULT_TITLE"
+                option="COM_TZ_PORTFOLIO_PLUS_ARTICLES_VIEW_DEFAULT_OPTION">
+            <help
+                url="https://www.tzportfolio.com/document.html"
+            />
+            <message>
+                <![CDATA[COM_TZ_PORTFOLIO_PLUS_MY_ARTICLES_VIEW_DEFAULT_DESC]]>
+            </message>
+        </layout>
+
+    <fields name="params" addfieldpath="/administrator/components/com_tz_portfolio_plus/models/fields">
+        <!-- Add fields to the request variables for the layout. -->
+        <fieldset name="request">
+            <field type="tzstatus" name="filter"
+                   filter="-3,-2,0,1,3,4"
+                   label="COM_TZ_PORTFOLIO_PLUS_DEFAULT_FILTER"
+                   description="COM_TZ_PORTFOLIO_PLUS_DEFAULT_FILTER_DESC">
+                <option value="">JOPTION_SELECT_PUBLISHED</option>
+            </field>
+        </fieldset>
+    </fields>
+</metadata>

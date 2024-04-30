@@ -1,0 +1,216 @@
+#tz-portfolio-template-information{
+  margin-bottom: 10px;
+}
+.tpp-bootstrap a{
+  outline: 0;
+}
+.tpp-bootstrap a:hover,
+.tpp-bootstrap a:focus,
+.tpp-bootstrap a:active{
+  outline: none;
+  text-decoration: none;
+}
+.tpp-bootstrap .btn-default{
+  border-color: #ddd;
+}
+.tpp-bootstrap .modal{
+  width: auto;
+  background: none;
+  margin: 0;
+}
+#TzContent .TzPortfolioTitle,
+.TzTag .TzBlogTitle,
+.TzUser .TzBlogTitle,
+.TzBlog .TzBlogTitle,
+.tz-search .title{
+  font-size: 20px;
+  line-height: 26px;
+  margin-top: 0;
+}
+.tpp-bootstrap .TzPortfolioTitle a,
+.TzTag .TzBlogTitle a,
+.TzUser .TzBlogTitle a,
+.TzBlog .TzBlogTitle a,
+.tz-search .title a{
+  color: #3b3b3b;
+}
+.tpp-bootstrap .TzPortfolioReadmore{
+  font-size: 12px;
+  margin-top: 10px;
+  text-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+#tz_append{
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+#tz_append .btn{
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+#portfolio #filter .btn{
+  margin-right: 5px;
+}
+#portfolio .element,
+.TzTag,
+.TzUser,
+.TzItemPage,
+.TzBlog{
+  color: #616161;
+  line-height: 20px;
+}
+.element .TzInner{
+  padding: 5px;
+}
+.TzPortfolioIntrotext{
+  margin-bottom: 10px;
+}
+.TzPortfolioDescription {
+  padding: 0 10px 10px;
+}
+.TzArticleTag .label{
+  margin-right: 5px;
+}
+
+/* Styles for article view */
+.TzHeadingTitle{
+  padding: 0 15px;
+}
+.TzItemPage{
+  .TzArticleTitle{
+    margin-top: 0;
+    color: #3b3b3b;
+    font-size: 28px;
+  }
+  .tz_portfolio_plus_like_button{
+    .TzLikeButtonInner{
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .TzLikeButtonInner{
+      > .TwitterButton,
+      > .PinterestButton{
+        padding-right: 11px;
+      }
+    }
+  }
+}
+.TzUser .TzArticleAuthorTitle,
+.TzItemPage .TzArticleAuthorTitle,
+.TzItemPage .TzRelatedTitle,
+.TzCategories .item-title{
+  margin-top: 0;
+  color: #3b3b3b;
+  font-size: 18px;
+  line-height: 24px;
+}
+.TzArticleMedia,
+.TzTagMedia,
+.TzUserMedia{
+  margin-bottom: 15px;
+}
+.TzUser .TzReadmore{
+  margin-top: 5px;
+}
+.TzItemsRow .TzItem{
+  border: 1px solid #ddd;
+  padding: 15px 15px 20px;
+}
+.TzLeading, .TzItem {
+  margin-bottom: 25px;
+}
+.tz_portfolio_plus_user{
+  margin-bottom: 20px;
+}
+.tz_portfolio_plus_user .media{
+  margin-top: 0;
+}
+.tz_portfolio_plus_user .media-heading{
+  font-size: 16px;
+}
+.AuthorAvatar.author-avatar-default .author-icon {
+  font-size: 100px;
+  line-height: 95px;
+}
+.TzRelated .TzItem {
+  margin-bottom: 8px;
+}
+.TzTag .TzTagHeading{
+  color: #3b3b3b;
+  font-size: 24px;
+  line-height: 30px;
+  margin-bottom: 15px;
+}
+.rating .rating-item{
+  color: #f5d608;
+}
+.rating .rating-item:hover,
+.rating .rating-item:focus,
+.rating .rating-item:active{
+  color: #f5d608;
+}
+.rating-item > span{
+  color: #f5d608;
+}
+
+.tpp-bootstrap select,
+.tpp-bootstrap textarea,
+.tpp-bootstrap input[type="text"],
+.tpp-bootstrap input[type="password"],
+.tpp-bootstrap input[type="datetime"],
+.tpp-bootstrap input[type="datetime-local"],
+.tpp-bootstrap input[type="date"],
+.tpp-bootstrap input[type="month"],
+.tpp-bootstrap input[type="time"],
+.tpp-bootstrap input[type="week"],
+.tpp-bootstrap input[type="number"],
+.tpp-bootstrap input[type="email"],
+.tpp-bootstrap input[type="url"],
+.tpp-bootstrap input[type="search"],
+.tpp-bootstrap input[type="tel"],
+.tpp-bootstrap input[type="color"],
+.tpp-bootstrap .uneditable-input{
+  height: auto;
+}
+.tpp-bootstrap .chzn-container-multi .tz_chzn-choices li.search-field input[type=text]{
+  height: 24px;
+}
+.tpp-bootstrap .input-append .add-on,
+.tpp-bootstrap .input-prepend .add-on{
+  height: auto;
+}
+.tpp-bootstrap .input-append .add-on.button-clear,
+.tpp-bootstrap .input-prepend .add-on.button-clear{
+  padding-bottom: 3px;
+}
+.tpp-bootstrap.tp-edit-page .nav{
+  margin-bottom: 15px;
+}
+.tpp-bootstrap.tp-edit-page .form-horizontal .control-label{
+  text-align: left;
+}
+.tpp-bootstrap .modal.in{
+  display: block !important;
+}
+.tpp-bootstrap .modal-header{
+  background: #fff;
+}
+.tpp-bootstrap .modal-body{
+  width: 100%;
+  background: #fff;
+}
+.tpp-bootstrap .tpp-author-about .avatar{
+  float: left;
+  display: flex;
+  padding-right: 0;
+  margin-right: 10px;
+  align-items: center;
+  justify-content: center;
+}
+.tpp-author-about .title{
+  margin-top: 0;
+}
+/* End styles for article view */

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <!-- Start parameters for field's create or edit view -->
+    <fields name="params">
+        <fieldset name="basic">
+            <field type="list" name="bootstrap_style"
+                   label="PLG_EXTRAFIELDS_RADIO_BOOTSTRAP_STYLE_LABEL">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field type="list" name="switcher"
+                   label="PLG_EXTRAFIELDS_RADIO_SWITCHER_LABEL"
+                   description="PLG_EXTRAFIELDS_RADIO_SWITCHER_DESC">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field type="list" name="number_columns"
+                   label="PLG_EXTRAFIELDS_RADIO_NUMBER_COLUMNS_LABEL">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">PLG_EXTRAFIELDS_RADIO_NO_COLUMN</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </field>
+            <field type="list" name="search_type"
+                   label="PLG_EXTRAFIELDS_RADIO_SEARCH_TYPE_LABEL">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="dropdownlist">PLG_EXTRAFIELDS_RADIO_DROPDOWN_LIST</option>
+                <option value="multiselect">PLG_EXTRAFIELDS_RADIO_MULTIPLESELECT</option>
+                <option value="radio">PLG_EXTRAFIELDS_RADIO_TITLE</option>
+                <option value="checkbox">PLG_EXTRAFIELDS_RADIO_CHECKBOX</option>
+            </field>
+        </fieldset>
+    </fields>
+    <!-- End parameters for field's create or edit view -->
+</form>

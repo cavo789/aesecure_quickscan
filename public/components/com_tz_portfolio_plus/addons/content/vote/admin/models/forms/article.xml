@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <!-- Parameters for article's create or edit view -->
+    <fields name="attribs">
+        <fieldset name="article_category_listing">
+            <field type="spacer" name="spacer_vote_hr" hr="true"/>
+            <field type="spacer" name="spacer_vote_name"
+                   class="alert alert-warning btn-block"
+                   label="PLG_CONTENT_VOTE_OPTIONS_LABEL"/>
+            <field type="list" name="show_cat_vote"
+                   label="JGLOBAL_SHOW_VOTE_LABEL"
+                   description="JGLOBAL_SHOW_VOTE_DESC">
+                <option value="">COM_TZ_PORTFOLIO_PLUS_OPTION_INHERIT_FROM_CATEGORY</option>
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+        </fieldset>
+    </fields>
+    <!-- End parameters for article's create or edit view -->
+</form>

@@ -1,0 +1,12 @@
+.tz-filter .list-extrafield{
+    padding-left: 0;
+    margin-left: 20px;
+}
+.tz-filter .chzn-container{
+    display: block;
+    margin-bottom: 7px;
+}
+.tz-filter select{
+    min-width: 180px;
+    margin-bottom: 7px;
+}

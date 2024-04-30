@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields name="filter">
+		<field type="text" name="search"
+			   hint="JSEARCH_FILTER"
+			   label="COM_TZ_PORTFOLIO_PLUS_FILTER_SEARCH_LABEL"
+			   description="COM_TZ_PORTFOLIO_PLUS_FILTER_SEARCH_DESC"/>
+
+		<field type="tzstatus" name="published"
+			   filter="-3,-2,0,1,3,4"
+			   onchange="this.form.submit();"
+			   label="COM_CONTENT_FILTER_PUBLISHED"
+			   description="COM_CONTENT_FILTER_PUBLISHED_DESC">
+			<option value="">JOPTION_SELECT_PUBLISHED</option>
+		</field>
+
+		<field type="tzcategory" name="category_id"
+			   multiple="true"
+			   class="multipleCategories"
+			   onchange="this.form.submit();"
+			   label="JOPTION_FILTER_CATEGORY"
+			   description="JOPTION_FILTER_CATEGORY_DESC"/>
+
+		<field type="tzmediatypes" name="type"
+			   multiple="true"
+			   class="multipleMediaType"
+			   onchange="this.form.submit();"
+			   label="COM_TZ_PORTFOLIO_PLUS_TYPE_OF_MEDIA"
+			   description="COM_TZ_PORTFOLIO_PLUS_TYPE_OF_MEDIA">
+			<option value="none">COM_TZ_PORTFOLIO_PLUS_OPTION_NONE_MEDIA</option>
+		</field>
+
+		<field type="fieldgroups" name="group"
+			   onchange="this.form.submit();"
+			   label="COM_TZ_PORTFOLIO_PLUS_GROUP"
+			   description="COM_TZ_PORTFOLIO_PLUS_GROUP">
+			<option value="">COM_TZ_PORTFOLIO_PLUS_OPTION_SELECT_GROUP</option>
+		</field>
+
+		<field type="integer" name="level"
+			   first="1" last="10"
+			   step="1" languages="*"
+			   onchange="this.form.submit();"
+			   label="JOPTION_FILTER_LEVEL"
+			   description="JOPTION_FILTER_LEVEL_DESC">
+			<option value="">JOPTION_SELECT_MAX_LEVELS</option>
+		</field>
+
+		<!--<field type="accesslevel" name="access"-->
+			   <!--multiple="true"-->
+			   <!--class="multipleAccessLevels"-->
+			   <!--onchange="this.form.submit();"-->
+			   <!--label="JOPTION_FILTER_ACCESS"-->
+			   <!--description="JOPTION_FILTER_ACCESS_DESC"/>-->
+
+		<!--<field type="author" name="author_id"-->
+			   <!--multiple="true"-->
+			   <!--class="multipleAuthors"-->
+			   <!--onchange="this.form.submit();"-->
+			   <!--label="COM_CONTENT_FILTER_AUTHOR"-->
+			   <!--description="COM_CONTENT_FILTER_AUTHOR_DESC">-->
+			<!--<option value="0">JNONE</option>-->
+		<!--</field>-->
+
+		<!--<field type="contentlanguage" name="language"-->
+			   <!--onchange="this.form.submit();"-->
+			   <!--label="JOPTION_FILTER_LANGUAGE"-->
+			   <!--description="JOPTION_FILTER_LANGUAGE_DESC">-->
+			<!--<option value="">JOPTION_SELECT_LANGUAGE</option>-->
+			<!--<option value="*">JALL</option>-->
+		<!--</field>-->
+		<input type="hidden" name="form_submited" value="1"/>
+	</fields>
+
+	<fields name="list">
+		<field type="list" name="fullordering"
+			   default="a.id DESC"
+			   onchange="this.form.submit();"
+			   label="COM_CONTENT_LIST_FULL_ORDERING"
+			   description="COM_CONTENT_LIST_FULL_ORDERING_DESC">
+			<option value="">COM_TZ_PORTFOLIO_PLUS_SORT_BY</option>
+			<option value="a.ordering ASC">COM_TZ_PORTFOLIO_PLUS_HEADING_ORDERING_ASC</option>
+			<option value="a.ordering DESC">COM_TZ_PORTFOLIO_PLUS_HEADING_ORDERING_DESC</option>
+			<option value="a.state ASC">COM_TZ_PORTFOLIO_PLUS_HEADING_STATUS_ASC</option>
+			<option value="a.state DESC">COM_TZ_PORTFOLIO_PLUS_HEADING_STATUS_DESC</option>
+			<option value="a.title ASC">COM_TZ_PORTFOLIO_PLUS_HEADING_TITLE_ASC</option>
+			<option value="a.title DESC">COM_TZ_PORTFOLIO_PLUS_HEADING_TITLE_DESC</option>
+			<option value="a.type ASC">COM_TZ_PORTFOLIO_PLUS_HEADING_MEDIA_TYPE_ASC</option>
+			<option value="a.type DESC">COM_TZ_PORTFOLIO_PLUS_HEADING_MEDIA_TYPE_DESC</option>
+			<option value="category_title ASC">COM_TZ_PORTFOLIO_PLUS_HEADING_CATEGORY_ASC</option>
+			<option value="category_title DESC">COM_TZ_PORTFOLIO_PLUS_HEADING_CATEGORY_DESC</option>
+			<option value="groupname ASC">COM_TZ_PORTFOLIO_PLUS_HEADING_GROUP_ASC</option>
+			<option value="groupname DESC">COM_TZ_PORTFOLIO_PLUS_HEADING_GROUP_DESC</option>
+			<option value="association ASC" requires="associations">COM_TZ_PORTFOLIO_PLUS_HEADING_ASSOCIATIONS_ASC</option>
+			<option value="association DESC" requires="associations">COM_TZ_PORTFOLIO_PLUS_HEADING_ASSOCIATIONS_DESC</option>
+			<option value="a.created_by ASC">COM_TZ_PORTFOLIO_PLUS_HEADING_AUTHOR_ASC</option>
+			<option value="a.created_by DESC">COM_TZ_PORTFOLIO_PLUS_HEADING_AUTHOR_DESC</option>
+			<option value="a.created ASC">COM_TZ_PORTFOLIO_PLUS_HEADING_DATE_ASC</option>
+			<option value="a.created DESC">COM_TZ_PORTFOLIO_PLUS_HEADING_DATE_DESC</option>
+			<option value="a.hits ASC">COM_TZ_PORTFOLIO_PLUS_HEADING_HITS_ASC</option>
+			<option value="a.hits DESC">COM_TZ_PORTFOLIO_PLUS_HEADING_HITS_DESC</option>
+			<option value="a.priority ASC">COM_TZ_PORTFOLIO_PLUS_HEADING_PRIORITY_ASC</option>
+			<option value="a.priority DESC">COM_TZ_PORTFOLIO_PLUS_HEADING_PRIORITY_DESC</option>
+			<option value="a.id ASC">COM_TZ_PORTFOLIO_PLUS_HEADING_ID_ASC</option>
+			<option value="a.id DESC">COM_TZ_PORTFOLIO_PLUS_HEADING_DESC</option>
+		</field>
+
+		<field type="limitbox" name="limit"
+			   default="25" class="input-mini"
+			   onchange="this.form.submit();"
+			   label="COM_CONTENT_LIST_LIMIT"
+			   description="COM_CONTENT_LIST_LIMIT_DESC"/>
+	</fields>
+</form>

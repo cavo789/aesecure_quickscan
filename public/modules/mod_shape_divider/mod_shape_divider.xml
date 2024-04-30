@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<extension type="module" version="3.*" method="upgrade" client="site">
+    <name>Shape Divider</name>
+    <author>Joomlaplates</author>
+	<authorEmail>support@joomlaplates.de</authorEmail>
+    <authorUrl>https://joomlaplates.de</authorUrl>
+    <copyright>© 2022 Joomlaplates. All rights reserved.</copyright>
+    <license>GNU General Public License version 3 or later; see http://www.gnu.org/licenses/gpl-3.0.txt</license>
+    <version>1.2.0</version>
+    <creationDate>2021</creationDate>
+    <description><![CDATA[
+		<p class="btn btn-sm btn-info" p>Version 1.2.0</p>
+		<p><a class="btn btn-sm btn-success" href="https://www.joomlaplates.de/dokumentation.html" target="_blank">Dokumentation</a></p>
+    ]]></description>
+	<updateservers>
+		<server type="extension" priority="2" name="Shape Divider">https://www.joomlaplates.de/updates/uikit/mod_shape_divider.xml</server>
+	</updateservers>	
+
+    <files>
+        <filename module="mod_shape_divider">mod_shape_divider.php</filename>
+        <folder>tmpl</folder>
+		<filename>changelog.txt</filename>
+
+    </files>
+
+    <config>
+        <fields name="params">
+
+            <fieldset name="basic">
+                
+
+				
+				<field name="shape_bg" type="color" label="Shape Background" default="#f9f9f9" class="input-small" />
+
+				<field name="shape_pos" type="list" label="Shape Angle" default="0" class="btn-group" >
+					<option value="left">Top Left</option>
+					<option value="right">Top Right</option>
+				</field> 
+				<field name="shape_angle" type="list" label="Shape Angle Degree" default="" >
+                    <option value="1deg">1</option>
+                    <option value="2deg">2</option>
+                    <option value="3deg">3</option>
+                    <option value="4deg">4</option>
+                    <option value="5deg">5</option>
+                    <option value="6deg">6</option>
+                    <option value="7deg">7</option>                    
+                </field>
+				
+            </fieldset>
+
+
+
+
+            <fieldset name="advanced">
+                <field name="layout" type="modulelayout" label="JFIELD_ALT_LAYOUT_LABEL" description="JFIELD_ALT_MODULE_LAYOUT_DESC"/>
+                <field name="cache" type="list" label="COM_MODULES_FIELD_CACHING_LABEL" description="COM_MODULES_FIELD_CACHING_DESC" default="1">
+                    <option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+                    <option value="1">JGLOBAL_USE_GLOBAL</option>
+                </field>
+            </fieldset>
+
+        </fields>
+    </config>
+</extension>

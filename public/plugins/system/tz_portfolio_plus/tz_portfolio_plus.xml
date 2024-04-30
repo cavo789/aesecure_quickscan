@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" version="3.0" group="system" method="upgrade">
+    <name>plg_system_tz_portfolio_plus</name>
+    <author>DuongTVTemPlaza</author>
+    <creationDate>January 25th 2013</creationDate>
+    <copyright>Copyright (C) 2015 TemPlaza. All rights reserved.</copyright>
+    <license>GNU/GPL v2 or later http://www.gnu.org/licenses/gpl-2.0.html</license>
+    <authorEmail>support@templaza.com</authorEmail>
+    <authorUrl>www.templaza.com/</authorUrl>
+    <version>2.6.0</version>
+
+    <files>
+        <filename plugin="tz_portfolio_plus">tz_portfolio_plus.php</filename>
+        <filename>index.html</filename>
+    </files>
+    <languages folder="language">
+        <language tag="en-GB">en-GB/en-GB.plg_system_tz_portfolio_plus.ini</language>
+        <language tag="en-GB">en-GB/en-GB.plg_system_tz_portfolio_plus.sys.ini</language>
+    </languages>
+</extension>

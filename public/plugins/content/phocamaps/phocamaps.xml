@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="content" method="upgrade" version="4.0">
+	<name>plg_content_phocamaps</name>
+	<author>Jan Pavelka (www.phoca.cz)</author>
+	<creationDate>15/03/2023</creationDate>
+	<authorEmail></authorEmail>
+	<authorUrl>https://www.phoca.cz</authorUrl>
+	<copyright>Jan Pavelka</copyright>
+	<license>GNU/GPL</license>
+	<version>4.0.1</version>
+	<description>PLG_CONTENT_PHOCAMAPS_DESCRIPTION</description>
+	<projectName>PhocaMapsPlugin</projectName>
+
+	<media destination="plg_content_phocamaps" folder="media">
+		<folder>css</folder>
+		<folder>js</folder>
+		<filename>index.html</filename>
+	</media>
+
+	<files>
+		<filename plugin="phocamaps">index.html</filename>
+		<filename plugin="phocamaps">manifest.xml</filename>
+		<filename plugin="phocamaps">phocamaps.php</filename>
+	</files>
+
+	<languages>
+		<language tag="en-GB">language/en-GB/en-GB.plg_content_phocamaps.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.plg_content_phocamaps.sys.ini</language>
+	</languages>
+
+	<administration>
+		<languages>
+			<language tag="en-GB">language/en-GB/en-GB.plg_content_phocamaps.ini</language>
+			<language tag="en-GB">language/en-GB/en-GB.plg_content_phocamaps.sys.ini</language>
+		</languages>
+	</administration>
+	
+	<config>
+	
+	<fields name="params" addpath="/administrator/components/com_phocamaps/models/fields">
+		
+		<fieldset name="basic">
+		
+		<field name="display_map_description" type="list" default="0" label="PLG_CONTENT_PHOCAMAPS_DISPLAY_MAP_DESCRIPTION_LABEL" description="PLG_CONTENT_PHOCAMAPS_DISPLAY_MAP_DESCRIPTION_DESC">
+			<option value="0">PLG_CONTENT_PHOCAMAPS_NO</option>
+			<option value="1">PLG_CONTENT_PHOCAMAPS_YES</option>
+		</field>
+		
+		<field name="detail_window" type="list" default="1" label="PLG_CONTENT_PHOCAMAPS_DETAIL_WINDOW_LABEL" description="PLG_CONTENT_PHOCAMAPS_DETAIL_WINDOW_DESC">
+			<option value="1">PLG_CONTENT_PHOCAMAPS_STANDARD_POPUP_WINDOW</option>
+			<option value="2">PLG_CONTENT_PHOCAMAPS_BOOTSTRAP_MODAL_BOX</option>
+		</field>
+		
+
+		</fieldset>
+	</fields>
+	</config>
+
+	<updateservers>
+		<server type="extension" name="PLG_CONTENT_PHOCAMAPS" priority="1"><![CDATA[https://raw.githubusercontent.com/PhocaCz/PhocaMapsPlugin/master/manifest.xml]]></server>
+	</updateservers>
+</extension>

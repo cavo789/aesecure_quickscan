@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install PUBLIC "-//Joomla! 2.5//DTD template 1.0//EN" "http://www.joomla.org/xml/dtd/2.5/template-install.dtd">
+<extension version="3.1" type="tz_portfolio_plus-template" method="upgrade">
+    <name>elegant</name>
+    <version>3.1</version>
+    <creationDate>September 5th 2019</creationDate>
+    <author>Sonny</author>
+    <authorEmail>sonlv@templaza.com</authorEmail>
+    <authorUrl>www.templaza.com</authorUrl>
+    <copyright>Copyright (C) 2019 TemPlaza. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <description>TZ_PORTFOLIO_PLUS_TPL_XML_DESCRIPTION</description>
+    <files>
+        <folder>config</folder>
+        <folder>html</folder>
+        <folder>images</folder>
+        <folder>js</folder>
+        <folder>language</folder>
+        <folder>scss</folder>
+        <filename>index.html</filename>
+        <filename>template.php</filename>
+        <filename>template.xml</filename>
+        <filename>template_preview.png</filename>
+    </files>
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field type="radio" name="use_single_layout_builder"
+                       default="1" class="switcher btn-group"
+                       layout="joomla.form.field.radio.switcher"
+                       label="TPL_SYSTEM_LAYOUT_BUILDER_LABEL">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field type="radio" name="load_style"
+                       default="1" class="switcher btn-group"
+                       layout="joomla.form.field.radio.switcher"
+                       label="TPL_SYSTEM_LOAD_STYLE_LABEL">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="date_format" type="text"
+                       default="l, d F Y"
+                       label="COM_TZ_PORTFOLIO_PLUS_DATE_FORMAT"
+                       description="COM_TZ_PORTFOLIO_PLUS_DATE_FORMAT_DESC"/>
+                <field type="list" name="filter_style"
+                       label="TP_STYLE_ELEGANT_FILTER_STYLE"
+                       description="TP_STYLE_ELEGANT_FILTER_STYLE_DESC">
+                    <option value="">JDEFAULT</option>
+                    <option value="dropdown">COM_TZ_PORTFOLIO_PLUS_DROP_DOWN_SELECTION</option>
+                </field>
+            </fieldset>
+        </fields>
+    </config>
+</extension>

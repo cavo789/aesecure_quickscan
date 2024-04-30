@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <!-- Start parameters for field's create or edit view -->
+    <fields name="params">
+        <fieldset name="basic">
+            <field type="list" name="regex"
+                   label="PLG_EXTRAFIELDS_TEXT_REGEX_LABEL"
+                   description="PLG_EXTRAFIELDS_TEXT_REGEX_DESC">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="none">JNONE</option>
+                <option value="/^[a-zA-Z]$/">PLG_EXTRAFIELDS_TEXT_SINGLE_LETTER</option>
+                <option value="/^[a-zA-Z]+$/">PLG_EXTRAFIELDS_TEXT_ALPHABETIC_STRING</option>
+                <option value="/^[a-zA-Z0-9]+$/">PLG_EXTRAFIELDS_TEXT_ALPHA_NUMERIC_STRING</option>
+                <option value="/^\w+$/">PLG_EXTRAFIELDS_TEXT_SINGLE_WORD</option>
+                <option value="/^\d+$/">PLG_EXTRAFIELDS_TEXT_INTEGER</option>
+                <option value="/^\d+(\.\d+)?$/">PLG_EXTRAFIELDS_TEXT_DECIMAL</option>
+                <option value="/^[\w\.-]+@[\w\.-]+\.[\w\.-]{2,6}$/">PLG_EXTRAFIELDS_TEXT_EMAIL_ADDRESS</option>
+                <option value="/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/">PLG_EXTRAFIELDS_TEXT_TELEPHONE_NUMBER</option>
+                <option value="/^(https?:\/\/)?([\w\.-]+)\.([\w\.-]{2,6})([\/\w \.-]*)*\/?$/i">PLG_EXTRAFIELDS_TEXT_URL</option>
+                <option value="/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/">
+                    PLG_EXTRAFIELDS_TEXT_IP_ADDRESS
+                </option>
+                <option value="custom">PLG_EXTRAFIELDS_TEXT_CUSTOM_REGEX</option>
+            </field>
+            <field type="text" name="custom_regex"
+                   label="PLG_EXTRAFIELDS_TEXT_CUSTOM_REGEX"
+                   description="PLG_EXTRAFIELDS_TEXT_CUSTOM_REGEX_DESC"/>
+            <field type="text" name="size"
+                   label="PLG_EXTRAFIELDS_TEXT_SIZE_LABEL"/>
+            <field type="text" name="placeholder"
+                   label="PLG_EXTRAFIELDS_TEXT_PLACEHOLDER_LABEL"/>
+            <field type="list" name="suggestion"
+                   label="PLG_EXTRAFIELDS_TEXT_SUGGESTION_LABEL"
+                   description="PLG_EXTRAFIELDS_TEXT_SUGGESTION_DESC">
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+        </fieldset>
+    </fields>
+    <!-- End parameters for field's create or edit view -->
+</form>

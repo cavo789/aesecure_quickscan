@@ -1,0 +1,1 @@
+Joomla=window.Joomla||{},document.addEventListener("DOMContentLoaded",(()=>{Joomla.submitbutton=o=>!("map.delete"===o&&!window.confirm(Joomla.Text._("COM_FINDER_MAPS_CONFIRM_DELETE_PROMPT"))||(Joomla.submitform(o),0))}));

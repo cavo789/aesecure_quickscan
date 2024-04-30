@@ -1,0 +1,1 @@
+!function(){"use strict";!function(t){t||(window.Joomla={});document.addEventListener("DOMContentLoaded",(function n(){t.submitbutton=function(n){return!("filters.delete"===n&&!window.confirm(t.Text._("COM_FINDER_INDEX_CONFIRM_DELETE_PROMPT")))&&(t.submitform(n),!0)},document.addEventListener("DOMContentLoaded",n)}))}(Joomla)}();

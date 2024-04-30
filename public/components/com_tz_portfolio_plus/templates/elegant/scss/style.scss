@@ -1,0 +1,18 @@
+/*
+ * Main scss file.
+ * The scss file of your style will be compile to css by path 'com_tz_portfolio_plus/css/style/your-style-name/style.css'
+*/
+
+/*
+ * Bootstrap's functions and variables imported automatic
+ * Bootstrap will import automatic by bootstrap option in global config
+ * You could override bootstrap's variables in variable_override.scss file
+*/
+
+@import "variables";
+
+/* Import scss from core*/
+@import '../../../scss/style';
+
+/* Import scss of style */
+@import "basic";

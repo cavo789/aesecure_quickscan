@@ -1,0 +1,29 @@
+# Changelog
+	1.2.5
+	# Animation Speed now with 0.5 or 0.1 possible
+
+	1.2.4
+	# Fixed Bug in Autoplay Interval
+
+	1.2.3
+	# Fixed Pause on Hover
+	+ Add local mp4 files to slide, Slide videos and (or) images
+
+	1.2.2
+	+ Add Animation
+
+	1.2.1
+	+ Add more content position options
+	+ Add an editor field before slideshow
+
+	1.2.0
+	+ Initial Release
+	
+
+	* -> Security Fix
+	# -> Bug Fix
+	$ -> Language fix or change
+	+ -> Addition
+	^ -> Change
+	- -> Removed
+	! -> Note

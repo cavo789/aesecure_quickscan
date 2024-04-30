@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+	<field name="cols" type="radio" label="Show and Hide Items for better Overview" default="0" >
+		<option value="0">JHIDE</option>
+		<option value="1">JSHOW</option>
+	</field>
+
+    <field name="title" type="text" label="MOD_UK_SLIDER_FORM_TITLE" class="input-xxlarge" showon="cols!:0"/>
+    <field name="img" type="media" label="Image" class="input-xxlarge" showon="cols!:0"/>
+
+	<field name="content" type="textarea" label="MOD_UK_SLIDER_FORM_CONTENT" rows="3" filter="raw" class="span12" showon="cols!:0"/>
+
+    <field name="modal_content" type="editor" label="Modalbox Content" filter="raw"  showon="cols!:0"/>
+	
+    <field name="modal_link" type="text" label="Unique Modal ID" description="Modal ID must be unique without Space" default="modal_001" class="input-large" showon="cols!:0"/>
+</form>

@@ -1,0 +1,72 @@
+[
+  {
+    "risk": "danger",
+    "pattern": "(\\@?(eval|include|system) *\\( *\\$_(COOKIES|GET|REQUEST|POST|SESSION))",
+    "disclaimer": "HIGHPROBALITY"
+  },
+  {
+    "risk": "danger",
+    "pattern": "(eval *\\(.*\\( *\\$_(COOKIES|GET|REQUEST|POST|SESSION))",
+    "disclaimer": "HIGHPROBALITY"
+  },
+  {
+    "risk": "danger",
+    "pattern": "(gzinflate *\\( *base64_decode)",
+    "disclaimer": "HIGHPROBALITY"
+  },
+  {
+    "risk": "danger",
+    "pattern": "(c99shell|c999sh_surl|edoced_46esab)",
+    "disclaimer": "HIGHPROBALITY"
+  },
+  {
+    "risk": "danger",
+    "pattern": "(c2U2NF9kZWNvZGU)",
+    "disclaimer": "HIGHPROBALITY"
+  },
+  {
+    "risk": "danger",
+    "pattern": "(GIF89a.*[\\r\\n]*.*<\\?php)",
+    "disclaimer": "HIGHPROBALITYFALSEGIF"
+  },
+  {
+    "risk": "danger",
+    "pattern": "(lily666\\.com|void\\.ru)",
+    "disclaimer": "HIGHPROBALITYBADSITE"
+  },
+  {
+    "risk": "danger",
+    "pattern": "(\"Spamed|\"_sreupot\"|\"e_urstop\"|\"euosp_tr\"|\"eutorsp_\"|\"oustp_er\"|\"peors_ut\"|\"puote_rs\"|\"rpot_eus\"|\"rseutop_\"|\"tpuo_rse\"|\"tsup_ore\"|\"tusre_op\"|\"uosrp_et\"|\"ureso_tp\"|\"us_terop\"|#arabpwn|\\$wp___wp|\\%20Digest\\%20cracker|\\%23Priv9\\%20htaccess|0d4y0nwh3v3ryw33k4n0n0ps|0r5FAwCUOe7vmduZ0F7S|1923Turk|1Aqapkrv|1nf3ct0r|2MzRp & LocalMan|3NxrXUnuecuwvOmNgdImmHkkL1qp|3duc4t10n4l|46seto_pacdb|4cae_db6stpo|4debptoc_6as|4n7153c 5upp0r73rs|4rb1tr4ry|6_sctaop4bde|6b4ce_adptso|6d_asp4eobct|6esbt4_dpcoa|6socted4bap_|702H702H702H702H702H70UJGw4qf|73s71ng sh3ll|7h3 c0ckr04ch|8thairforce|@r00t3rz|ASPSpyder|AZZATSSINS|Abdullah|Ahmed Shawky|Aki3m|Alaykoum|AlpHaNiX|Amin Shokohi|Anketa|AnonAngel|AnonCoders|AnonHack|Anonymous007HFZ|Antipeace|Arab Security|Arbitrary File Upload|Arc~en~Ciel|Ashwagandha|AtzShahab|Ayyildiz|Az\u00c9\u2122rbaycanca|B3742k|BCV4UCt1oI7EJSweSB1Tb77F|BL4cK Release|Barabaka|BeatsByDreCyber|Benutzungsvorschrift |Bl0od3r|BlackJoker|Blankon33|Brazil *HackTeam|BruT3Force|Bruteforcing|By *zehir|By MecTruy|By\\%20Piaster|Bypass Exploit|C0D3D By|COM WSHSHELL|CWKnockout|CYBERSERKERS|CaTugkQCUKPRW2apAMa3vcs6mZj5LkL|Check Card PIN|CiH_H@CkEr|Cleiton Pinheiro|CodersLeeT Team|Codz by angel|Common *Webshell|Coupdegrace|Cr@zy_King|Cracked Password|Crazy3xploit|Cross Site Script|Cyb3R_ShubhaM|Cyber army|D35m0nd142|D9aWtZl6Sw4qXT2J|DEVIL SHELL|DXGLOBALSHI|DamaneDz|DanZo KaGawa|Data Cha0s|Dengan\\%20Bijak|De\u00c4\u0178erler|Ditambahkan|Dmo3 aNsanH|DonHaXor|Dr_Cr4sH|DreAmeRz|Dustin D\u00d0\u201crr|ERRO AO ENVIAR|EglmsQVf4baXRbajFa\\%2BjhjwN|Electronic Army|Emperor Hacking TEAM|Eval Code execution|Evilc0der|Exl0it1ng|FDSJERIUI234FSDF|FUCK YOU|FathurFreakz|FeeLCoMz|FilesTools|For MEH Crew|Fuzzyman|GaRDeNFoX|GaZa\\%20Shell|Gagal Mendownload|Gaza\\%20HaCKeR|GlzdGVuKGxzb2NrLCAxKSkgew0KICAgIHBl|Group Freedom Search|H3r03ZiM0uZ|H4ck3rDr381|H4t3d Sh3ll|H70UD79lmX9k|HJ3HrqvclkZfpXr1SzTI|HaCKeR\\%20Team|HackedBy|Hadidi44|Hamid Ebadi|Hash\\%20Cracker|Hasil\\%20Bajakan|Hekk da pl0net|Heroez|HkRkoz ALKuwaiT|HolaKo|Hossein Asgary|Hr0QAz|IGlmICggaXNzZXQoICRf|IN73CT0R|INDOXPLOIT|IOSDJGIO SDGNJISDNG|IhaQueR|Indonesian people|Inj3cti0n|Iranian HackerZ|Islamophobes|JCE Fucker|JDSGISo8495|Jayalah|Joker\\%20Dark\\%20Knight|JokerGreyHat\\%20\\%20|Just B0x3d|K3CEB0NG|KA_uShell|KaptanWhiteHat|KelvinSecurity|Ketika\\%20Sahabat|KingDefacer|Knull shell|Kullanicilar|L0c4l V4lu3|LBFUBZEPURDBKVJFqUIJ8p2paobEL4L5dfN3LnjRJmAHE2YFqWBbh8GZHp|LUKE from ChickenX|Latino Saber|LoOoO*L|Lumeno|M4XS4L1M1|MENGEKSEKUSI|MaGnoM|Madan Cyber|Makayench|Masalah|Mass *Defacer|Mass *Mailer|Masukkan\\%20User\\%20|Maxiumum permissible|Medanonymous|Mehmet BAYDAR|MetalSoft|Michael Foord|Mizt3riO_uZ|Modified By iFX|Mohajer22|Morpheus|MrShahab|Mustafa Moshkela|MySQL Web Interface|Nao Enviado|NetWork Teknolojileri|Nginx1337|No\\%20Free\\%202015|NscwWL3TzY|Okay d0ne|Ow\\%3D|Owned by Spyn3t|Ozel Harekat|PAKET\\%20CP\\%20DATANG\\%20COY|PATRAOjohnnyM|PCT4BA6ODSE_|PENYALAHGUNAAN\\%20|PHP Emperor|PHPencoder|Password Cracked|Pasukan|Payday Loan|Perl IrcBot|PerlKit|Phoenix1337|PinkPanther|Powered by KcB|Puli\u00c3\u0192\u00c2\u00a7a da Passoca|R3m0t3 C0d3|RFI Olarak Kullanilmaz|RGV2aWwgU2hlbGw|RagnaroK|ReZK2LL Team|Red Hat 3|Remote File Upload|RetnOHacK|RmlsZXNNYW4|Rosebanditz|RusH Security Team|SELselectECT |SH3ll Coded|SQL Injection|SXRQefRJan4ZenRWlUsNV9JTu|Sadece c99da|Safe Mode Shell|Safe_Mode Bypass|Sani marpic|Save\\%20Palestine|Security Angel|SektionEins|Serdadu|Server intrusion|SheLL Archive|Shell Version|Shell tara|Shell \u00c3\u00bczerinde|Shell\\%20\\%3A\\%20Kontol|Shell\\%20\\%3D\\%20Kontol|Shellshock_vull|SimAttacker|Simorgh Security|SkvoznoY|SooMin Kim|St00neD|Subhashdasyam|Surrogafier|SyRiAn_34G13|Syrian Sh3ll|TERORISTTIR|TUBAN CYBER|Tamamlayamadi|Taurusomar|Team IHC|The Dark Raver|ToAxR0ot|TrYaG Team|Tunisian Fallaga Team|Ty dupo|U2B4Kn9TL2KhUw4IFCqlaC01FfcpgJD3ZfN|UDPFlood|UnDeRTaKeR|Universal Shell|Upload Shellz|Urutan\\%20dari\\%20Option|Vbulletin index changer|W3b_dR1ft3R|WSOsetcookie|Warriors Team|Web Shell by boff|Wp\\%20IP\\%20Scanner|XERATUTA|XMehdiHack|XW4NT0R0|Xenophobic|Xploit failed|Xvirus|YTFrUCknOz4kUWVfbmV5TXp|Yayank Riri|Yogyacarderlink|Yoh Diyom Ya|Yuklendi|Yunus Incredibl|ZGVjb2Rl|ZM5j2q0shf|ZaIdOoHxHaCkEr|Zamboanga |Zerox Dot|ZoRBaCK|_6dapteb4cos|_c4a6spoedtb|_dpsb64aecot|_rsotupe|aBo Ali|abdse4pc_o6t|ac_ptbe4s6od|activefamilychiropractic|against Muslims|alankritfashions|allthewebt|androidepisode|antichat|ao_td4bc6pes|aollista|armenian genocide|attacking|azrail|b0x@hotmail|b374k|b4ckd00r|baltimorecityevictions|bckdrprm|be4aotp6_dcs|bestbooksfiles|bitchx|bmZzTe8d5oDlq9mDcJV|bogel|bozit27|bqaqseq64q_dqeqcqodqe|brute force|bruteforcer|buasueu64_duecuoudue|buy followers|buyhqfollowersforcheap|by Cr@zy_King|by FASTBOY|by Michael Schierl|by dinggo|by profexer|by\\%20KALGECIN|c0d3 4 0d4y5|c0rPi0n|c3lzdGVt|c99 *shell|c99fsearch|c99madshell|c99sh_surl|c99shexit|ca46_epsotdb|cert_ercynpr|chloramphenicol|chmod 0777|cjs5BtmsJHNAPwQskc9x7d5x0fmv|co_t6s4pdeab|com_huruhelpdesk|cracking|crystalShell|cur_socket|cyber monday|d3b~X|d7025c0e80f4d58f7597f92b4ff52b92|darkc0de Crew|debranorris|defacing|devilforevryone|diebastard|djeu84m|dody\\%20a\\%C3\\%A7\\%C4\\%B1lamad\\%C4\\%B1|doxycycline|dsadasdsa1fag1|dspa6bo4tc_e|dulgandul|dzmafia|eXpl0id|edoced_46esab|eggdrop|ekin0x|envir0nn|etalfnizg|ev\\!l c0de|evilc0der|exoshell|exploit success|f33db4ck|fWI4bWhOf5jIipIC3uz40R|fashcashloan|fianewscrowrom|fix by r00nix|flashCyber|fuck security|fucking mode|fx29sh_|fx29shell|garanteepayday|gd058up6C|getlinktospam|gjwqweodsa|greataudiosdownload|greetz|grup hacking|guardservices|h00lyshit|h4ck1ng c0mmuni7y|h4ckcity|hackeado|hackmode|handjob|has been infected|hassan mrmounine|health insurance|hiddenymouz|holak0|hqnuvideoz|i hate you|iMHaPFTP|ia_archiver|illegal use of|injektor|irc_servers|iskorpitx|izleyici|jackpotcruise|jeryy34|k1LGwmFzQNn9J|katrok|kerambia159|krimoudz|lIRfQIfAgUAAgwCCgpRVlBSTVEKYgZ9cm|letshareus|lillybunn|lionaneesh|liz0zim|logcleaner|lostDC shell|m0rtix|mIRC|massbrowsersploit|medication|metoclopramide|mfileshare|midlandlibrary|milw0rm|mkd team|mortgage|multiviews|mxjbb|mypromediastoretwo|n0\\%20d0rk\\%20f0r\\%20k1dd10ts|n4ss1m|nShell v|name\\%20of\\%20Allah|nemat0da|newfastmediasearcher|nulledstylez|o_b4adpesct6|ocest6b4_pad|of Islam|onlinebooksfiles|oustp_er|p455w0rd|p6o_abce4tsd|pacotadorzinhu|pass\\:admin|paydayloan|pekayoba|petrosphenoidal|php\\%20dec\\%5B0\\%5Dder|phpremoteview|pkPlM\\%2BJ3VPNXNXV2VoTFhhPnVPN|post_exploit|prednisone|privat *shell|promediasearch|ptsuo_re|q6dq625bdi4|qZD5TPid1TzVzV1dlaExY|r00t\\%3Dpwn|r35ult_5usu|r3v3ng4ns|r57 *shell|rG5Ib053kY2419ZWhOVWL5|recky|reverse shell|romanisti|rossdrumilous|s3cur3 y0 sh17|s_cp6odet4ba|safem0de\\%20|saveclip|scoe4a_6dbpt|searchcomforgotten|security clan|select\\%201,\\%20concat|setoran404|shekkoliks|shellbot|shrewsburyyouthsoccer|simple shell|sistemasuniversales|skorpitx|sloboz|sniper_sa|spamtools|stanateaspos|startspamyes|ste_co4apb6d|sup3rm4n|sylphishprostszy|synthroid|t4ps6ob_edca|tcba4dp6o_se|tcsp4doeab6_|thamburaj|theboatersnetwork|timelesstailoring|trojan|turkishwhitehat|u4HUOF81ktfBFVhXx3Fyv20GLdYvBTfX8Nw|uggblackfridaysalesonline2015|ultr4l33t|ungku_nazmi|upl0ad|urlmediafiles|user010203|usloans|uz3 1t f0r|vAJRKOC|vJ5J15E|vQIX5FD|vTXUI|valtrex|ventolin|viagra|w3 supp0r7 y0u|w4ck1ng Shell|warrior|wcwrwewawtew_wfwunwction|webshell|wh173h475|wieeeee|wp_dy25410|x7yabE9loh0UJc02J|xSecurity|xenical|xp_brute_xmlrpc|xsecur1ty|yahoob|yalan donya ve|yb dekcah|yournetmediastore|yoursoftwareplace|zdemir BENLER|zf1nk_g3mb3l|~themaile)",
+    "disclaimer": "HIGHPROBALITY"
+  },
+  {
+    "risk": "danger",
+    "pattern": "(JF9TRVJWRVI=|UkVRVUVTVF9VUkk=|SFRUUF9SRUZFUkVS|SFRUUF9VU0VSX0FHRU5U|SFRUUF9IT1NU|SFRUUF9VU0VSX0FHRU5U|UkVNT1RFX0FERFI=|U0NSSVBUX0ZJTEVOQU1F|UEhQX1NFTEY=|ZndyaXRl|c3RyX3JlcGxhY2U|c3Vic3Ry|ZXhwbG9kZQ|Zm9wZW4=|ZnJlYWQ=|Y3Rpb25fZXhpc3R|YmFzZTY0X2RlY29kZQ==|ZmlsZV9nZXRfY29udGVudHMg|cHJlZ19yZXBsYWNl|aHR0cDovL3Rpbnl1cmwuY29t|c2hlbGxfZXhlYw==|bXVsdGlwYXJ0L2Zvcm0tZGF0YQ==)",
+    "disclaimer": "HIGHPROBALITYBASE64KEYWORD"
+  },
+  {
+    "risk": "danger",
+    "pattern": "(_COOKIE)",
+    "disclaimer": "HIGHPROBALITYBASE64KEYWORD"
+  },
+  {
+    "risk": "warning",
+    "pattern": "(c2hlbG|NoZWxs|zaGVsb|c3lzdGVt|N5c3Rlb|zeXN0ZW|cmVwbGFjZ|JlcGxhY2|yZXBsYWNl|ZXhlYy|VjaG|lY2hv|ZnVuY3Rpb2|Z1bmN0aW9u|mdW5jdGlvb|aW5jbHVkZ|luY2x1ZG|pbmNsdWRl|cmVxdWlyZ|JlcXVpcm|yZXF1aXJl|YmFzZTY0|Jhc2U2N|iYXNlNj|SFRUUF9VU0VSX0FHRU5U|hUVFBfVVNFUl9BR0VOV|IVFRQX1VTRVJfQUdFTl|Z3ppbmZsYXRl|d6aW5mbGF0Z|nemluZmxhdG|Y3NsYXNoZX|NzbGFzaGVz|jc2xhc2hlc|ZXh0cmFjd|V4dHJhY3|leHRyYWN0|JF9HRV|RfR0VU|kX0dFV|JF9QT1NU|RfUE9TV|kX1BPU1|JF9DT09LSU|RfQ09PS0lF|kX0NPT0tJR|JF9SRVFVRVNU|RfUkVRVUVTV|kX1JFUVVFU1|R0xPQkFMU|dMT0JBTF|HTE9CQUxT|c2l6ZW9m|NpemVvZ|zaXplb2|cHJpbnRm|ByaW50Z|wcmludG|ZGVmaW5l|RlZmluZ|kZWZpbm)",
+    "disclaimer": "WARNINGBASE64ENCODEDPATTERN"
+  },
+  {
+    "risk": "warning",
+    "pattern": "(Shell by .*)",
+    "disclaimer": "WARNINGNOTMANDATORYAVIRUS"
+  },
+  {
+    "risk": "warning",
+    "pattern": "(base64_decode|gzdecode|gzdeflate|gzuncompress|gzcompress|readgzfile|uudecode|zlib_decode|zlib_encode|gzfile|gzget|gzpassthru)",
+    "disclaimer": "WARNINGNOTMANDATORYAVIRUS"
+  },
+  {
+    "risk": "warning",
+    "pattern": "(AnonGhost|Backdoor|bash_history|bckdrprm|bindshell|bitchx|ConnectBackShell|Cybester90|crystalshell|cwings|dalnet|directmail|eggdrop|ekibastos|FaTaLisTiCz_Fx|FilesMan|FilesTools|fopo\\.com|guardservices|Hackeado|HaCkEr|hackmeplz|HackTeam|Hmei7|Inbox Mass Mailer|JCE Fucker|m0rtix|multiviews|phpremoteview|phpshell|phpshell|psybnc|r0nin|r57shell|raslan58|shell_exec|shellbot|\\$sh3llColor|spymeta|uname -a|undernet|upl0ad|vandal|viagra|vulnscan|Web Shell|Webshell|wrgggthhd|WSOsetcookie|WSOstripslashes|MagelangCyber|Baby_Drakon|3xp1r3|NinjaVirus|Hacked By|Punker2Bot|Zed0x|darkminz|ReaL_PuNiShEr|OoN_Boy|Pashkela|Webcommander|YENI3ERI|d3lete|K!LL3r|MrHazem|DX_Header_drawn|Dr\\.abolalh|C0derz\\.com|Mr\\.HiTman|IrSecTeam|FLoodeR|eriuqer|freetellafriend|c99ftpbrutecheck|profexor|.hell|ZOBUGTEL|M4ll3r|itsoknoproblembro|tmhapbzcerff)",
+    "disclaimer": "WARNINGNOTMANDATORYAVIRUS"
+  }
+]

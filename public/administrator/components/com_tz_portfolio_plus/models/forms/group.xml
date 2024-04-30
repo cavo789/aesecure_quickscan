@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fieldset>
+        <field type="text" name="id" class="readonly"
+               size="10" default="0"
+               readonly="true"
+               label="JGLOBAL_FIELD_ID_LABEL"
+               description ="JGLOBAL_FIELD_ID_DESC"/>
+
+        <field name="asset_id" type="hidden" filter="unset" />
+
+        <field type="text" name="title"
+               class="inputbox" size="30"
+               required="true"
+               label="JGLOBAL_TITLE" />
+
+        <field name="alias" type="text" label="JFIELD_ALIAS_LABEL"
+               description="JFIELD_ALIAS_DESC" class="inputbox" size="45" />
+
+        <field name="published" type="list" label="JSTATUS"
+               description="JFIELD_PUBLISHED_DESC" class="inputbox"
+               filter="intval" size="1" default="1">
+            <option value="1">JPUBLISHED</option>
+            <option value="0">JUNPUBLISHED</option>
+        </field>
+
+        <field name="created" type="calendar"
+               translateformat="true"
+               showtime="true"
+               filter="user_utc"
+               label="JGLOBAL_FIELD_CREATED_LABEL"
+               description="JGLOBAL_FIELD_CREATED_DESC" />
+
+        <field name="created_by" type="user"
+               label="JGLOBAL_FIELD_CREATED_BY_LABEL"
+               description="COM_TZ_PORTFOLIO_PLUS_FIELD_CREATED_BY_DESC" />
+
+        <field name="modified" type="calendar" class="readonly"
+               translateformat="true"
+               showtime="true"
+               filter="user_utc"
+               readonly="true"
+               label="JGLOBAL_FIELD_MODIFIED_LABEL"
+               description="COM_TZ_PORTFOLIO_PLUS_FIELD_MODIFIED_DESC"/>
+
+        <field name="modified_by" type="user"
+               class="readonly" readonly="true" filter="unset"
+               label="JGLOBAL_FIELD_MODIFIED_BY_LABEL" />
+
+        <field type="list" name="field_ordering_type"
+               default="0"
+               label="COM_TZ_PORTFOLIO_PLUS_FIELD_ORDERING_TYPE_LABEL"
+               description="COM_TZ_PORTFOLIO_PLUS_FIELD_ORDERING_TYPE_DESC">
+            <option value="0">JGLOBAL_NO_ORDER</option>
+            <option value="1">COM_TZ_PORTFOLIO_PLUS_ORDER_BY_FIELD</option>
+            <option value="2">COM_TZ_PORTFOLIO_PLUS_ORDER_BY_GROUP</option>
+        </field>
+
+        <field type="categoriesassignment" name="categories_assignment" class="checkbox menu-assignment"/>
+
+        <field name="description" type="editor" class="inputbox"
+               filter="JComponentHelper::filterText" buttons="true"
+               label="JGLOBAL_DESCRIPTION" />
+
+
+        <field type="accesslevel" name="access"
+               size="1"
+               label="JFIELD_ACCESS_LABEL"
+               description="JFIELD_ACCESS_DESC" />
+
+        <field name="rules" type="rules"
+               translate_label="false" class="inputbox" filter="rules"
+               component="com_tz_portfolio_plus" section="group" validate="rules"
+               label="JFIELD_RULES_LABEL"/>
+    </fieldset>
+</form>

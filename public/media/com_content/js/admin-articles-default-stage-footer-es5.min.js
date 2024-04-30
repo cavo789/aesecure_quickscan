@@ -1,0 +1,1 @@
+!function(){"use strict";!function(t,n){t.addEventListener("DOMContentLoaded",(function(){var e=t.getElementById("stage-submit-button-id");e&&e.addEventListener("click",(function(e){!function(e){var i=t.getElementById("adminForm");i&&n(e,i)}(e.target.getAttribute("data-submit-task"))}))}))}(document,Joomla.submitform)}();
