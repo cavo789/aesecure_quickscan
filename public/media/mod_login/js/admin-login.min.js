@@ -1,1 +1,0 @@
-((t,e)=>{e.addEventListener("DOMContentLoaded",(()=>{const n=e.getElementById("btn-login-submit");n&&n.addEventListener("click",(o=>{o.preventDefault(),e.formvalidator.isValid(n.form)&&t.submitbutton("login")}))}))})(window.Joomla,document);

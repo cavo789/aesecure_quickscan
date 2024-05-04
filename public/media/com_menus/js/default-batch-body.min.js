@@ -1,1 +1,0 @@
-(e=>{const t=e.getElementById("batch-menu-id"),d=e.getElementById("batch-copy-move");let n;const a=()=>{0!==n.value||""!==n.value?d.classList.remove("hidden"):d.classList.add("hidden")};t&&(n=t),d&&n.addEventListener("change",a)})(document);

@@ -1,1 +1,0 @@
-Joomla=window.Joomla||{},(e=>{document.addEventListener("DOMContentLoaded",(()=>{e.submitbuttonurl=()=>{const e=document.getElementById("adminForm"),t=document.getElementById("loading");t&&t.classList.remove("hidden"),e.installtype.value="url",e.submit()}}))})(Joomla);

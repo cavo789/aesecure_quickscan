@@ -1,1 +1,0 @@
-!function(){"use strict";!function(e){var t=function(){[].slice.call(e.querySelectorAll(".dbg-header")).forEach((function(t){t.addEventListener("click",(function(n){var c;n.preventDefault(),c=t.getAttribute("data-debug-toggle"),e.getElementById(c).classList.toggle("hidden")}))}))};e.addEventListener("DOMContentLoaded",(function(){t()}))}(document)}();

@@ -1,1 +1,0 @@
-((t,e)=>{t.addEventListener("DOMContentLoaded",(()=>{const n=t.getElementById("stage-submit-button-id");n&&n.addEventListener("click",(n=>{(n=>{const d=t.getElementById("adminForm");d&&e(n,d)})(n.target.getAttribute("data-submit-task"))}))}))})(document,Joomla.submitform);

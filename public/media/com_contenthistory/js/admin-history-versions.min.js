@@ -1,1 +1,0 @@
-window.addEventListener("DOMContentLoaded",(()=>{const d=document.getElementById("versionsModal");d&&document.body.appendChild(d)}));

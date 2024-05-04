@@ -1,1 +1,0 @@
-!function(){"use strict";Joomla=window.Joomla||{},document.addEventListener("DOMContentLoaded",(function(){Joomla.submitbutton=function(o){return!("map.delete"===o&&!window.confirm(Joomla.Text._("COM_FINDER_MAPS_CONFIRM_DELETE_PROMPT"))||(Joomla.submitform(o),0))}}))}();

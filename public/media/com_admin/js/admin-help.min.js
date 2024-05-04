@@ -1,1 +1,0 @@
-const helpIndex=document.getElementById("help-index");helpIndex&&[].slice.call(helpIndex.querySelectorAll("a")).map((e=>e.addEventListener("click",(()=>{window.scroll(0,0)}))));

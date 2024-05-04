@@ -1,1 +1,0 @@
-!function(){"use strict";Joomla=window.Joomla||{},function(t){document.addEventListener("DOMContentLoaded",(function(){t.submitbuttonurl=function(){var t=document.getElementById("adminForm"),n=document.getElementById("loading");n&&n.classList.remove("hidden"),t.installtype.value="url",t.submit()}}))}(Joomla)}();

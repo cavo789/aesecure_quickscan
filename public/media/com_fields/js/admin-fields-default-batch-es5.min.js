@@ -1,1 +1,0 @@
-!function(){"use strict";document.addEventListener("DOMContentLoaded",(function(){var e=document.getElementById("batch-group-id"),t=document.getElementById("batch-copy-move");t.classList.add("hidden"),e.addEventListener("change",(function(){"nogroup"===e.value||""!==e.value?t.classList.remove("hidden"):t.classList.add("hidden")}),!1)}))}();

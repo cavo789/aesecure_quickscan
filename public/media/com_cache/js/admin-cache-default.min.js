@@ -1,1 +1,0 @@
-Joomla=window.Joomla||{},((e,c)=>{e.addEventListener("DOMContentLoaded",(()=>{[].slice.call(e.querySelectorAll(".cache-entry")).forEach((e=>{e.addEventListener("click",(({currentTarget:e})=>{c.isChecked(e.checked)}))}))}))})(document,Joomla);

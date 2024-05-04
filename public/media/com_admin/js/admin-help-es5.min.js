@@ -1,1 +1,0 @@
-!function(){"use strict";var e=document.getElementById("help-index");e&&[].slice.call(e.querySelectorAll("a")).map((function(e){return e.addEventListener("click",(function(){window.scroll(0,0)}))}))}();

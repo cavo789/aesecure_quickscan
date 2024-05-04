@@ -1,1 +1,0 @@
-(e=>{const t=()=>{[].slice.call(e.querySelectorAll(".dbg-header")).forEach((t=>{t.addEventListener("click",(d=>{var l;d.preventDefault(),l=t.getAttribute("data-debug-toggle"),e.getElementById(l).classList.toggle("hidden")}))}))};e.addEventListener("DOMContentLoaded",(()=>{t()}))})(document);

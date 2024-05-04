@@ -1,1 +1,0 @@
-!function(){"use strict";Joomla=window.Joomla||{},function(e){e.toggleAll=function(){[].slice.call(document.querySelectorAll(".chk-menulink")).forEach((function(e){e.checked=!e.checked}))},e.toggleMenutype=function(e){[].slice.call(document.getElementsByClassName("menutype-"+e)).forEach((function(e){e.checked=!e.checked}))}}(Joomla)}();

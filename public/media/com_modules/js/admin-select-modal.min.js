@@ -1,1 +1,0 @@
-(t=>{t.addEventListener("DOMContentLoaded",(()=>{t.querySelectorAll("#new-modules-list a.select-link").forEach((t=>{t.addEventListener("click",(({currentTarget:t,target:e})=>{let n=t;n||(n=e,n&&!n.classList.contains("select-link")&&(n=n.parentNode));const a=n.getAttribute("data-function");a&&"function"==typeof window.parent[a]&&window.parent[a](n)}))}))}))})(document);
