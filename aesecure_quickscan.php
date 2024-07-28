@@ -28,7 +28,7 @@
  *
  * version 2.0.3
  *    + Prevent empty files to be scanned
- *    + Immediately show the listing of files having detected as being a virus (blacklist) or 
+ *    + Immediately show the listing of files having detected as being a virus (blacklist) or
  *      containing a virus (edited file having a virus load)
  *
  * version 2.0.2
@@ -110,6 +110,7 @@
  *
  *      So, don't use __DIR__ but c:/sites/hacked/
  */
+
 define('REPO', 'https://github.com/cavo789/aesecure_quickscan');
 
 define('DIR', str_replace('/', DIRECTORY_SEPARATOR, dirname((string) $_SERVER['SCRIPT_FILENAME'])));
@@ -1494,7 +1495,8 @@ class aeSecureCMS
      */
     private static function isJoomla(string $root): bool|array
     {
-        if ((($wpos = strpos($root, DS . 'administrator' . DS)) > 0) ||
+        if (
+            (($wpos = strpos($root, DS . 'administrator' . DS)) > 0) ||
             (($wpos = strpos($root, DS . 'bin' . DS)) > 0) ||
             (($wpos = strpos($root, DS . 'cache' . DS)) > 0) ||
             (($wpos = strpos($root, DS . 'cli' . DS)) > 0) ||
@@ -2567,7 +2569,7 @@ class aeSecureScan
     {
         $aeLanguage = aeSecureLanguage::getInstance();
 
-        return '<footer class="footer"><a href='.REPO.' target="_blank">' .
+        return '<footer class="footer"><a href=' . REPO . ' target="_blank">' .
          '&copy; Avonture Christophe 2013-' . date('Y') . ' | <span style="font-style:italic;">' .
          'aeSecure QuickScan v.' . VERSION . '</span>' .
         '</a></footer>';
@@ -2779,7 +2781,7 @@ class aeSecureScan
                 }
 
                 try {
-                    // Only files and only when size is greater than zero 
+                    // Only files and only when size is greater than zero
                     // (A virus can't be an empty file)
                     if (is_file($filename) && (filesize($filename) !== 0)) {
                         $md5 = md5_file($filename);
@@ -2787,12 +2789,12 @@ class aeSecureScan
                         if (isset($this->_arrBlackListHashes[$md5])) {
                             // Already known as bad?
                             $arrFiles[] = $filename;
-                            $arrFilesBlacklisted[] = str_replace(DIR.'/', '', $filename);
+                            $arrFilesBlacklisted[] = str_replace(DIR . '/', '', $filename);
                             ++$wNbrBlacklisted;
                         } elseif (isset($this->_arrEditedHashes[$md5])) {
                             // Already known as having a virus in it?
                             $arrFiles[] = $filename;
-                            $arrFilesEditlisted[] = str_replace(DIR.'/', '', $filename);
+                            $arrFilesEditlisted[] = str_replace(DIR . '/', '', $filename);
                             ++$wNbrEdited;
                         } elseif (isset($this->_arrCMSHashes[$md5]) || isset($this->_arrWhiteListHashes[$md5]) || isset($this->_arrOtherHashes[$md5])) {
                             // if the hash of file is listed in the CMS core file,

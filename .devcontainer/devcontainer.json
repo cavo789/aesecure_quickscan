@@ -1,15 +1,7 @@
 {
     "name": "php_devcontainer",
     "build": {
-        "dockerfile": "Dockerfile",
-        "args": {
-            "PHP_VERSION": "8.2",
-            "COMPOSER_VERSION": "2.5.5",
-            "PHPCSFIXER_INSTALL": "true",
-            "PHPCSFIXER_VERSION": "3.46.0",
-            "PHPCBF_INSTALL": "true",
-            "PHPCBF_VERSION": "3.7.2"
-        }
+        "dockerfile": "Dockerfile"
     },
     "workspaceMount": "source=${localWorkspaceFolder},target=/var/www/html,type=bind",
     "workspaceFolder": "/var/www/html",
@@ -56,12 +48,9 @@
                 "junstyle.php-cs-fixer",
                 "ms-azuretools.vscode-docker",
                 "sonarsource.sonarlint-vscode",
-                "streetsidesoftware.code-spell-checker",
-                "usernamehw.errorlens",
                 "ValeryanM.vscode-phpsab",
                 "zobo.php-intellisense"
             ]
         }
-    },
-    "postCreateCommand": "composer require rector/rector --dev"
+    }
 }

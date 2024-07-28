@@ -64,7 +64,7 @@ RUN set -e -x \
 RUN set -e -x \
     && printf "\e[0;105m%s\e[0;0m\n" "Install Linux binaries" \
     && apt-get update -yqq \
-    && apt-get install -y --no-install-recommends curl libzip-dev zip unzip \
+    && apt-get install -y --no-install-recommends curl git libzip-dev zip unzip \
     && docker-php-ext-install zip \
     && docker-php-source delete \
     && apt-get clean \

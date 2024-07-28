@@ -8,7 +8,7 @@
 
 > PHP script to install on your site (preferably in localhost for better performance) to scan files for viruses.
 
-**aeSecure QuickScan already RECOGNIZE MORE THAN 47.750 VIRUSES (September 2023) and use whitelist hashes to avoid to scan [WordPress](https://github.com/cavo789/aesecure_quickscan/tree/master/hashes/wordpress) and [Joomla](https://github.com/cavo789/aesecure_quickscan/tree/master/hashes/joomla) native files.**
+**aeSecure QuickScan already RECOGNISE MORE THAN 47.750 VIRUSES (September 2023) and use whitelist hashes to avoid to scan [WordPress](https://github.com/cavo789/aesecure_quickscan/tree/master/hashes/wordpress) and [Joomla](https://github.com/cavo789/aesecure_quickscan/tree/master/hashes/joomla) native files.**
 
 > ℹ️ **INSTALLATION**
 > You just need to get a copy of `aesecure_quickscan.php` and nothing else; please read [installation guide](#install).
@@ -53,7 +53,7 @@ aeSecure QuickScan will automatically download three or four files:
 
 - `aesecure_quickscan_lang_en-GB.json` (can also be fr-FR or nl-BE) which is the file for your language. The preferred language will be detected from your browser's configuration;
 - `aesecure_quickscan_pattern.json` contains configuration's items for the scanner;
-- `aesecure_quickscan_supported_cms.json` contains a list of CMS software recognized by the scanner.
+- `aesecure_quickscan_supported_cms.json` contains a list of CMS software recognised by the scanner.
 
 If your website is running a supported CMS like f.i. `Joomla` and a supported version, a file called `aesecure_quickscan_XXXXXX.json` will be downloaded (where `XXXXXX` is f.i. `J!3.9.0`).
 
@@ -67,7 +67,7 @@ aeSecure QuickScan will automatically three or four more files:
 
 - `aesecure_quickscan_blacklist.json` contains md5 hash of viruses;
 - `aesecure_quickscan_edited.json` contains md5 hash of files where viruses have been added;
-- `aesecure_quickscan_other.json` contains md5 hash of files that are considered as cleaned (like well known Joomla's components);
+- `aesecure_quickscan_other.json` contains md5 hash of files that are considered as cleaned (like well-known Joomla's components);
 - `aesecure_quickscan_whitelist.json` contains md5 hash of files that are considered as cleaned (manually processed file by file by Christophe, author of QuickScan);
 
 ![More JSON files](images/files_extended.png)
@@ -92,9 +92,9 @@ You need to click on this button first.
 
 Before starting the scan, QuickScan needs to know how many files he needs to scan. The `Getting the file list` action will get the list of all files of your site and all whitelisted files will be ignored. A whitelisted file is a file that QuickScan knows he's clean. How? Because the md5 hash of the file is mentioned in a whitelist file like the `aesecure_quickscan_J!3.9.0.json` (or any other whitelist files).
 
-In other words: `Getting the file list` will only retrieve files that need to be scanned. In a fresh Joomla or WordPress installation, you'll have a very few files to scan since the native, core files are whitelisted. Explanation: I've generated hashes for a lot of versions (see https://github.com/cavo789/aesecure_quickscan/tree/master/hashes/joomla and https://github.com/cavo789/aesecure_quickscan/tree/master/hashes/wordpress). As soon as QuickScan can retrieve a hash file for the version of Joomla/Wordpress you're using, a hash will be computed for every single files of your site and if that hash is recognized, it means your file is healthy meaning his content is exactly the one present in a fresh installation of Joomla/Wordpress and thus didn't contains any viruses.  As soon as a core file has been altered, even with just a space characther, the hash will be different thus not retrieved in the list. As a consequence, the file will be scanned even if part of the "core" files of the CMS. Only unmodified files will be considered as healthy and not scanned.
+In other words: `Getting the file list` will only retrieve files that need to be scanned. In a fresh Joomla or WordPress installation, you'll have a very few files to scan since the native, core files are whitelisted. Explanation: I've generated hashes for a lot of versions (see https://github.com/cavo789/aesecure_quickscan/tree/master/hashes/joomla and https://github.com/cavo789/aesecure_quickscan/tree/master/hashes/wordpress). As soon as QuickScan can retrieve a hash file for the version of Joomla/Wordpress you're using, a hash will be computed for every single file of your site and if that hash is recognised, it means your file is healthy meaning his content is exactly the one present in a fresh installation of Joomla/Wordpress and thus didn't contain any viruses.  As soon as a core file has been altered, even with just a space character, the hash will be different thus not retrieved in the list. As a consequence, the file will be scanned even if part of the "core" files of the CMS. Only unmodified files will be considered as healthy and not scanned.
 
-**unmodified** files are whitelisted (if unchanged of course).
+**Unmodified** files are whitelisted (if unchanged of course).
 
 As you can see here below, on a fresh installation of Joomla 3.9.0, the number of files to scan is: zero. This because nothing was added to the site and thus 100% of files are in our whitelist.
 
@@ -136,9 +136,9 @@ For Joomla!, simply download the desired version by surfing on [https://download
 
 If you need more than one version, just download all the required versions and save each archive in the `./hashes/joomla` folder.
 
-It's important that the archive filename is updated and be, just, the version. For instance rename `Joomla_5.0.0-Stable-Full_Package.zip` to `5.0.0.zip`.
+It's important that the archive filename is updated and be, just, the version. For instance, rename `Joomla_5.0.0-Stable-Full_Package.zip` to `5.0.0.zip`.
 
-In the example below, I've download Joomla 4.4.0 till 5.1.0. Zip files are in my `./hashes/joomla` folder and I uncompress them by running the command below in my Linux console:
+In the example below, I've downloaded Joomla 4.4.0 till 5.1.0. Zip files are in my `./hashes/joomla` folder and I uncompress them by running the command below in my Linux console:
 
 ```bash
 unzip 4.4.0.zip -d ./4.4.0 && rm -f 4.4.0.zip
@@ -152,13 +152,23 @@ unzip 5.0.3.zip -d ./5.0.3 && rm -f 5.0.3.zip
 unzip 5.1.0.zip -d ./5.1.0 && rm -f 5.1.0.zip
 ```
 
+Since I'm lazy, here is the Linux command to start for getting the list here above: 
+
+```bash
+for f in *.zip ; do var=`find "$f"`; echo "unzip $f -d ${f%.*} && rm -f $f"; done
+```
+
 This done, now I can start my browser and the `make_hashes.php` script.
+
+```info Using Docker
+Just run `docker run -d -p 8080:80 -u $(id -u):$(id -g) -v "$PWD":/var/www/html php:8.2-apache` then jump to `http://localhost:8080/make_hash.php`, wait a few seconds and you're done
+```
 
 The script will immediately start the creation of the hashes; there is nothing to do; just wait.
 
-After a few seconds, you'll get one JSON file by versions in `./hashes/joomla`.
+After a few seconds, you'll get new JSON files (one by version) in `./hashes/joomla`. You can now, optionally, remove the subfolders; no more needed.
 
-If you've write permissions to the [https://github.com/cavo789/aesecure_quickscan](https://github.com/cavo789/aesecure_quickscan) repository, just push new signatures to make them publicly available.
+If you've written permissions to the [https://github.com/cavo789/aesecure_quickscan](https://github.com/cavo789/aesecure_quickscan) repository, just push new signatures to make them publicly available.
 
 ## License
 
