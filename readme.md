@@ -160,9 +160,7 @@ for f in *.zip ; do var=`find "$f"`; echo "unzip $f -d ${f%.*} && rm -f $f"; don
 
 This done, now I can start my browser and the `make_hashes.php` script.
 
-```info Using Docker
-Just run `docker run -d -p 8080:80 -u $(id -u):$(id -g) -v "$PWD":/var/www/html php:8.2-apache` then jump to `http://localhost:8080/make_hash.php`, wait a few seconds and you're done
-```
+If you're a Docker user, just run `docker run -d -p 8080:80 -u $(id -u):$(id -g) -v "$PWD":/var/www/html php:8.2-apache` in the folder where you've cloned this repository then start your browser and open `http://localhost:8080/make_hash.php`, wait a few seconds and you're done.
 
 The script will immediately start the creation of the hashes; there is nothing to do; just wait.
 
