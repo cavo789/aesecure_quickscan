@@ -45,6 +45,8 @@ If you need a version for PHP 7.x, please download that one: [https://raw.github
 
 So, in the root folder of your website, you've the `aesecure_quickscan.php` file (or `scan.php`). To run it, just start a browser and access the file by URL f.i. `http://localhost/my_site/aesecure_quickscan.php`.
 
+If you're using Docker, you can also run the interface by starting this command line: `docker run -d -p 8080:80 -u $(id -u):$(id -g) -v "$PWD":/var/www/html php:8.2-apache` in the folder where your website is located and where you have copied the `aesecure_quickscan.php` file. This done, simply start the interface by starting your browser and open `http://localhost:8080/aesecure_quickscan.php`, wait a few seconds and the scanner page will be displayed.
+
 ### Automatic downloads
 
 #### When the interface is displayed
