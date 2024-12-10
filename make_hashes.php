@@ -74,7 +74,7 @@ function rrmdir($folder, $killroot = false, $arrIgnoreFiles = ['.htaccess', 'ind
     return $return;
 }
 
-function json_validate($string)
+function json_val($string)
 {
     // decode the JSON data
     $result = json_decode($string);
@@ -207,7 +207,7 @@ function makeJSON($folder, $filename)
 
         // Security, check that we've at least one file
         if (count($json) > 0) {
-            if (json_validate(json_encode($json))) {
+            if (json_val(json_encode($json))) {
                 asort($json);
 
                 if (file_exists($filename)) {
