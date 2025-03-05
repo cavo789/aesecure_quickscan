@@ -1,3 +1,7 @@
+⚠️ This repository is now archived. The French "Association Francophone des Utilisateurs de Joomla" (AFUJ) will now continue this project ⚠️
+Please refers to [https://github.com/AFUJ/quickscan](https://github.com/AFUJ/quickscan) to get the latest version.
+
+
 # aeSecure - QuickScan
 
 <!-- cspell:ignore aesecure,quickscan,joomla,uncompress -->
